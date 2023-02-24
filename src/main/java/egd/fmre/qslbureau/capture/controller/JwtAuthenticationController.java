@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import egd.fmre.qslbureau.capture.component.JwtTokenUtil;
 import egd.fmre.qslbureau.capture.dto.JwtRequest;
 import egd.fmre.qslbureau.capture.dto.JwtResponse;
-import egd.fmre.qslbureau.capture.service.JwtUserDetailsService;
+import egd.fmre.qslbureau.capture.service.impl.JwtUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController

@@ -1,4 +1,4 @@
-package egd.fmre.qslbureau.capture.service;
+package egd.fmre.qslbureau.capture.service.impl;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.entity.Capturer;
+import egd.fmre.qslbureau.capture.service.CapturerService;
+import egd.fmre.qslbureau.capture.service.LocalService;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {

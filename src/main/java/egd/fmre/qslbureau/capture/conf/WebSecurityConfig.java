@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import egd.fmre.qslbureau.capture.component.JwtAuthenticationEntryPoint;
 import egd.fmre.qslbureau.capture.component.JwtRequestFilter;
-import egd.fmre.qslbureau.capture.service.JwtUserDetailsService;
+import egd.fmre.qslbureau.capture.service.impl.JwtUserDetailsService;
 
 @Configuration
 @EnableGlobalMethodSecurity(

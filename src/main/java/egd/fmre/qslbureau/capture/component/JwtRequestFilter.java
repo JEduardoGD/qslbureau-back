@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import egd.fmre.qslbureau.capture.service.JwtUserDetailsService;
+import egd.fmre.qslbureau.capture.service.impl.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
