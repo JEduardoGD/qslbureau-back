@@ -6,4 +6,7 @@ public interface CapturerService {
 
     Capturer findById(int idCapturer);
 
+    Capturer findByUsername(String username);
+
+    Capturer getActiveCapturerById(int idCapturer);
 }

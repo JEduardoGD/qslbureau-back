@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import egd.fmre.qslbureau.capture.dao.QslDao;
+import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
@@ -29,7 +29,7 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     private int idCapturer;
     
     @Override
-    public QslDao captureQsl(QslDao qsl) {
+    public QslDto captureQsl(QslDto qsl) {
 
         Slot slot;
         

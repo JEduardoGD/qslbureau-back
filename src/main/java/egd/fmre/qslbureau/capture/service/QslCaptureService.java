@@ -1,9 +1,9 @@
 package egd.fmre.qslbureau.capture.service;
 
-import egd.fmre.qslbureau.capture.dao.QslDao;
+import egd.fmre.qslbureau.capture.dto.QslDto;
 
 public interface QslCaptureService {
 
-    QslDao captureQsl(QslDao qsl);
+    QslDto captureQsl(QslDto qsl);
 
 }

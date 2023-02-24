@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import egd.fmre.qslbureau.capture.entity.Capturer;
 
 @Repository
-public interface CapturerRepository extends JpaRepository<Capturer, Integer>{
-
+public interface CapturerRepository extends JpaRepository<Capturer, Integer> {
+    public Capturer findByUsername(String username);
 }
