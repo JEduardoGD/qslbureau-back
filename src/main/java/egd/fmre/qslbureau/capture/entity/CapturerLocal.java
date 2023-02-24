@@ -1,0 +1,50 @@
+package egd.fmre.qslbureau.capture.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Table;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@Entity
+@Table(name = "D_CAPTURER_LOCAL")
+@EqualsAndHashCode(of = {"id"})
+public class CapturerLocal implements Serializable {
+
+    private static final long serialVersionUID = -7843759781324034869L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDCAPTURERLOCAL")
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("capturerId")
+    @JoinColumn(name = "IDCAPTURER")
+    private Capturer capturer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("localId")
+    @JoinColumn(name = "IDLOCAL")
+    private Local local;
+
+    @Column(name = "START")
+    private Date start;
+
+    @Column(name = "END")
+    private Date end;
+    
+    
+}
