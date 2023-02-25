@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("qslcard")
-@Slf4j
 public class QslcapturaController {
 
     @Autowired
@@ -23,9 +21,6 @@ public class QslcapturaController {
 
     @PutMapping
     public QslDto captureQsl(@RequestBody QslDto qsl, @RequestHeader Map<String, String> headers) {
-        headers.forEach((key, value) -> {
-            log.info(String.format("Header '%s' = %s", key, value));
-        });
         return qslCaptureService.captureQsl(qsl);
     }
 }
