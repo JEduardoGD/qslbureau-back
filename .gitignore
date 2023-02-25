@@ -34,3 +34,4 @@ build/
 
 ##
 deploy_env.properties
+hs_err_pid*.log
