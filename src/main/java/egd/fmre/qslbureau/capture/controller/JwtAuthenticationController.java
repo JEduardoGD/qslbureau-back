@@ -9,7 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,12 +36,6 @@ public class JwtAuthenticationController {
     
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
-    @RequestMapping(value = "/encode/{text}", method = RequestMethod.GET)
-    private ResponseEntity<String> encode(@PathVariable(value="text") String text) {
-        log.info(passwordEncoder.encode(text));
-        return ResponseEntity.ok(text);
-    }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
