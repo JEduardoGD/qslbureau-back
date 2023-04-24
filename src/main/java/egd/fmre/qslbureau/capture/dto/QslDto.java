@@ -4,5 +4,8 @@ import lombok.Data;
 
 @Data
 public class QslDto {
+    private int qslId;
     private String toCallsign;
+    private int slotNumber;
+    private int qslsInSlot;
 }

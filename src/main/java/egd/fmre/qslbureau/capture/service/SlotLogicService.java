@@ -5,6 +5,8 @@ import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
 
 public interface SlotLogicService {
 
-    Slot getSlotForQsl(String callsignTo) throws MaximumSlotNumberReachedException;
+    public Slot getSlotForQsl(String callsignTo) throws MaximumSlotNumberReachedException;
+    
+    public Slot findById(int slotId);
 
 }
