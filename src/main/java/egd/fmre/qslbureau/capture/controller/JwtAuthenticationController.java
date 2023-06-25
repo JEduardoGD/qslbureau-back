@@ -26,9 +26,11 @@ import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.service.CapturerService;
 import egd.fmre.qslbureau.capture.service.LocalService;
 import egd.fmre.qslbureau.capture.service.impl.JwtUserDetailsService;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin
+@Slf4j
 public class JwtAuthenticationController {
 
     @Autowired
@@ -51,6 +53,7 @@ public class JwtAuthenticationController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+        log.info("{}", passwordEncoder.encode(authenticationRequest.getUsername()));
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
