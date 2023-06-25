@@ -29,9 +29,8 @@ public class QslcapturaController {
     private QslCaptureService qslCaptureService;
 
     @PutMapping
-    public StandardResponse captureQsl(@RequestBody QslDto qsl, @RequestHeader Map<String, String> headers) {
-        return new ResponseEntity<>(null,new HttpHeaders(),HttpStatus.CREATED);
-        return qslCaptureService.captureQsl(qsl);
+    public ResponseEntity<StandardResponse> captureQsl(@RequestBody QslDto qsl, @RequestHeader Map<String, String> headers) {
+        return new ResponseEntity<StandardResponse>(qslCaptureService.captureQsl(qsl),new HttpHeaders(),HttpStatus.CREATED);
     }
 
     @GetMapping("/countbyslot/{slotId}")

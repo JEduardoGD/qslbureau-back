@@ -1,6 +1,7 @@
 package egd.fmre.qslbureau.capture.util;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,18 @@ public abstract class SlotsUtil {
         return newSlot;
     }
     
-    public static Set<QslDto> parse(Set<Qsl> qsls ) {
+    public static Set<QslDto> parse(List<Qsl> qsls) {
+        return qsls.stream().map(q -> {
+            QslDto qslDto = new QslDto();
+            qslDto.setQslId(q.getId());
+            qslDto.setToCallsign(q.getCallsignTo());
+            qslDto.setSlotNumber(q.getSlot().getSlotNumber());
+            qslDto.setDateTimeCapture(q.getDatetimecapture());
+            return qslDto;
+        }).collect(Collectors.toSet());
+    }
+    
+    public static Set<QslDto> parse(Set<Qsl> qsls) {
         return qsls.stream().map(q -> {
             QslDto qslDto = new QslDto();
             qslDto.setQslId(q.getId());
