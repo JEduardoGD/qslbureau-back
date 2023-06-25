@@ -68,4 +68,9 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         Slot newSlot = generateSlot(newCallsignTo, new Date(), local, i);
         return slotRepository.save(newSlot);
     }
+
+    @Override
+    public Slot findById(int slotId) {
+        return slotRepository.findById(slotId).orElse(null);
+    }
 }

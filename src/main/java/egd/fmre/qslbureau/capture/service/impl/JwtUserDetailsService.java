@@ -16,10 +16,8 @@ import egd.fmre.qslbureau.capture.service.LocalService;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    LocalService localService;
-    @Autowired
-    CapturerService capturerService;
+    @Autowired LocalService localService;
+    @Autowired CapturerService capturerService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

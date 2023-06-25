@@ -19,11 +19,8 @@ import egd.fmre.qslbureau.capture.service.impl.JwtUserDetailsService;
 
 @EnableWebSecurity
 public class WebSecurityConfig {
-    @Autowired
-    JwtUserDetailsService jwtUserDetailsService;
-
-    @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired          JwtUserDetailsService      jwtUserDetailsService;
+    @Autowired private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     JwtRequestFilter authenticationJwtTokenFilter() {

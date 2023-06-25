@@ -1,5 +1,8 @@
 package egd.fmre.qslbureau.capture.controller;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,12 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 import egd.fmre.qslbureau.capture.component.JwtTokenUtil;
 import egd.fmre.qslbureau.capture.dto.JwtRequest;
 import egd.fmre.qslbureau.capture.dto.JwtResponse;
+import egd.fmre.qslbureau.capture.dto.LocalDto;
+import egd.fmre.qslbureau.capture.entity.Capturer;
+import egd.fmre.qslbureau.capture.entity.Local;
+import egd.fmre.qslbureau.capture.service.CapturerService;
+import egd.fmre.qslbureau.capture.service.LocalService;
 import egd.fmre.qslbureau.capture.service.impl.JwtUserDetailsService;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin
-@Slf4j
 public class JwtAuthenticationController {
 
     @Autowired
@@ -33,9 +39,15 @@ public class JwtAuthenticationController {
 
     @Autowired
     private JwtUserDetailsService userDetailsService;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CapturerService capturerService;
+    
+    @Autowired
+    private LocalService localService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
@@ -43,21 +55,37 @@ public class JwtAuthenticationController {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
-        UsernamePasswordAuthenticationToken authenticationToken;
+        Capturer capturer = null;
+        Set<Local> locals = null;
 
         if (userDetails != null) {
             if (passwordEncoder.matches(authenticationRequest.getPassword(), userDetails.getPassword())) {
-                // if it matches, then we can initialize UsernamePasswordAuthenticationToken.
-                // Attention! We used its 3 parameters constructor.
-                authenticationToken = new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword(), userDetails.getAuthorities());
-                log.info(authenticationToken.toString());
+                capturer = capturerService.findByUsername(authenticationRequest.getUsername());
+                locals = localService.findByCapturer(capturer);
             }
         }
 
         final String token = jwtTokenUtil.generateToken(userDetails);
+        
+        JwtResponse jwtResponse = new JwtResponse(token);
+        if (capturer != null) {
+            jwtResponse.setCapturerId(capturer.getId());
+            jwtResponse.setCapturerName(capturer.getName());
+            jwtResponse.setCapturerLastName(capturer.getLastName());
+            jwtResponse.setCapturerUsername(capturer.getUsername());
+            if (locals != null) {
+                Set<LocalDto> localsDto = locals.stream().map(l -> {
+                    LocalDto localDto = new LocalDto();
+                    localDto.setId(l.getId());
+                    localDto.setMaxSlots(l.getMaxSlots());
+                    return localDto;
+                }).collect(Collectors.toSet());
+                jwtResponse.setLocals(localsDto);
+            }
+        }
+        
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(jwtResponse);
     }
 
     private void authenticate(String username, String password) throws Exception {
