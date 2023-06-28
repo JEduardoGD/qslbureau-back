@@ -30,6 +30,7 @@ import egd.fmre.qslbureau.capture.service.CapturerService;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
+import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
 import egd.fmre.qslbureau.capture.util.SlotsUtil;
 
 @Service
@@ -58,10 +59,11 @@ public class QslCaptureServiceImpl implements QslCaptureService {
             qsl.setDatetimecapture(new Date());
             qsl.setSlot(slot);
             qsl = qslRepository.save(qsl);
-            qslDto.setSlotNumber(slot.getSlotNumber());
             Set<Qsl> qsls = qslRepository.findBySlot(slot);
-            qslDto.setQslsInSlot(qsls.size());
-            return new StandardResponse(JsonParserUtil.parse(qsl.toDto()));
+            QslDto qslDtoRet = QsldtoTransformer.map(qsl);
+            qslDtoRet.setDateTimeCapture(qsl.getDatetimecapture());
+            qslDtoRet.setQslsInSlot(qsls.size());
+            return new StandardResponse(JsonParserUtil.parse(qslDtoRet));
         } catch (SlotLogicServiceException |JsonParserException e) {
             return new StandardResponse(true, e.getMessage());
         }
