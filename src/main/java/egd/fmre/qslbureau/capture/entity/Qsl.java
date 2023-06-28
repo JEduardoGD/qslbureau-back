@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import egd.fmre.qslbureau.capture.dto.QslDto;
 import lombok.Data;
 
 @Data
@@ -40,13 +39,4 @@ public class Qsl implements Serializable {
     
     @Column(name = "DATETIMECAPTURE")
     private Date datetimecapture;
-    
-    public QslDto toDto() {
-        QslDto qslDto = new QslDto();
-        qslDto.setQslId(this.id);
-        qslDto.setToCallsign(this.getCallsignTo());
-        qslDto.setSlotNumber(slot.getSlotNumber());
-        qslDto.setDateTimeCapture(datetimecapture);
-        return qslDto;
-    }
 }
