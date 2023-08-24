@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,5 +47,10 @@ public class QslcapturaController {
     @GetMapping("/bylocalid/{localid}")
     public List<QslDto> byLocalId(@PathVariable int localid) throws QslcaptureException {
         return qslCaptureService.qslsByLocal(localid);
+    }
+
+    @DeleteMapping("/deletebyid/{qslid}")
+    public ResponseEntity<StandardResponse> byQslId(@PathVariable int qslid) throws QslcaptureException {
+        return new ResponseEntity<StandardResponse>(qslCaptureService.deleteById(qslid),new HttpHeaders(),HttpStatus.CREATED);
     }
 }

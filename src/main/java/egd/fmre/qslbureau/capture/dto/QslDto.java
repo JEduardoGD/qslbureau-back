@@ -11,4 +11,5 @@ public class QslDto {
     private int slotNumber;
     private int qslsInSlot;
     private Date dateTimeCapture;
+    private int status;
 }
