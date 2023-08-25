@@ -2,7 +2,6 @@ package egd.fmre.qslbureau.capture.service.impl;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,6 +31,7 @@ import egd.fmre.qslbureau.capture.service.CallsignRuleService;
 import egd.fmre.qslbureau.capture.service.CapturerService;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
 import lombok.extern.slf4j.Slf4j;
@@ -46,9 +45,6 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     @Autowired QslRepository       qslRepository;
     @Autowired CapturerService     capturerService;
     @Autowired LocalRepository     localRepository;
-    
-    @Value("${ID_CAPTURER}")
-    private int idCapturer;
     
     private Status statusQslVigente;
     private Status statusQslEliminada;
@@ -64,14 +60,14 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     public StandardResponse captureQsl(QslDto qslDto) {
         Slot slot;
         
-        Capturer capturer = capturerService.findById(idCapturer);
+        Capturer capturer = capturerService.findById(qslDto.getIdCapturer());
 
         try {
             slot = slotLogicService.getSlotForQsl(qslDto.getToCallsign());
             Qsl qsl = new Qsl();
             qsl.setCapturer(capturer);
             qsl.setCallsignTo(qslDto.getToCallsign());
-            qsl.setDatetimecapture(new Date());
+            qsl.setDatetimecapture(DateTimeUtil.getDateTime());
             qsl.setSlot(slot);
             qsl.setStatus(statusQslVigente);
             qsl = qslRepository.save(qsl);
