@@ -39,4 +39,8 @@ public class Qsl implements Serializable {
     
     @Column(name = "DATETIMECAPTURE")
     private Date datetimecapture;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="IDSTATUS")
+    private Status status;
 }

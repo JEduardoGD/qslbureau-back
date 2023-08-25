@@ -1,0 +1,6 @@
+FRONT_NAMESERVER=
+JWT_SECRET=
+MYSQL_DB_PASSWORD=
+MYSQL_DB_URL=jdbc:mysql://xxx.xxx.xxx.xxx:nnnn/db_name?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=utf-8&&enabledTLSProtocols=TLSv1.2
+MYSQL_DB_USERNAME=
+ROOT_LOG_LEVEL=
