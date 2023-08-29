@@ -61,9 +61,10 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         Slot slot;
         
         Capturer capturer = capturerService.findById(qslDto.getIdCapturer());
+        Local local = localRepository.findById(qslDto.getLocalId());
 
         try {
-            slot = slotLogicService.getSlotForQsl(qslDto.getToCallsign());
+            slot = slotLogicService.getSlotForQsl(qslDto.getToCallsign(), local);
             Qsl qsl = new Qsl();
             qsl.setCapturer(capturer);
             qsl.setCallsignTo(qslDto.getToCallsign());

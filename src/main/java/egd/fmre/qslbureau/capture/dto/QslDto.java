@@ -13,4 +13,5 @@ public class QslDto {
     private int qslsInSlot;
     private Date dateTimeCapture;
     private int status;
+    private int localId;
 }

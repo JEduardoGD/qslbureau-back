@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.SlotCountqslDTO;
@@ -29,14 +28,8 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     
     private static String MAX_NUMBER_SLOTS_REACHED = "Se ha alcanzado el número máximo de slots para este local";
     
-    @Value("${LOCAL_ID}")
-    private int localId;
-    
     @Override
-    public Slot getSlotForQsl(String callsignTo) throws MaximumSlotNumberReachedException {
-        
-        Local local = localRepository.findById(localId);
-        
+    public Slot getSlotForQsl(String callsignTo, Local local) throws MaximumSlotNumberReachedException {
         //apply rules of redirect
         String newCallsignTo = callsignRuleService.applyCallsignRule(callsignTo);
         
