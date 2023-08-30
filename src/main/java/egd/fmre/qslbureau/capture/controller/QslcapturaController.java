@@ -21,6 +21,7 @@ import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
+import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 
 @RestController
 @RequestMapping("qslcard")
@@ -30,8 +31,16 @@ public class QslcapturaController {
     private QslCaptureService qslCaptureService;
 
     @PutMapping
-    public ResponseEntity<StandardResponse> captureQsl(@RequestBody QslDto qsl, @RequestHeader Map<String, String> headers) {
-        return new ResponseEntity<StandardResponse>(qslCaptureService.captureQsl(qsl),new HttpHeaders(),HttpStatus.CREATED);
+    public ResponseEntity<StandardResponse> captureQsl(@RequestBody QslDto qsl,
+            @RequestHeader Map<String, String> headers) {
+        StandardResponse standardResponse;
+        try {
+            standardResponse = new StandardResponse(JsonParserUtil.parse(qslCaptureService.captureQsl(qsl)));
+        } catch (QslcaptureException e) {
+            standardResponse = new StandardResponse(true, e.getMessage());
+        }
+        return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
+
     }
 
     @GetMapping("/countbyslot/{slotId}")

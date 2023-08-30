@@ -27,8 +27,7 @@ public class LocalController  {
     @Autowired private CapturerService      capturerService;
     @Autowired private CapturerLocalService capturerLocalService;
     @Autowired private LocalService         localService;
-    @Autowired
-    private ModelMapper modelMapper;
+    @Autowired private ModelMapper modelMapper;
     
     @RequestMapping(value = "/getlocalsofidcapturer/{idcapturer}", method = RequestMethod.GET)
     public ResponseEntity<Set<LocalDto>> captureQsl(@PathVariable(value = "idcapturer") int idcapturer) {

@@ -18,4 +18,6 @@ public class LocalDto implements Serializable {
     
     private int maxSlots;
     
+    private String name;
+    
 }
