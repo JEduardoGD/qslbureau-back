@@ -3,6 +3,7 @@ package egd.fmre.qslbureau.capture.controller;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -51,6 +52,8 @@ public class JwtAuthenticationController {
     @Autowired
     private LocalService localService;
 
+    @Autowired private ModelMapper modelMapper;
+
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         log.info("{}", passwordEncoder.encode(authenticationRequest.getUsername()));
@@ -76,15 +79,8 @@ public class JwtAuthenticationController {
             jwtResponse.setCapturerName(capturer.getName());
             jwtResponse.setCapturerLastName(capturer.getLastName());
             jwtResponse.setCapturerUsername(capturer.getUsername());
-            if (locals != null) {
-                Set<LocalDto> localsDto = locals.stream().map(l -> {
-                    LocalDto localDto = new LocalDto();
-                    localDto.setId(l.getId());
-                    localDto.setMaxSlots(l.getMaxSlots());
-                    return localDto;
-                }).collect(Collectors.toSet());
-                jwtResponse.setLocals(localsDto);
-            }
+            Set<LocalDto> LocalDtoSet = locals.stream().map(l -> modelMapper.map(l, LocalDto.class)).collect(Collectors.toSet());
+            jwtResponse.setLocals(LocalDtoSet);
         }
         
 

@@ -22,7 +22,6 @@ import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.StatusEnum;
-import egd.fmre.qslbureau.capture.exception.JsonParserException;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.exception.SlotLogicServiceException;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
@@ -57,7 +56,7 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     
     
     @Override
-    public StandardResponse captureQsl(QslDto qslDto) {
+    public QslDto captureQsl(QslDto qslDto) throws QslcaptureException {
         Slot slot;
         
         Capturer capturer = capturerService.findById(qslDto.getIdCapturer());
@@ -76,9 +75,9 @@ public class QslCaptureServiceImpl implements QslCaptureService {
             QslDto qslDtoRet = QsldtoTransformer.map(qsl);
             qslDtoRet.setDateTimeCapture(qsl.getDatetimecapture());
             qslDtoRet.setQslsInSlot(qsls.size());
-            return new StandardResponse(JsonParserUtil.parse(qslDtoRet));
-        } catch (SlotLogicServiceException |JsonParserException e) {
-            return new StandardResponse(true, e.getMessage());
+            return qslDtoRet;
+        } catch (SlotLogicServiceException e) {
+            throw new QslcaptureException(e);
         }
     }
 

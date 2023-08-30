@@ -37,6 +37,9 @@ public class Local implements Serializable {
     @Column(name = "MAXSLOTS")
     private int maxSlots;
     
+    @Column(name = "NAME")
+    private String name;
+    
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "local")
     private Set<CapturerLocal> capturerLocals = new HashSet<>();
 }

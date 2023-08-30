@@ -15,7 +15,7 @@ public interface QslCaptureService {
 
     List<QslDto> qslsByLocal(int localId) throws QslcaptureException;
 
-    StandardResponse captureQsl(QslDto qsl);
-
     StandardResponse deleteById(int qslid) throws QslcaptureException;
+
+    QslDto captureQsl(QslDto qslDto) throws QslcaptureException;
 }
