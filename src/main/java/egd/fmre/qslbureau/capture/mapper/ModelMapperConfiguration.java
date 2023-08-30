@@ -20,6 +20,7 @@ public class ModelMapperConfiguration {
                 LocalDto localDto = new LocalDto();
                 localDto.setId(local.getId());
                 localDto.setMaxSlots(local.getMaxSlots());
+                localDto.setName(local.getName());
                 return localDto;
             }
         });
