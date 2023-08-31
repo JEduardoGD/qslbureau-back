@@ -8,7 +8,8 @@ import lombok.Data;
 public class QslDto {
     private int idCapturer;
     private int qslId;
-    private String toCallsign;
+    private String to;
+    private String via;
     private int slotNumber;
     private int qslsInSlot;
     private Date dateTimeCapture;

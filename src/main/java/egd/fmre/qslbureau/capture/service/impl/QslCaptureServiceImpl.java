@@ -24,13 +24,13 @@ import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.exception.SlotLogicServiceException;
+import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
 import egd.fmre.qslbureau.capture.repo.QslRepository;
 import egd.fmre.qslbureau.capture.service.CallsignRuleService;
 import egd.fmre.qslbureau.capture.service.CapturerService;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
-import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
 import lombok.extern.slf4j.Slf4j;
@@ -63,14 +63,12 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         Local local = localRepository.findById(qslDto.getLocalId());
 
         try {
-            slot = slotLogicService.getSlotForQsl(qslDto.getToCallsign(), local);
+            String effectiveCallsign = qslDto.getVia() != null
+                    && !StaticValuesHelper.EMPTY_STRING.equals(qslDto.getVia()) ? qslDto.getVia() : qslDto.getTo();
+            slot = slotLogicService.getSlotForQsl(effectiveCallsign, local);
+            
             slotLogicService.changeSlotstatusToOpen(slot);
-            Qsl qsl = new Qsl();
-            qsl.setCapturer(capturer);
-            qsl.setCallsignTo(qslDto.getToCallsign());
-            qsl.setDatetimecapture(DateTimeUtil.getDateTime());
-            qsl.setSlot(slot);
-            qsl.setStatus(statusQslVigente);
+            Qsl qsl = QsldtoTransformer.map(qslDto, capturer, slot, statusQslVigente);
             qsl = qslRepository.save(qsl);
             Set<Qsl> qsls = qslRepository.findBySlot(slot);
             QslDto qslDtoRet = QsldtoTransformer.map(qsl);
