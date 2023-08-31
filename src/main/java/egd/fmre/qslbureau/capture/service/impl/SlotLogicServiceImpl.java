@@ -1,10 +1,12 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +14,19 @@ import org.springframework.stereotype.Service;
 import egd.fmre.qslbureau.capture.dto.SlotCountqslDTO;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Slot;
+import egd.fmre.qslbureau.capture.entity.Status;
+import egd.fmre.qslbureau.capture.enums.SlotstatusEnum;
 import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
 import egd.fmre.qslbureau.capture.repo.SlotRepository;
 import egd.fmre.qslbureau.capture.service.CallsignRuleService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.SlotsUtil;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService {
     
     @Autowired CallsignRuleService callsignRuleService;
@@ -28,55 +35,99 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     
     private static String MAX_NUMBER_SLOTS_REACHED = "Se ha alcanzado el número máximo de slots para este local";
     
+    private Status slotstatusCreated;
+    private Status slotstatusOpen;
+    private Status slotstatusClosed;
+    
+    @PostConstruct
+    private void Init(){
+        slotstatusCreated = new Status(SlotstatusEnum.SLOT_CREATED.getIdstatus());
+        slotstatusOpen    = new Status(SlotstatusEnum.SLOT_OPEN.getIdstatus());
+        slotstatusClosed  = new Status(SlotstatusEnum.SLOT_CLOSED.getIdstatus());
+    }
+    
+    @Override
+    public List<Slot> getOpenedOrCreatedSlotsInLocal(Local local) {
+        List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
+        return slotRepository.findByStatusesForLocal(slotStatuses, local);
+    }
+    
+    @Override
+    public List<Slot> getOpenedOrCreatedSlotsForCallsignInLocal(String callsign, Local local) {
+        List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
+        return openedOrCreatedSlotsInLocal.stream().filter(s -> callsign.equals(s.getCallsignto())).collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<SlotCountqslDTO> getQslsBySlot(List<Integer> SlotsInLocalIds) {
+        return slotRepository.getQslsBySlot(SlotsInLocalIds);
+    }
+    
+    @Override
+    public void changeSlotstatusToOpen(Slot slot) {
+        Status slotStatus = slot.getStatus();
+        if(!slotStatus.getId().equals(slotstatusCreated.getId())) {
+            log.warn("The status on slot id {} is not created", slot.getId());
+        }
+        if(slotStatus.getId().equals(slotstatusOpen.getId())) {
+            log.warn("The status on slot id {} already is open", slot.getId());
+            return;
+        }
+        slot.setStatus(slotstatusOpen);
+        slotRepository.save(slot);
+    }
+    
     @Override
     public Slot getSlotForQsl(String callsignTo, Local local) throws MaximumSlotNumberReachedException {
         //apply rules of redirect
         String newCallsignTo = callsignRuleService.applyCallsignRule(callsignTo);
         
-        //find some slot open that is used by newCallsignTo
-        Slot slot = slotRepository.getOpenedSlotForCallsign(newCallsignTo, local);
-        
-        if (slot != null) {
-            return slot;
+        // find some slot open or created that is used by newCallsignTo
+        List<Slot> openedOrCreatedSlotsForCallsignInLocal =
+                getOpenedOrCreatedSlotsForCallsignInLocal(newCallsignTo, local);
+        if (openedOrCreatedSlotsForCallsignInLocal != null && !openedOrCreatedSlotsForCallsignInLocal.isEmpty()) {
+            return openedOrCreatedSlotsForCallsignInLocal.get(0);
         }
 
-        List<Slot> openedSlotsInLocal = slotRepository.getOpenedSlotsInLocal(local);
+        
+        List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
         List<Slot> closeableList = new ArrayList<>();
-        closeableList.addAll(openedSlotsInLocal);
+        closeableList.addAll(openedOrCreatedSlotsInLocal);
 
         
         //checking if some slot could be closed
-        List<Integer> openedSlotsIdsInLocal = openedSlotsInLocal.stream().map(Slot::getId).collect(Collectors.toList());
-        List<SlotCountqslDTO> slotCountList = slotRepository.getQslsBySlot(openedSlotsIdsInLocal);
+        List<Integer> openedOrCreatedSlotsInLocalIdsInLocal = openedOrCreatedSlotsInLocal.stream().map(Slot::getId).collect(Collectors.toList());
+        List<SlotCountqslDTO> slotCountList = getQslsBySlot(openedOrCreatedSlotsInLocalIdsInLocal);
         List<Slot> slotsInUse = slotCountList.stream().map(SlotCountqslDTO::getSlot).collect(Collectors.toList());
         closeableList.removeAll(slotsInUse);
         closeableList.forEach(s->{
-            s.setClosed(new Date());
+            s.setClosedAt(DateTimeUtil.getDateTime());
+            s.setStatus(slotstatusClosed);
             slotRepository.save(s);
         });
-        openedSlotsInLocal = slotRepository.getOpenedSlotsInLocal(local);
+        openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
         
-        if (openedSlotsInLocal.size() <= 0 && local.getMaxSlots() > 0) {
-            Slot newSlot = generateSlot(newCallsignTo, new Date(), local, 1);
+        if (openedOrCreatedSlotsInLocal.size() <= 0 && local.getMaxSlots() > 0) {
+            Slot newSlot = generateSlot(newCallsignTo, DateTimeUtil.getDateTime(), local, 1);
             return slotRepository.save(newSlot);
         }
-        openedSlotsInLocal.sort(Comparator.comparing(Slot::getSlotNumber));
+        openedOrCreatedSlotsInLocal.sort(Comparator.comparing(Slot::getSlotNumber));
         
-        if (openedSlotsInLocal.size() >= local.getMaxSlots()) {
+        if (openedOrCreatedSlotsInLocal.size() >= local.getMaxSlots()) {
             throw new MaximumSlotNumberReachedException(MAX_NUMBER_SLOTS_REACHED);
         }
         
         int i = 1;
-        for (Slot s : openedSlotsInLocal) {
+        for (Slot s : openedOrCreatedSlotsInLocal) {
             if (i == s.getSlotNumber()) {
                 i++;
                 continue;
             } else {
-                Slot newSlot = generateSlot(newCallsignTo, new Date(), local, i);
+                Slot newSlot = generateSlot(newCallsignTo, DateTimeUtil.getDateTime(), local, i);
                 return slotRepository.save(newSlot);
             }
         }
-        Slot newSlot = generateSlot(newCallsignTo, new Date(), local, i);
+        Slot newSlot = generateSlot(newCallsignTo, DateTimeUtil.getDateTime(), local, i);
         return slotRepository.save(newSlot);
     }
 
@@ -85,3 +136,4 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         return slotRepository.findById(slotId).orElse(null);
     }
 }
+

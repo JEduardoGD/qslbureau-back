@@ -21,7 +21,7 @@ import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
-import egd.fmre.qslbureau.capture.enums.StatusEnum;
+import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.exception.SlotLogicServiceException;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
@@ -50,8 +50,8 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     
     @PostConstruct
     private void Init(){
-        statusQslVigente = new Status(StatusEnum.QSL_VIGENTE.getIdstatus());
-        statusQslEliminada = new Status(StatusEnum.QSL_ELIMINADA.getIdstatus());
+        statusQslVigente = new Status(QslstatusEnum.QSL_VIGENTE.getIdstatus());
+        statusQslEliminada = new Status(QslstatusEnum.QSL_ELIMINADA.getIdstatus());
     }
     
     
@@ -64,6 +64,7 @@ public class QslCaptureServiceImpl implements QslCaptureService {
 
         try {
             slot = slotLogicService.getSlotForQsl(qslDto.getToCallsign(), local);
+            slotLogicService.changeSlotstatusToOpen(slot);
             Qsl qsl = new Qsl();
             qsl.setCapturer(capturer);
             qsl.setCallsignTo(qslDto.getToCallsign());
