@@ -34,7 +34,7 @@ public class Qsl implements Serializable {
     @JoinColumn(name="IDCAPTURER")
     private Capturer capturer;
     
-    @Column(name = "TO")
+    @Column(name = "TOCALLSIGN")
     private String to;
     
     @Column(name = "VIA")

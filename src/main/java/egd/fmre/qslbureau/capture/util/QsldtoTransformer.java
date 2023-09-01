@@ -37,6 +37,7 @@ public abstract class QsldtoTransformer {
         Qsl qsl = new Qsl();
         qsl.setCapturer(capturer);
         qsl.setTo(qslDto.getTo());
+        qsl.setVia(qslDto.getVia());
         qsl.setDatetimecapture(DateTimeUtil.getDateTime());
         qsl.setSlot(slot);
         qsl.setStatus(status);
