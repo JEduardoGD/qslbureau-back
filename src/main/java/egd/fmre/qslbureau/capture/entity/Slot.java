@@ -37,9 +37,13 @@ public class Slot implements Serializable {
     @Column(name = "SLOTNUMBER")
     private int slotNumber;
 
-    @Column(name = "OPENDATETIME")
-    private Date open;
+    @Column(name = "CREATED_AT")
+    private Date createdAt;
 
-    @Column(name = "CLOSEDATETIME")
-    private Date closed;
+    @Column(name = "CLOSED_AT")
+    private Date closedAt;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="IDSTATUS")
+    private Status status;
 }

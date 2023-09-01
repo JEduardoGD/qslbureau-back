@@ -34,8 +34,11 @@ public class Qsl implements Serializable {
     @JoinColumn(name="IDCAPTURER")
     private Capturer capturer;
     
-    @Column(name = "CALLSIGNTO")
-    private String callsignTo;
+    @Column(name = "TOCALLSIGN")
+    private String to;
+    
+    @Column(name = "VIA")
+    private String via;
     
     @Column(name = "DATETIMECAPTURE")
     private Date datetimecapture;
