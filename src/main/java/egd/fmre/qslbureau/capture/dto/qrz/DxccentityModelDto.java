@@ -12,7 +12,7 @@ import lombok.Data;
 @XmlRootElement(name = "DXCC")
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
 @Data
-public class DxccentityModelDAO implements Serializable {
+public class DxccentityModelDto implements Serializable {
     private static final long serialVersionUID = 504739903644405865L;
     private Integer dxcc;
     private String cc;
@@ -25,5 +25,5 @@ public class DxccentityModelDAO implements Serializable {
     private BigDecimal lat;
     private BigDecimal lon;
     @XmlElement(name = "Session")
-    private QrzSessionDTO session;
+    private QrzSessionDto session;
 }

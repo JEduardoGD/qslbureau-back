@@ -13,17 +13,19 @@ import lombok.Data;
 @XmlRootElement(name = "QRZDatabase")
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
 @Data
-public class QRZDatabaseDAO implements Serializable {
+public class QRZDatabaseDto implements Serializable {
+
+    private static final long serialVersionUID = 4440460204920525292L;
 
     @XmlAttribute
     private BigDecimal version;
 
     @XmlElement(name = "Callsign")
-    private QrzCallsignDAO callsign;
+    private QrzCallsignDto callsign;
 
     @XmlElement(name = "DXCC")
-    private DxccentityModelDAO dxcc;
+    private DxccentityModelDto dxcc;
 
     @XmlElement(name = "Session")
-    private QrzSessionDTO session;
+    private QrzSessionDto session;
 }

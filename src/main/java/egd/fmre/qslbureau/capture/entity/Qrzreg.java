@@ -18,34 +18,37 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "T_QRZSESSION")
+@Table(name = "T_QRZREG")
 @EqualsAndHashCode(of = { "id" })
-public class Qrzsession implements Serializable {
+public class Qrzreg implements Serializable {
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private static final long serialVersionUID = 2463189018733802601L;
+    private static final long serialVersionUID = 5825179921964483323L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDQRZSESSION")
+    @Column(name = "IDQRZREG")
     private Integer id;
 
-    @Column(name = "S_KEY")
-    private String key;
+    @Column(name = "S_CALLSIGN")
+    private String callsign;
 
-    @Column(name = "I_COUNT")
-    private Integer count;
+    @Column(name = "I_DXCC")
+    private Long dxcc;
 
-    @Column(name = "D_SUB_EXP")
-    private Date subExp;
+    @Column(name = "S_STATE")
+    private String state;
 
-    @Column(name = "D_GM_TIME")
-    private Date gmTime;
+    @Column(name = "I_ITU")
+    private Integer itu;
 
-    @Column(name = "S_REMARK")
-    private String remark;
+    @Column(name = "I_CQ")
+    private Integer cq;
 
-    @Column(name = "S_ERROR")
-    private String error;
+    @Column(name = "S_COUNTRY")
+    private String country;
+
+    @Column(name = "D_UPDATED_AT")
+    private Date updatedAt;
 }

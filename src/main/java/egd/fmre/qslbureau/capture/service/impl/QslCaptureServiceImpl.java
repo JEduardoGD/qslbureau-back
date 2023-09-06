@@ -65,12 +65,18 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         
         Capturer capturer = capturerService.findById(qslDto.getIdCapturer());
         Local local = localRepository.findById(qslDto.getLocalId());
+        Boolean qslToRecordFound = null;
+        Boolean qslViaRecordFound = null;
         
         try {
-			Qrzsession qrzsession = qrzService.getSession();
-			Boolean rrr = qrzService.checkCallsignOnQrz(qrzsession, qslDto.getTo());
-		} catch (QrzException e1) {
-		}
+            Qrzsession qrzsession = qrzService.getSession();
+            qslToRecordFound = qrzService.checkCallsignOnQrz(qrzsession, qslDto.getTo());
+            if (qslDto.getVia() != null && !StaticValuesHelper.EMPTY_STRING.equals(qslDto.getVia())) {
+                qslViaRecordFound = qrzService.checkCallsignOnQrz(qrzsession, qslDto.getVia());
+            }
+        } catch (QrzException e) {
+            log.error(e.getMessage());
+        }
         
 
         try {
@@ -85,6 +91,8 @@ public class QslCaptureServiceImpl implements QslCaptureService {
             QslDto qslDtoRet = QsldtoTransformer.map(qsl);
             qslDtoRet.setDateTimeCapture(qsl.getDatetimecapture());
             qslDtoRet.setQslsInSlot(qsls.size());
+            qslDtoRet.setQslToRecordFound(qslToRecordFound);
+            qslDtoRet.setQslViaRecordFound(qslViaRecordFound);
             return qslDtoRet;
         } catch (SlotLogicServiceException e) {
             throw new QslcaptureException(e);

@@ -13,7 +13,7 @@ import lombok.Data;
 @XmlRootElement(name = "Callsign")
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
 @Data
-public class QrzCallsignDAO implements Serializable {
+public class QrzCallsignDto implements Serializable {
 
     private static final long serialVersionUID = 4436853846557275450L;
     private String call;
