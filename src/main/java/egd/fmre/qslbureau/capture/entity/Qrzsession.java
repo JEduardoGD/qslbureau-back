@@ -31,9 +31,21 @@ public class Qrzsession implements Serializable {
     @Column(name = "IDQRZSESSION")
     private Integer id;
 
-    @Column(name = "SESSION")
-    private String session;
+    @Column(name = "S_KEY")
+    private String key;
 
-    @Column(name = "CREATED_AT")
-    private Date createdAt;
+    @Column(name = "N_COUNT")
+    private Integer count;
+
+    @Column(name = "D_SUB_EXP")
+    private Date subExp;
+
+    @Column(name = "D_GM_TIME")
+    private Date gmTime;
+
+    @Column(name = "S_REMARK")
+    private String remark;
+
+    @Column(name = "S_ERROR")
+    private String error;
 }

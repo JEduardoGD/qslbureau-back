@@ -25,5 +25,5 @@ public class DxccentityModelDAO implements Serializable {
     private BigDecimal lat;
     private BigDecimal lon;
     @XmlElement(name = "Session")
-    private QrzSessionDAO session;
+    private QrzSessionDTO session;
 }

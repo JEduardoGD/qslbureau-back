@@ -18,10 +18,12 @@ import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Local;
+import egd.fmre.qslbureau.capture.entity.Qrzsession;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
+import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.exception.SlotLogicServiceException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
@@ -29,6 +31,7 @@ import egd.fmre.qslbureau.capture.repo.LocalRepository;
 import egd.fmre.qslbureau.capture.repo.QslRepository;
 import egd.fmre.qslbureau.capture.service.CallsignRuleService;
 import egd.fmre.qslbureau.capture.service.CapturerService;
+import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
@@ -44,6 +47,7 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     @Autowired QslRepository       qslRepository;
     @Autowired CapturerService     capturerService;
     @Autowired LocalRepository     localRepository;
+    @Autowired QrzService          qrzService;
     
     private Status statusQslVigente;
     private Status statusQslEliminada;
@@ -61,6 +65,13 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         
         Capturer capturer = capturerService.findById(qslDto.getIdCapturer());
         Local local = localRepository.findById(qslDto.getLocalId());
+        
+        try {
+			Qrzsession qrzsession = qrzService.getSession();
+			Boolean rrr = qrzService.checkCallsignOnQrz(qrzsession, qslDto.getTo());
+		} catch (QrzException e1) {
+		}
+        
 
         try {
             String effectiveCallsign = qslDto.getVia() != null

@@ -25,5 +25,5 @@ public class QRZDatabaseDAO implements Serializable {
     private DxccentityModelDAO dxcc;
 
     @XmlElement(name = "Session")
-    private QrzSessionDAO session;
+    private QrzSessionDTO session;
 }

@@ -19,7 +19,7 @@ import lombok.Data;
 @XmlRootElement(name = "Session")
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
 @Data
-public class QrzSessionDAO implements Serializable {
+public class QrzSessionDTO implements Serializable {
 
 
     private static final long serialVersionUID = 6338929926411760720L;

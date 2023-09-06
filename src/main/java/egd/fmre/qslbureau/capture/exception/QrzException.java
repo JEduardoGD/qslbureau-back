@@ -1,10 +1,10 @@
 package egd.fmre.qslbureau.capture.exception;
 
-public class FmreContestException extends Exception {
+public class QrzException extends Exception {
 
     private static final long serialVersionUID = 2726311477222074887L;
 
-    public FmreContestException(String error) {
+    public QrzException(String error) {
         super(error);
     }
 
