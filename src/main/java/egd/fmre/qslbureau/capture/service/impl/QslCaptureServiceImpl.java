@@ -18,10 +18,13 @@ import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Local;
+import egd.fmre.qslbureau.capture.entity.Qrzreg;
+import egd.fmre.qslbureau.capture.entity.Qrzsession;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
+import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.exception.SlotLogicServiceException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
@@ -29,6 +32,7 @@ import egd.fmre.qslbureau.capture.repo.LocalRepository;
 import egd.fmre.qslbureau.capture.repo.QslRepository;
 import egd.fmre.qslbureau.capture.service.CallsignRuleService;
 import egd.fmre.qslbureau.capture.service.CapturerService;
+import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
@@ -44,6 +48,7 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     @Autowired QslRepository       qslRepository;
     @Autowired CapturerService     capturerService;
     @Autowired LocalRepository     localRepository;
+    @Autowired QrzService          qrzService;
     
     private Status statusQslVigente;
     private Status statusQslEliminada;
@@ -61,12 +66,24 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         
         Capturer capturer = capturerService.findById(qslDto.getIdCapturer());
         Local local = localRepository.findById(qslDto.getLocalId());
+        Boolean qslToRecordFound = null;
+        Boolean qslViaRecordFound = null;
+        
+        try {
+            Qrzsession qrzsession = qrzService.getSession();
+            qslToRecordFound = qrzService.checkCallsignOnQrz(qrzsession, qslDto.getTo());
+            if (qslDto.getVia() != null && !StaticValuesHelper.EMPTY_STRING.equals(qslDto.getVia())) {
+                qslViaRecordFound = qrzService.checkCallsignOnQrz(qrzsession, qslDto.getVia());
+            }
+        } catch (QrzException e) {
+            log.error(e.getMessage());
+        }
+        
 
         try {
             String effectiveCallsign = qslDto.getVia() != null
                     && !StaticValuesHelper.EMPTY_STRING.equals(qslDto.getVia()) ? qslDto.getVia() : qslDto.getTo();
             slot = slotLogicService.getSlotForQsl(effectiveCallsign, local);
-            
             slotLogicService.changeSlotstatusToOpen(slot);
             Qsl qsl = QsldtoTransformer.map(qslDto, capturer, slot, statusQslVigente);
             qsl = qslRepository.save(qsl);
@@ -74,6 +91,8 @@ public class QslCaptureServiceImpl implements QslCaptureService {
             QslDto qslDtoRet = QsldtoTransformer.map(qsl);
             qslDtoRet.setDateTimeCapture(qsl.getDatetimecapture());
             qslDtoRet.setQslsInSlot(qsls.size());
+            qslDtoRet.setQslToRecordFound(qslToRecordFound);
+            qslDtoRet.setQslViaRecordFound(qslViaRecordFound);
             return qslDtoRet;
         } catch (SlotLogicServiceException e) {
             throw new QslcaptureException(e);
@@ -107,8 +126,10 @@ public class QslCaptureServiceImpl implements QslCaptureService {
 
         Pageable sortedByPriceDesc = PageRequest.of(0, 20, Sort.by("id").descending());
         List<Qsl> qsls = qslRepository.findByPaggeable(local, sortedByPriceDesc);
+        
+        List<Qrzreg> qrzregs = qrzService.getQrzregOf(qsls);
 
-        List<QslDto> qslsDtoList = QsldtoTransformer.map(qsls).stream().collect(Collectors.toList());
+        List<QslDto> qslsDtoList = QsldtoTransformer.map(qsls, qrzregs).stream().collect(Collectors.toList());
 
         Collections.sort(qslsDtoList, new Comparator<QslDto>() {
             @Override

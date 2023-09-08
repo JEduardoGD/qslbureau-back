@@ -15,4 +15,6 @@ public class QslDto {
     private Date dateTimeCapture;
     private int status;
     private int localId;
+    private Boolean qslToRecordFound;
+    private Boolean qslViaRecordFound;
 }
