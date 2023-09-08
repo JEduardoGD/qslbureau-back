@@ -18,6 +18,7 @@ import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Local;
+import egd.fmre.qslbureau.capture.entity.Qrzreg;
 import egd.fmre.qslbureau.capture.entity.Qrzsession;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
@@ -83,7 +84,6 @@ public class QslCaptureServiceImpl implements QslCaptureService {
             String effectiveCallsign = qslDto.getVia() != null
                     && !StaticValuesHelper.EMPTY_STRING.equals(qslDto.getVia()) ? qslDto.getVia() : qslDto.getTo();
             slot = slotLogicService.getSlotForQsl(effectiveCallsign, local);
-            
             slotLogicService.changeSlotstatusToOpen(slot);
             Qsl qsl = QsldtoTransformer.map(qslDto, capturer, slot, statusQslVigente);
             qsl = qslRepository.save(qsl);
@@ -126,8 +126,10 @@ public class QslCaptureServiceImpl implements QslCaptureService {
 
         Pageable sortedByPriceDesc = PageRequest.of(0, 20, Sort.by("id").descending());
         List<Qsl> qsls = qslRepository.findByPaggeable(local, sortedByPriceDesc);
+        
+        List<Qrzreg> qrzregs = qrzService.getQrzregOf(qsls);
 
-        List<QslDto> qslsDtoList = QsldtoTransformer.map(qsls).stream().collect(Collectors.toList());
+        List<QslDto> qslsDtoList = QsldtoTransformer.map(qsls, qrzregs).stream().collect(Collectors.toList());
 
         Collections.sort(qslsDtoList, new Comparator<QslDto>() {
             @Override

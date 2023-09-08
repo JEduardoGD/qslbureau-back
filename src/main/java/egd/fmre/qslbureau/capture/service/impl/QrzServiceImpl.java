@@ -1,8 +1,9 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,16 +13,15 @@ import egd.fmre.qslbureau.capture.dto.qrz.QRZDatabaseDto;
 import egd.fmre.qslbureau.capture.dto.qrz.QrzSessionDto;
 import egd.fmre.qslbureau.capture.entity.Qrzreg;
 import egd.fmre.qslbureau.capture.entity.Qrzsession;
+import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.repo.QrzregRepository;
 import egd.fmre.qslbureau.capture.repo.QrzsessionRepository;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.QrzUtil;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 public class QrzServiceImpl implements QrzService {
     @Value("${QRZ.SESSIONTTL}")
     private int qrzsessionttlindays;
@@ -57,12 +57,7 @@ public class QrzServiceImpl implements QrzService {
         Qrzreg qrzreg;
 
         Calendar calendar = DateTimeUtil.getNowCalendar();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-        log.info(sdf.format(calendar.getTime()));
-
         calendar.add(Calendar.DATE, -qrzCallsignExp);
-        log.info(sdf.format(calendar.getTime()));
 
         List<Qrzreg> qrzregList = qrzregRepository.findByCallsignInPeriod(callsign, calendar.getTime());
 
@@ -82,5 +77,15 @@ public class QrzServiceImpl implements QrzService {
             return true;
         }
         return false;
+    }
+    
+    @Override
+    public List<Qrzreg> getQrzregOf(List<Qsl> qsls) {
+        Calendar calendar = DateTimeUtil.getNowCalendar();
+        calendar.add(Calendar.DATE, -qrzCallsignExp);
+        List<String> finalList = new ArrayList<>();
+        finalList.addAll(qsls.stream().map(Qsl::getTo).collect(Collectors.toList()));
+        finalList.addAll(qsls.stream().map(Qsl::getVia).collect(Collectors.toList()));
+        return qrzregRepository.findByCallsignsInPeriod(finalList, calendar.getTime());
     }
 }

@@ -13,4 +13,7 @@ public interface QrzregRepository extends JpaRepository<Qrzreg, Integer> {
 
     @Query("SELECT r FROM Qrzreg r WHERE r.callsign = :callsign and :date <= r.updatedAt")
     List<Qrzreg> findByCallsignInPeriod(@Param("callsign") String callsign, @Param("date") Date date);
+
+    @Query("SELECT r FROM Qrzreg r WHERE r.callsign IN :callsigns and :date <= r.updatedAt")
+    List<Qrzreg> findByCallsignsInPeriod(@Param("callsigns") List<String> callsignList, @Param("date") Date date);
 }
