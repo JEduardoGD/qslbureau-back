@@ -15,14 +15,17 @@ public class CorsSecurityConf {
     @Value("${FRONT_NAMESERVER}")
     private String frontNameserver;
     
+    @Value("${QSLBUREAU_PORTAL}")
+    private String qslBureauPortal;
+    
     @Bean
     WebMvcConfigurer corsConfigurer() {
-        log.info("CORS allowed url: {}", frontNameserver);
+        log.info("CORS allowed url: {} and {}", frontNameserver, qslBureauPortal);
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(frontNameserver)
+                        .allowedOrigins(frontNameserver, qslBureauPortal)
                         .allowedMethods("*")
                         .allowedHeaders("*");
             }

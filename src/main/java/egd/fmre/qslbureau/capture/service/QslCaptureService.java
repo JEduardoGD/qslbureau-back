@@ -5,6 +5,7 @@ import java.util.Set;
 
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
+import egd.fmre.qslbureau.capture.dto.SummaryQslDto;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 
 public interface QslCaptureService {
@@ -18,4 +19,6 @@ public interface QslCaptureService {
     StandardResponse deleteById(int qslid) throws QslcaptureException;
 
     QslDto captureQsl(QslDto qslDto) throws QslcaptureException;
+
+    SummaryQslDto getActiveQslsForCallsign(String callsign);
 }
