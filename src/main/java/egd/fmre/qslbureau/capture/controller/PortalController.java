@@ -1,5 +1,7 @@
 package egd.fmre.qslbureau.capture.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,18 +15,21 @@ import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.service.PortalService;
+import egd.fmre.qslbureau.capture.service.QuerylogService;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 
 @RestController
 @RequestMapping("portal")
 public class PortalController {
     
-    @Autowired PortalService portalService;
+    @Autowired PortalService   portalService;
+    @Autowired QuerylogService querylogService;
     
     private int maxCallsignLeght = StaticValuesHelper.TWELVE;
 
     @GetMapping("/qslsfor/{callsign}")
-    public ResponseEntity<StandardResponse> captureQsl(@PathVariable String callsign) {
+    public ResponseEntity<StandardResponse> captureQsl(@PathVariable String callsign, HttpServletRequest request) {
+        querylogService.newRegister(callsign, request.getRemoteAddr());
         StandardResponse standardResponse;
         try {
             callsign = callsign.trim();
