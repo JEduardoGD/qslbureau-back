@@ -5,6 +5,7 @@ import java.util.List;
 import egd.fmre.qslbureau.capture.dto.SlotCountqslDTO;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Slot;
+import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
 
 public interface SlotLogicService {
@@ -20,4 +21,6 @@ public interface SlotLogicService {
     List<Slot> getOpenedOrCreatedSlotsInLocal(Local local);
 
     List<Slot> getOpenedOrCreatedSlotsForCallsignInLocal(String callsign, Local local);
+
+    List<Status> getCreatedAndOpenStatuses();
 }
