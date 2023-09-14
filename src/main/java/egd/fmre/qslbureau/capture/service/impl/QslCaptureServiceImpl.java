@@ -2,6 +2,7 @@ package egd.fmre.qslbureau.capture.service.impl;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
+import egd.fmre.qslbureau.capture.dto.SummaryQslDto;
 import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qrzreg;
@@ -159,4 +161,58 @@ public class QslCaptureServiceImpl implements QslCaptureService {
             return new StandardResponse(JsonParserUtil.parse(qslDtoRet));
         }
     }
+    
+    @Override
+    public SummaryQslDto getActiveQslsForCallsign(String callsign) {
+        Set<Qsl> qslsForCallsign = qslRepository.findQslsInSystem(callsign, callsign, statusQslVigente,
+                slotLogicService.getCreatedAndOpenStatuses());
+        
+        SummaryQslDto summaryQslDto = new SummaryQslDto();
+        summaryQslDto.setCallsign(callsign);
+        
+        if(qslsForCallsign == null || qslsForCallsign.isEmpty()) {
+            summaryQslDto.setCount(StaticValuesHelper.ZERO);
+            return summaryQslDto;
+        }
+        
+        Date oldest = qslsForCallsign.stream().map(Qsl::getDatetimecapture).min(Date::compareTo).get();
+        Date newest = qslsForCallsign.stream().map(Qsl::getDatetimecapture).max(Date::compareTo).get();
+        int count = qslsForCallsign.size();
+        summaryQslDto.setOldest(oldest);
+        summaryQslDto.setNewest(newest);
+        summaryQslDto.setCount(count);
+        
+        return summaryQslDto;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

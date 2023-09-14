@@ -135,5 +135,10 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     public Slot findById(int slotId) {
         return slotRepository.findById(slotId).orElse(null);
     }
+    
+    @Override
+    public List<Status> getCreatedAndOpenStatuses() {
+        return Arrays.asList(slotstatusCreated, slotstatusOpen);
+    }
 }
 
