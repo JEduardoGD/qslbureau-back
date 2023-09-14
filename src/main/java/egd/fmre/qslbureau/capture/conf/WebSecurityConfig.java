@@ -52,6 +52,7 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
         // dont authenticate this particular request
         .authorizeRequests().antMatchers("/authenticate").permitAll()
+        .and().authorizeRequests().antMatchers("/actuator/**").permitAll()
         .and().authorizeRequests().antMatchers("/portal/**").permitAll()
         //.and().authorizeRequests().antMatchers("/actuator/**").permitAll()
         // all other requests need to be authenticated
