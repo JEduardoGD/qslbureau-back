@@ -29,13 +29,13 @@ public class PortalController {
 
     @GetMapping("/qslsfor/{callsign}")
     public ResponseEntity<StandardResponse> captureQsl(@PathVariable String callsign, HttpServletRequest request) {
-        querylogService.newRegister(callsign, request.getRemoteAddr());
         StandardResponse standardResponse;
         try {
             callsign = callsign.trim();
             if (callsign.length() > maxCallsignLeght) {
                 callsign = callsign.substring(StaticValuesHelper.ZERO, maxCallsignLeght);
             }
+            querylogService.newRegister(callsign, request.getRemoteAddr());
             callsign = callsign.toUpperCase();
             standardResponse = new StandardResponse(JsonParserUtil.parse(portalService.getQslInfoForCallsign(callsign)));
         } catch (QslcaptureException e) {
