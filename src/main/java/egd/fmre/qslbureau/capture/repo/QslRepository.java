@@ -26,7 +26,7 @@ public interface QslRepository extends JpaRepository<Qsl, Integer> {
     List<Qsl> findByPaggeable(@Param("local") Local slot, Pageable pageable);
 
     @Query(value = "SELECT q From Qsl q INNER JOIN q.slot s "
-            + "WHERE q.to = :to or q.via = :via and q.status = :qslStatus and s.status IN :slotStatuses")
+            + "WHERE (q.to = :to or q.via = :via) and q.status = :qslStatus and s.status IN :slotStatuses")
     Set<Qsl> findQslsInSystem(@Param("to") String to, @Param("via") String via, @Param("qslStatus") Status qslStatus,
             @Param("slotStatuses") List<Status> slotStatuses);
 
