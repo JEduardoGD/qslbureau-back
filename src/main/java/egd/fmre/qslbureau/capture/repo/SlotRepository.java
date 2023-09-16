@@ -21,5 +21,9 @@ public interface SlotRepository extends JpaRepository<Slot, Integer> {
     List<SlotCountqslDTO> getQslsBySlot(@Param("slotsIds") List<Integer> slotsIds);
     
     @Query("SELECT s FROM Slot s WHERE s.status IN :statuses AND s.local = :local")
-    List<Slot>findByStatusesForLocal(@Param("statuses") List<Status> statuses, @Param("local") Local local);
+	List<Slot> findByStatusesForLocal(@Param("statuses") List<Status> statuses, @Param("local") Local local);
+    
+	@Query("SELECT s FROM Slot s WHERE s.country = :country AND s.status IN :statuses AND s.local = :local")
+	List<Slot> findByLocalAndCountryAndStatuses(@Param("country") String country,
+			@Param("statuses") List<Status> statuses, @Param("local") Local local);
 }
