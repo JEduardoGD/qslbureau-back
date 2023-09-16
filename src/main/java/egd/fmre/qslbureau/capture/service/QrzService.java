@@ -11,8 +11,10 @@ public interface QrzService {
 
 	Qrzsession getSession() throws QrzException;
 
-	Boolean checkCallsignOnQrz(Qrzsession qrzsession, String callsign) throws QrzException;
-
     List<Qrzreg> getQrzregOf(List<Qsl> qsls);
+
+	Boolean checkCallsignOnQrz(String callsign) throws QrzException;
+
+	String getCountryOfCallsign(String callsign);
 
 }

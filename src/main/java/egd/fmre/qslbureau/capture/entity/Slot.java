@@ -37,6 +37,9 @@ public class Slot implements Serializable {
     @Column(name = "SLOTNUMBER")
     private int slotNumber;
 
+    @Column(name = "COUNTRY")
+    private String country;
+
     @Column(name = "CREATED_AT")
     private Date createdAt;
 

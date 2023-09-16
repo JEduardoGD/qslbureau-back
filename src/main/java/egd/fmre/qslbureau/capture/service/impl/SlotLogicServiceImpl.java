@@ -20,9 +20,11 @@ import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
 import egd.fmre.qslbureau.capture.repo.SlotRepository;
 import egd.fmre.qslbureau.capture.service.CallsignRuleService;
+import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.SlotsUtil;
+import egd.fmre.qslbureau.capture.util.TextUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -32,6 +34,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Autowired CallsignRuleService callsignRuleService;
     @Autowired SlotRepository      slotRepository;
     @Autowired LocalRepository     localRepository;
+    @Autowired QrzService          qrzService;
     
     private static String MAX_NUMBER_SLOTS_REACHED = "Se ha alcanzado el número máximo de slots para este local";
     
@@ -76,6 +79,30 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         slot.setStatus(slotstatusOpen);
         slotRepository.save(slot);
     }
+    
+    private int getNextSlotNumber(List<Status> slotStatuses, Local local) {
+        Integer slotNumber = slotRepository.getLastSlotNumberByLocal(slotStatuses, local);
+        if (slotNumber != null) {
+            return slotNumber.intValue() + 1;
+        }
+        return 1;
+    }
+    
+	@Override
+	public Slot getSlotByCountry(String callsign, Local local) throws MaximumSlotNumberReachedException {
+		String country = qrzService.getCountryOfCallsign(callsign);
+		country= TextUtil.sanitize(country);
+		List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
+		List<Slot> slots = slotRepository.findByLocalAndCountryAndStatuses(country, slotStatuses, local);
+
+		if (slots != null && !slots.isEmpty()) {
+			return slots.stream().sorted(Comparator.comparingInt(Slot::getId).reversed()).findFirst().get();
+		}
+
+		int slotNumber = this.getNextSlotNumber(slotStatuses, local);
+		Slot newSlot = generateSlotCountry(country, DateTimeUtil.getDateTime(), local, slotNumber);
+		return slotRepository.save(newSlot);
+	}
     
     @Override
     public Slot getSlotForQsl(String callsignTo, Local local) throws MaximumSlotNumberReachedException {
