@@ -17,4 +17,14 @@ public class SlotsUtil {
         newSlot.setStatus(new Status(SlotstatusEnum.SLOT_CREATED.getIdstatus()));
         return newSlot;
     }
+    
+    protected Slot generateSlotCountry(String country, Date createdAt, Local local, int slotNumber) {
+        Slot newSlot = new Slot();
+        newSlot.setLocal(local);
+        newSlot.setCountry(country);
+        newSlot.setSlotNumber(slotNumber);
+        newSlot.setCreatedAt(createdAt);
+        newSlot.setStatus(new Status(SlotstatusEnum.SLOT_CREATED.getIdstatus()));
+        return newSlot;
+    }
 }

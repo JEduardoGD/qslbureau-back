@@ -2,6 +2,7 @@ package egd.fmre.qslbureau.capture.service.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,8 +21,10 @@ import egd.fmre.qslbureau.capture.repo.QrzsessionRepository;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.QrzUtil;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class QrzServiceImpl implements QrzService {
     @Value("${QRZ.SESSIONTTL}")
     private int qrzsessionttlindays;
@@ -51,29 +54,64 @@ public class QrzServiceImpl implements QrzService {
         }
         return qrzsession;
     }
-
-    @Override
-    public Boolean checkCallsignOnQrz(Qrzsession qrzsession, String callsign) throws QrzException {
-        Qrzreg qrzreg;
-
+    
+    private List<Qrzreg> getActiveQrzregList(String callsign) {
         Calendar calendar = DateTimeUtil.getNowCalendar();
         calendar.add(Calendar.DATE, -qrzCallsignExp);
+    	return qrzregRepository.findByCallsignInPeriod(callsign, calendar.getTime());
+    }
+    
+    private boolean aksQrzAndRegister(Qrzsession qrzsession, String callsign) throws QrzException {
+        Qrzreg qrzreg;
+        QRZDatabaseDto qrzDtabaseDto = QrzUtil
+                .callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzsession.getKey(), callsign));
+        if (qrzDtabaseDto != null && qrzDtabaseDto.getCallsign() != null) {
+            qrzreg = QrzUtil.parse(qrzDtabaseDto.getCallsign());
+            qrzreg.setUpdatedAt(DateTimeUtil.getDateTime());
+            qrzregRepository.save(qrzreg);
+            return true;
+        }
+        return false;
+    }
 
-        List<Qrzreg> qrzregList = qrzregRepository.findByCallsignInPeriod(callsign, calendar.getTime());
+	@Override
+	public String getCountryOfCallsign(String callsign) {
+    	Qrzsession qrzsession;
+		try {
+			qrzsession = getSession();
+		} catch (QrzException e) {
+			log.error(e.getMessage());
+			return null;
+		}
+		List<Qrzreg> qrzregList = this.getActiveQrzregList(callsign);
+
+		try {
+			if (qrzregList == null || qrzregList.isEmpty()) {
+				aksQrzAndRegister(qrzsession, callsign);
+				qrzregList = this.getActiveQrzregList(callsign);
+			}
+		} catch (QrzException e) {
+			log.error(e.getMessage());
+		}
+
+		if (qrzregList != null && !qrzregList.isEmpty()) {
+			Qrzreg res = qrzregList.stream().sorted(Comparator.comparingInt(Qrzreg::getId).reversed())
+					.findFirst().get();
+			return res.getCountry();
+		}
+		return null;
+	}
+
+    @Override
+    public Boolean checkCallsignOnQrz(String callsign) throws QrzException {
+    	Qrzsession qrzsession = getSession();
+        List<Qrzreg> qrzregList = this.getActiveQrzregList(callsign);
 
         if (qrzregList == null || qrzregList.isEmpty()) {
-            QRZDatabaseDto qrzDtabaseDto = QrzUtil
-                    .callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzsession.getKey(), callsign));
-            if (qrzDtabaseDto != null && qrzDtabaseDto.getCallsign() != null) {
-                qrzreg = QrzUtil.parse(qrzDtabaseDto.getCallsign());
-                qrzreg.setUpdatedAt(DateTimeUtil.getDateTime());
-                qrzregRepository.save(qrzreg);
-                return true;
-            }
+        	return aksQrzAndRegister(qrzsession, callsign);
         }
 
         if (qrzregList != null && !qrzregList.isEmpty()) {
-            qrzreg = qrzregList.get(qrzregList.size() - 1);
             return true;
         }
         return false;
