@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,7 +22,6 @@ import egd.fmre.qslbureau.capture.dto.SummaryQslDto;
 import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qrzreg;
-import egd.fmre.qslbureau.capture.entity.Qrzsession;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
@@ -37,6 +37,7 @@ import egd.fmre.qslbureau.capture.service.CapturerService;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.util.CompareNacionalityUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,9 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     @Autowired CapturerService     capturerService;
     @Autowired LocalRepository     localRepository;
     @Autowired QrzService          qrzService;
+    
+    @Value("${MX_PREFIXES}")
+    private String mxPrefixes;
     
     private Status statusQslVigente;
     private Status statusQslEliminada;
@@ -72,10 +76,9 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         Boolean qslViaRecordFound = null;
         
         try {
-            Qrzsession qrzsession = qrzService.getSession();
-            qslToRecordFound = qrzService.checkCallsignOnQrz(qrzsession, qslDto.getTo());
+            qslToRecordFound = qrzService.checkCallsignOnQrz(qslDto.getTo());
             if (qslDto.getVia() != null && !StaticValuesHelper.EMPTY_STRING.equals(qslDto.getVia())) {
-                qslViaRecordFound = qrzService.checkCallsignOnQrz(qrzsession, qslDto.getVia());
+                qslViaRecordFound = qrzService.checkCallsignOnQrz(qslDto.getVia());
             }
         } catch (QrzException e) {
             log.error(e.getMessage());
@@ -85,7 +88,21 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         try {
             String effectiveCallsign = qslDto.getVia() != null
                     && !StaticValuesHelper.EMPTY_STRING.equals(qslDto.getVia()) ? qslDto.getVia() : qslDto.getTo();
-            slot = slotLogicService.getSlotForQsl(effectiveCallsign, local);
+                    
+            boolean isMexican = CompareNacionalityUtil.isMexican(effectiveCallsign, mxPrefixes);
+
+			try {
+				if (isMexican) {
+					slot = slotLogicService.getSlotForQsl(effectiveCallsign, local);
+				} else {
+					slot = slotLogicService.getSlotByCountry(effectiveCallsign, local);
+				}
+			} catch (QrzException e) {
+				log.error(e.getMessage());
+				return null;
+			}
+            
+            
             slotLogicService.changeSlotstatusToOpen(slot);
             Qsl qsl = QsldtoTransformer.map(qslDto, capturer, slot, statusQslVigente);
             qsl = qslRepository.save(qsl);
