@@ -29,4 +29,6 @@ public interface SlotRepository extends JpaRepository<Slot, Integer> {
 	
 	@Query("SELECT max(s.slotNumber) FROM Slot s WHERE s.status IN :statuses AND s.local = :local")
 	Integer getLastSlotNumberByLocal(@Param("statuses") List<Status> statuses, @Param("local") Local local);
+	
+	List<Slot> findByLocal(Local local);
 }
