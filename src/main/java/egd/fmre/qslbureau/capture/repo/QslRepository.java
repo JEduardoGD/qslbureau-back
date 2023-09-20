@@ -20,14 +20,11 @@ public interface QslRepository extends JpaRepository<Qsl, Integer> {
     Set<Qsl> findBySlot(Slot slot);
 
     @Query(value = "SELECT Q From Qsl Q INNER JOIN Q.slot s INNER JOIN s.local l WHERE l = :local")
-    Set<Qsl> findByLocal(@Param("local") Local slot);
-
-    @Query(value = "SELECT Q From Qsl Q INNER JOIN Q.slot s INNER JOIN s.local l WHERE l = :local")
     List<Qsl> findByPaggeable(@Param("local") Local slot, Pageable pageable);
 
     @Query(value = "SELECT q From Qsl q INNER JOIN q.slot s "
             + "WHERE (q.to = :to or q.via = :via) and q.status = :qslStatus and s.status IN :slotStatuses")
     Set<Qsl> findQslsInSystem(@Param("to") String to, @Param("via") String via, @Param("qslStatus") Status qslStatus,
             @Param("slotStatuses") List<Status> slotStatuses);
-
+    
 }
