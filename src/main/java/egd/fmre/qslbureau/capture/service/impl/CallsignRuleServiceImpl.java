@@ -87,7 +87,7 @@ public class CallsignRuleServiceImpl implements CallsignRuleService {
     }
     
     @Override
-    public List<QslSlotTraslade> aplyRules(List<QslCallsignRule> aplicableRulesForLocal) {
+    public List<QslSlotTraslade> aplyRules(List<QslCallsignRule> aplicableRulesForLocal, boolean isSimulated) {
         List<QslSlotTraslade> trasladosList = new ArrayList<>();
         for (QslCallsignRule aplicableRule : aplicableRulesForLocal) {
             String callsignRedirect = aplicableRule.getCallsignRule().getCallsignRedirect();
@@ -112,15 +112,18 @@ public class CallsignRuleServiceImpl implements CallsignRuleService {
                 continue;
             }
             if (newSlot.getSlotNumber() == oldSlot.getSlotNumber()) {
-                log.warn("newSlot and newSlot are same");
+                log.warn("newSlot and oldSlot are same");
                 continue;
             }
-            qsl.setSlot(newSlot);
-            qsl = qslService.save(qsl);
-            qslSlotTraslade.setNewSlot(qsl.getSlot());
+            if(!isSimulated) {
+                qsl.setSlot(newSlot);
+                qsl = qslService.save(qsl);
+                qslSlotTraslade.setNewSlot(qsl.getSlot());
+                slotLogicService.runCloseCloseableLocals(local);
+            } else {
+                qslSlotTraslade.setNewSlot(newSlot);
+            }
             trasladosList.add(qslSlotTraslade);
-
-            slotLogicService.runCloseCloseableLocals(local);
 
         }
         return trasladosList;

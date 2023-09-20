@@ -38,21 +38,21 @@ public class RulesController {
 
 
     @GetMapping("/{localid}")
-    public List<QslCallsignRule> getApplicableRules(@PathVariable int localid) throws QslcaptureException {
-        List<Status> slotStatus = slotLogicService.getCreatedAndOpenStatuses();
-        Local local = localService.getById(localid);
-        List<Slot> allSlots = slotLogicService.getSlotsOfLocal(local);
-        return callsignRuleService.getApplicableRules(slotStatus, allSlots);
+    public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable int localid) throws QslcaptureException {
+        return this.applyRules(localid, true);
     }
-
 
     @GetMapping("/applyforlocal/{localid}")
     public ResponseEntity<StandardResponse> applyForLocal(@PathVariable int localid) throws QslcaptureException {
+        return this.applyRules(localid, false);
+    }
+    
+    private ResponseEntity<StandardResponse> applyRules(int localid, boolean isSimulated) {
         List<Status> slotStatus = slotLogicService.getCreatedAndOpenStatuses();
         Local local = localService.getById(localid);
         List<Slot> allSlots = slotLogicService.getSlotsOfLocal(local);
         List<QslCallsignRule> aplicableRulesForLocal = callsignRuleService.getApplicableRules(slotStatus, allSlots);
-        List<QslSlotTraslade> qslSlotTrasladeList = callsignRuleService.aplyRules(aplicableRulesForLocal);
+        List<QslSlotTraslade> qslSlotTrasladeList = callsignRuleService.aplyRules(aplicableRulesForLocal, isSimulated);
         
         List<CallsignRuleDto> callsignRuleDtoList = qslSlotTrasladeList.stream().map(q -> {
             QslDto qslDto = QsldtoTransformer.map(q.getQsl());

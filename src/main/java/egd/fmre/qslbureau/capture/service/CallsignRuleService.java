@@ -13,5 +13,5 @@ public interface CallsignRuleService {
 
     List<QslCallsignRule> getApplicableRules(List<Status> createdAndOpenSlotStatuses, List<Slot> allSlots);
 
-    List<QslSlotTraslade> aplyRules(List<QslCallsignRule> aplicableRulesForLocal);
+    List<QslSlotTraslade> aplyRules(List<QslCallsignRule> aplicableRulesForLocal, boolean isSimulated);
 }
