@@ -1,5 +1,6 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,10 @@ public class LocalServiceImpl implements LocalService {
         Set<CapturerLocal> capturerLocals = capturerLocalService.findCapturerLocalActiveByCapturer(capturer);
 
         return localRepository.findByCapturerLocalsIn(capturerLocals);
+    }
+    
+    @Override
+    public List<Local> getActiveLocals() {
+        return localRepository.findAll();
     }
 }
