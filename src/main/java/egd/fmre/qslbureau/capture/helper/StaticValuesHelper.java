@@ -6,4 +6,6 @@ public abstract class StaticValuesHelper {
     
     public static final int ZERO   =  0;
     public static final int TWELVE = 12;
+    
+    public static final String QRZ_ERROR_INVALID_SESSION_KEY = "Invalid session key";
 }
