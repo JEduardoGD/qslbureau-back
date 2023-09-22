@@ -26,4 +26,6 @@ public interface SlotLogicService {
     List<Status> getCreatedAndOpenStatuses();
 
 	Slot getSlotByCountry(String callsignTo, Local local) throws MaximumSlotNumberReachedException, QrzException;
+
+    List<Slot> getOpenedOrCreatedSlots();
 }
