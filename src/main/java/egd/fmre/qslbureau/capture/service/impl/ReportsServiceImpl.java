@@ -45,6 +45,8 @@ public class ReportsServiceImpl implements ReportsService {
 		}
 		return list;
 	}
+	
+	
 
 	private void processCallsign(List<QslsReport> list, QslsReportKey key, Date dateTimeCapture) {
 		QslsReport qslsReport;

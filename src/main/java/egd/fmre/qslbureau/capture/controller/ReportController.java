@@ -22,5 +22,6 @@ public class ReportController {
 	public void distinctCallsigns() {
 		@SuppressWarnings("unused")
 		List<QslsReport> map = reportsService.gettingCallsignsMap();
+		
 	}
 }
