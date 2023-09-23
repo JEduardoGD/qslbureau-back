@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -26,10 +28,13 @@ import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.QslsReport;
 import egd.fmre.qslbureau.capture.dto.QslsReportKey;
 import egd.fmre.qslbureau.capture.entity.Slot;
+import egd.fmre.qslbureau.capture.entity.Status;
+import egd.fmre.qslbureau.capture.entity.Zonerule;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.ReportsService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.service.ZoneruleService;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -40,6 +45,15 @@ public class ReportsServiceImpl implements ReportsService {
 	private SlotLogicService slotLogicService;
 	@Autowired
 	private QslCaptureService qslCaptureService;
+	@Autowired
+	private ZoneruleService zoneruleService;
+	
+	private Status statusQslVigente;
+	
+	@PostConstruct
+	private void init() {
+		statusQslVigente = qslCaptureService.getStatusQslVigente();
+	}
 
 
 	@Override
@@ -48,9 +62,15 @@ public class ReportsServiceImpl implements ReportsService {
 		List<QslsReport> list = new ArrayList<>();
 		for (Slot slot : openedOrCreatedSlots) {
 			try {
-				Set<QslDto> qsls = qslCaptureService.qslsBySlot(slot.getId());
+				List<QslDto> qsls = qslCaptureService.qslsBySlot(slot.getId()).stream()
+						.filter(q -> q.getStatus() == statusQslVigente.getId().intValue())
+						.collect(Collectors.toList());
 				for (QslDto qsl : qsls) {
-					processCallsign(list, new QslsReportKey(qsl.getTo(), qsl.getVia()), qsl.getDateTimeCapture());
+					String efectiveCallsign = qsl.getVia() != null ? qsl.getVia() : qsl.getTo();
+					Zonerule zonerule = zoneruleService.findActiveByCallsign(efectiveCallsign);
+					if (zonerule == null) {
+						processCallsign(list, new QslsReportKey(qsl.getTo(), qsl.getVia()), qsl.getDateTimeCapture());
+					}
 				}
 			} catch (QslcaptureException e) {
 				log.error(e.getMessage());
