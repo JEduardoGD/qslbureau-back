@@ -67,8 +67,8 @@ public class QrzServiceImpl implements QrzService {
         QRZDatabaseDto qrzDtabaseDto = QrzUtil
                 .callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzsession.getKey(), callsign));
         String error = qrzDtabaseDto.getSession().getError();
-        if (error != null && !StaticValuesHelper.EMPTY_STRING.equals(error)) {
-            log.warn("Getting new session, the original session has error: {}", error);
+        if (error != null && !StaticValuesHelper.QRZ_ERROR_INVALID_SESSION_KEY.equals(error)) {
+            log.warn(StaticValuesHelper.QRZ_NEW_SESSION_MESSAGE, error);
             qrzsession.setError(error);
             qrzsessionRepository.save(qrzsession);
             qrzsession = this.getSession();

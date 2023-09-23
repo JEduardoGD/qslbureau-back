@@ -213,7 +213,14 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     public List<Status> getCreatedAndOpenStatuses() {
         return Arrays.asList(slotstatusCreated, slotstatusOpen);
     }
-
+  
+	@Override
+	public List<Slot> getOpenedOrCreatedSlots() {
+        List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
+        return slotRepository.findByStatusesForLocal(slotStatuses);
+	}
+  
+  
     @Override
     public List<Slot> getSlotsOfLocal(Local local) {
         return slotRepository.findByLocal(local);

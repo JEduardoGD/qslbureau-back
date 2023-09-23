@@ -65,6 +65,11 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         statusQslEliminada = new Status(QslstatusEnum.QSL_ELIMINADA.getIdstatus());
     }
     
+    @Override
+    public Status getStatusQslVigente() {
+    	return this.statusQslVigente;
+    }
+    
     
     @Override
     public QslDto captureQsl(QslDto qslDto) throws QslcaptureException {

@@ -8,4 +8,5 @@ public abstract class StaticValuesHelper {
     public static final int TWELVE = 12;
     
     public static final String QRZ_ERROR_INVALID_SESSION_KEY = "Invalid session key";
+    public static final String QRZ_NEW_SESSION_MESSAGE= "Getting new session, the original session has error: {}";
 }
