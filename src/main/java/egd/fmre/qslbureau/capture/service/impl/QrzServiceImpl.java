@@ -16,6 +16,7 @@ import egd.fmre.qslbureau.capture.entity.Qrzreg;
 import egd.fmre.qslbureau.capture.entity.Qrzsession;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.exception.QrzException;
+import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.repo.QrzregRepository;
 import egd.fmre.qslbureau.capture.repo.QrzsessionRepository;
 import egd.fmre.qslbureau.capture.service.QrzService;
@@ -65,6 +66,15 @@ public class QrzServiceImpl implements QrzService {
         Qrzreg qrzreg;
         QRZDatabaseDto qrzDtabaseDto = QrzUtil
                 .callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzsession.getKey(), callsign));
+        String error = qrzDtabaseDto.getSession().getError();
+        if (error != null && !StaticValuesHelper.QRZ_ERROR_INVALID_SESSION_KEY.equals(error)) {
+            log.warn(StaticValuesHelper.QRZ_NEW_SESSION_MESSAGE, error);
+            qrzsession.setError(error);
+            qrzsessionRepository.save(qrzsession);
+            qrzsession = this.getSession();
+            qrzDtabaseDto = QrzUtil.callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzsession.getKey(), callsign));
+        }
+
         if (qrzDtabaseDto != null && qrzDtabaseDto.getCallsign() != null) {
             qrzreg = QrzUtil.parse(qrzDtabaseDto.getCallsign());
             qrzreg.setUpdatedAt(DateTimeUtil.getDateTime());

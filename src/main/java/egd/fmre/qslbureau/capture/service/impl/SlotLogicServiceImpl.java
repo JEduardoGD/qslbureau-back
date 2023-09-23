@@ -3,7 +3,9 @@ package egd.fmre.qslbureau.capture.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -12,14 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.SlotCountqslDTO;
+import egd.fmre.qslbureau.capture.entity.CallsignRule;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.SlotstatusEnum;
 import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
+import egd.fmre.qslbureau.capture.repo.CallsignruleRepository;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
 import egd.fmre.qslbureau.capture.repo.SlotRepository;
-import egd.fmre.qslbureau.capture.service.CallsignRuleService;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
@@ -31,7 +34,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService {
     
-    @Autowired CallsignRuleService callsignRuleService;
+    //@Autowired CallsignRuleService callsignRuleService;
+    @Autowired CallsignruleRepository callsignruleRepository;
     @Autowired SlotRepository      slotRepository;
     @Autowired LocalRepository     localRepository;
     @Autowired QrzService          qrzService;
@@ -80,6 +84,20 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         slotRepository.save(slot);
     }
     
+    @Override
+    public void changeSlotstatusToClosed(Slot slot) {
+        Status slotStatus = slot.getStatus();
+        if(!slotStatus.getId().equals(slotstatusOpen.getId())) {
+            log.warn("The status on slot id {} is not open", slot.getId());
+        }
+        if(slotStatus.getId().equals(slotstatusClosed.getId())) {
+            log.warn("The status on slot id {} already is closed", slot.getId());
+            return;
+        }
+        slot.setStatus(slotstatusClosed);
+        slotRepository.save(slot);
+    }
+    
     private int getNextSlotNumber(List<Status> slotStatuses, Local local) {
         Integer slotNumber = slotRepository.getLastSlotNumberByLocal(slotStatuses, local);
         if (slotNumber != null) {
@@ -103,11 +121,51 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 		Slot newSlot = generateSlotCountry(country, DateTimeUtil.getDateTime(), local, slotNumber);
 		return slotRepository.save(newSlot);
 	}
+	
+	@Override
+	public void runCloseCloseableLocals(Local local) {
+        //checking if some slot could be closed
+	    List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
+        List<Slot> closeableList = new ArrayList<>();
+        closeableList.addAll(openedOrCreatedSlotsInLocal);
+        List<Integer> openedOrCreatedSlotsInLocalIdsInLocal = openedOrCreatedSlotsInLocal.stream().map(Slot::getId).collect(Collectors.toList());
+        List<SlotCountqslDTO> slotCountList = getQslsBySlot(openedOrCreatedSlotsInLocalIdsInLocal);
+        List<Slot> slotsInUse = slotCountList.stream().map(SlotCountqslDTO::getSlot).collect(Collectors.toList());
+        closeableList.removeAll(slotsInUse);
+        closeableList.forEach(slot -> this.changeSlotstatusToClosed(slot));
+	}
+    
+    //filter that happends in time
+    public static BiPredicate<CallsignRule, Date> isOntime = (c, d) -> {
+        if (c.getEnd() == null) {
+            return c.getStart().before(d);
+        }
+        return c.getStart().before(d) && c.getEnd().after(d);
+    };
+	
+    private String applyCallsignRule(String callsignTo) {
+        // get applicable rules for callsignTo
+        List<CallsignRule> callsignRules = callsignruleRepository.getActiveRulesForCallsign(DateTimeUtil.getDateTime(),
+                callsignTo);
+        
+        if(callsignRules.size() <= 0) {
+            return callsignTo;
+        }
+        
+        //filter an apply only last rule
+        CallsignRule aplicableRule = callsignRules.stream()
+                .filter(c -> isOntime.test(c, DateTimeUtil.getDateTime()))
+                .sorted(Comparator.comparingInt(CallsignRule::getId))
+                .reduce((f, s) -> s)
+                .orElse(null);
+        
+        return aplicableRule == null ? callsignTo : aplicableRule.getCallsignRedirect();
+    }
     
     @Override
     public Slot getSlotForQsl(String callsignTo, Local local) throws MaximumSlotNumberReachedException {
         //apply rules of redirect
-        String newCallsignTo = callsignRuleService.applyCallsignRule(callsignTo);
+        String newCallsignTo = this.applyCallsignRule(callsignTo);
         
         // find some slot open or created that is used by newCallsignTo
         List<Slot> openedOrCreatedSlotsForCallsignInLocal =
@@ -115,23 +173,11 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         if (openedOrCreatedSlotsForCallsignInLocal != null && !openedOrCreatedSlotsForCallsignInLocal.isEmpty()) {
             return openedOrCreatedSlotsForCallsignInLocal.get(0);
         }
-
+        
+        this.runCloseCloseableLocals(local);
         
         List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
-        List<Slot> closeableList = new ArrayList<>();
-        closeableList.addAll(openedOrCreatedSlotsInLocal);
-
         
-        //checking if some slot could be closed
-        List<Integer> openedOrCreatedSlotsInLocalIdsInLocal = openedOrCreatedSlotsInLocal.stream().map(Slot::getId).collect(Collectors.toList());
-        List<SlotCountqslDTO> slotCountList = getQslsBySlot(openedOrCreatedSlotsInLocalIdsInLocal);
-        List<Slot> slotsInUse = slotCountList.stream().map(SlotCountqslDTO::getSlot).collect(Collectors.toList());
-        closeableList.removeAll(slotsInUse);
-        closeableList.forEach(s->{
-            s.setClosedAt(DateTimeUtil.getDateTime());
-            s.setStatus(slotstatusClosed);
-            slotRepository.save(s);
-        });
         openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
         
         if (openedOrCreatedSlotsInLocal.size() <= 0 && local.getMaxSlots() > 0) {
@@ -167,11 +213,17 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     public List<Status> getCreatedAndOpenStatuses() {
         return Arrays.asList(slotstatusCreated, slotstatusOpen);
     }
-
+  
 	@Override
 	public List<Slot> getOpenedOrCreatedSlots() {
         List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
         return slotRepository.findByStatusesForLocal(slotStatuses);
 	}
+  
+  
+    @Override
+    public List<Slot> getSlotsOfLocal(Local local) {
+        return slotRepository.findByLocal(local);
+    }
 }
 
