@@ -9,9 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import egd.fmre.qslbureau.capture.dto.CallsignRuleDto;
 import egd.fmre.qslbureau.capture.dto.QslDto;
+import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.SummaryQslDto;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.exception.JsonParserException;
+import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -54,5 +56,27 @@ public abstract class JsonParserUtil {
         } catch (JsonProcessingException e) {
             throw new JsonParserException(e);
         }
+    }
+
+    public static String parse(SlotDto slotDto) throws JsonParserException {
+        try {
+            return objectMapper.writeValueAsString(slotDto);
+        } catch (JsonProcessingException e) {
+            throw new JsonParserException(e);
+        }
+    }
+
+    public static String parseSlotList(List<SlotDto> slotDtoList) throws JsonParserException {
+        if (slotDtoList == null) {
+            return null;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(StaticValuesHelper.JSON_ARRAY_OPEN);
+        for (SlotDto slotDto : slotDtoList) {
+            stringBuilder.append(JsonParserUtil.parse(slotDto));
+            stringBuilder.append(StaticValuesHelper.COMMA);
+        }
+        stringBuilder.append(StaticValuesHelper.JSON_ARRAY_CLOSE);
+        return stringBuilder.toString().replaceAll("\\,\\]$", "]");
     }
 }

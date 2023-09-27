@@ -71,6 +71,20 @@ public abstract class QsldtoTransformer {
         s.setStatusId(slot.getStatus().getId());
         return s;
     }
+    
+    public static SlotDto map(Slot slot, int qslsInSlot) {
+        SlotDto s = new SlotDto();
+        s.setId(slot.getId());
+        s.setLocalId(slot.getLocal().getId());
+        s.setCallsignto(slot.getCallsignto());
+        s.setSlotNumber(slot.getSlotNumber());
+        s.setCountry(slot.getCountry());
+        s.setCreatedAt(slot.getCreatedAt());
+        s.setClosedAt(slot.getCreatedAt());
+        s.setStatusId(slot.getStatus().getId());
+        s.setQslsInSlot(qslsInSlot);
+        return s;
+    }
 }
 
 

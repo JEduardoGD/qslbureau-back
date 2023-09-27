@@ -66,8 +66,8 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     }
     
     @Override
-    public List<SlotCountqslDTO> getQslsBySlot(List<Integer> SlotsInLocalIds) {
-        return slotRepository.getQslsBySlot(SlotsInLocalIds);
+    public List<SlotCountqslDTO> getQslsBySlotIdList(List<Integer> slotIdList) {
+        return slotRepository.getQslsBySlotIdList(slotIdList);
     }
     
     @Override
@@ -129,7 +129,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         List<Slot> closeableList = new ArrayList<>();
         closeableList.addAll(openedOrCreatedSlotsInLocal);
         List<Integer> openedOrCreatedSlotsInLocalIdsInLocal = openedOrCreatedSlotsInLocal.stream().map(Slot::getId).collect(Collectors.toList());
-        List<SlotCountqslDTO> slotCountList = getQslsBySlot(openedOrCreatedSlotsInLocalIdsInLocal);
+        List<SlotCountqslDTO> slotCountList = getQslsBySlotIdList(openedOrCreatedSlotsInLocalIdsInLocal);
         List<Slot> slotsInUse = slotCountList.stream().map(SlotCountqslDTO::getSlot).collect(Collectors.toList());
         closeableList.removeAll(slotsInUse);
         closeableList.forEach(slot -> this.changeSlotstatusToClosed(slot));

@@ -15,8 +15,6 @@ public interface SlotLogicService {
     
     public Slot findById(int slotId);
 
-    List<SlotCountqslDTO> getQslsBySlot(List<Integer> SlotsInLocalIds);
-
     void changeSlotstatusToOpen(Slot slot);
 
     List<Slot> getOpenedOrCreatedSlotsInLocal(Local local);
@@ -34,4 +32,6 @@ public interface SlotLogicService {
   void changeSlotstatusToClosed(Slot slot);
   
   void runCloseCloseableLocals(Local local);
+
+List<SlotCountqslDTO> getQslsBySlotIdList(List<Integer> slotIds);
 }

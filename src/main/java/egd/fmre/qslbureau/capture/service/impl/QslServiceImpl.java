@@ -39,4 +39,11 @@ public class QslServiceImpl implements QslService {
     public Qsl save(Qsl qsl) {
         return qslRepository.save(qsl);
     }
+
+    @Override
+    public List<Qsl> getBySlotAndStatus(Slot slot, QslstatusEnum qslstatusEnum) {
+        Status status = new Status();
+        status.setId(qslstatusEnum.getIdstatus());
+        return qslRepository.findBySlotAndStatus(slot, status);
+    }
 }

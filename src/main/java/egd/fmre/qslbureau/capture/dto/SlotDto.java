@@ -16,4 +16,5 @@ public class SlotDto implements Serializable {
     private Date createdAt;
     private Date closedAt;
     private int statusId;
+    private int qslsInSlot;
 }
