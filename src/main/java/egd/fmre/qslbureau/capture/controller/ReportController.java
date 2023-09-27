@@ -19,17 +19,10 @@ public class ReportController {
 	@Autowired
 	ReportsService reportsService;
 
-	@GetMapping
-	public void distinctCallsigns() {
-		@SuppressWarnings("unused")
-		List<QslsReport> map = reportsService.gettingCallsignsMap();
-
-	}
-
-	@GetMapping(value = "/get-image-with-media-type", produces = "application/vnd.ms-excel")
+	@GetMapping(value = "/byregion", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 	public @ResponseBody byte[] getImageWithMediaType() throws IOException {
-		List<QslsReport> map = reportsService.gettingCallsignsMap();
-		return reportsService.writeReport(map);
+		List<QslsReport> qslreportByRegion = reportsService.gettingCallsignsMap();
+		return reportsService.writeReport(qslreportByRegion);
 		
 	}
 
