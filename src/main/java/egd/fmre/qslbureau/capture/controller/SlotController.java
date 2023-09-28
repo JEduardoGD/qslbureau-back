@@ -3,6 +3,8 @@ package egd.fmre.qslbureau.capture.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
+import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.LocalService;
@@ -31,12 +34,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SlotController {
 
-    @Autowired
-    SlotLogicService slotLogicService;
-    @Autowired
-    LocalService localService;
-    @Autowired
-    QslService qslService;
+    @Autowired SlotLogicService slotLogicService;
+    @Autowired LocalService     localService;
+    @Autowired QslService       qslService;
+    
+    private List<Status> createdAndOpenStatuses;
+    
+    @PostConstruct
+    private void init() {
+        createdAndOpenStatuses = slotLogicService.getCreatedAndOpenStatuses();
+    }
 
     @GetMapping("/list/bylocalid/{localid}")
     public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable int localid) {
@@ -47,15 +54,15 @@ public class SlotController {
             slots = slotLogicService.getOpenedOrCreatedSlotsInLocal(local);
         } else {
             return new ResponseEntity<StandardResponse>(
-                    new StandardResponse(true, String.format("cant found local with id: %s}", localid)),
+                    new StandardResponse(true, String.format("cant found local with id: %s", localid)),
                     new HttpHeaders(), HttpStatus.CREATED);
         }
-        
-        List<SlotDto> slotDtoList =  slots.stream().map(s -> {
+
+        List<SlotDto> slotDtoList = slots.stream().map(s -> {
             List<Qsl> qsls = qslService.getBySlotAndStatus(s, QslstatusEnum.QSL_VIGENTE);
             return QsldtoTransformer.map(s, qsls.size());
         }).collect(Collectors.toList());
-        
+
         StandardResponse standardResponse;
         try {
             standardResponse = new StandardResponse(JsonParserUtil.parseSlotList(slotDtoList));
@@ -66,9 +73,16 @@ public class SlotController {
         return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
     }
 
-    /*
-     * @GetMapping("/close/byid/{slotid}") public ResponseEntity<StandardResponse>
-     * getApplicableRules(@PathVariable int slotid) { return null; }
-     */
+    @GetMapping("/close/byid/{slotid}")
+    public ResponseEntity<StandardResponse> closeSlot(@PathVariable int slotid) {
+        Slot slot = slotLogicService.findById(slotid);
+        if (slot == null) {
+            return new ResponseEntity<StandardResponse>(
+                    new StandardResponse(true, String.format("El slot con id %s no se encuentra", slotid)),
+                    new HttpHeaders(), HttpStatus.CREATED);
+        }
+
+        return null;
+    }
 
 }
