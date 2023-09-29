@@ -81,6 +81,8 @@ public class SlotController {
                     new StandardResponse(true, String.format("El slot con id %s no se encuentra", slotid)),
                     new HttpHeaders(), HttpStatus.CREATED);
         }
+        
+        slotLogicService.changeSlotstatusToClosed(slot, true);
 
         return null;
     }

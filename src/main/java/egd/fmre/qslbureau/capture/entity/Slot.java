@@ -49,4 +49,7 @@ public class Slot implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="IDSTATUS")
     private Status status;
+
+    @Column(name = "CONFIRM_CODE")
+    private String confirmCode;
 }

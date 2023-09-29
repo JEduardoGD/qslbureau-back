@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,7 +86,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     }
     
     @Override
-    public void changeSlotstatusToClosed(Slot slot) {
+    public void changeSlotstatusToClosed(Slot slot, boolean createConfirmCode) {
         Status slotStatus = slot.getStatus();
         if(!slotStatus.getId().equals(slotstatusOpen.getId())) {
             log.warn("The status on slot id {} is not open", slot.getId());
@@ -94,6 +95,8 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
             log.warn("The status on slot id {} already is closed", slot.getId());
             return;
         }
+        
+        slot.setConfirmCode(RandomStringUtils.randomAlphabetic(6).toUpperCase());
         slot.setStatus(slotstatusClosed);
         slotRepository.save(slot);
     }
@@ -132,7 +135,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         List<SlotCountqslDTO> slotCountList = getQslsBySlotIdList(openedOrCreatedSlotsInLocalIdsInLocal);
         List<Slot> slotsInUse = slotCountList.stream().map(SlotCountqslDTO::getSlot).collect(Collectors.toList());
         closeableList.removeAll(slotsInUse);
-        closeableList.forEach(slot -> this.changeSlotstatusToClosed(slot));
+        closeableList.forEach(slot -> this.changeSlotstatusToClosed(slot, false));
 	}
     
     //filter that happends in time
