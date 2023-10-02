@@ -46,12 +46,14 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     private Status slotstatusCreated;
     private Status slotstatusOpen;
     private Status slotstatusClosed;
+    private Status slotstatusClosedForSend;
     
     @PostConstruct
     private void Init(){
-        slotstatusCreated = new Status(SlotstatusEnum.SLOT_CREATED.getIdstatus());
-        slotstatusOpen    = new Status(SlotstatusEnum.SLOT_OPEN.getIdstatus());
-        slotstatusClosed  = new Status(SlotstatusEnum.SLOT_CLOSED.getIdstatus());
+        slotstatusCreated        = new Status(SlotstatusEnum.CREATED.getIdstatus());
+        slotstatusOpen           = new Status(SlotstatusEnum.OPEN.getIdstatus());
+        slotstatusClosed         = new Status(SlotstatusEnum.CLOSED.getIdstatus());
+        slotstatusClosedForSend  = new Status(SlotstatusEnum.CLOSED_FOR_SEND.getIdstatus());
     }
     
     @Override
@@ -63,7 +65,8 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Override
     public List<Slot> getOpenedOrCreatedSlotsForCallsignInLocal(String callsign, Local local) {
         List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
-        return openedOrCreatedSlotsInLocal.stream().filter(s -> callsign.equals(s.getCallsignto())).collect(Collectors.toList());
+        return openedOrCreatedSlotsInLocal.stream().filter(s -> callsign.equals(s.getCallsignto()))
+                .collect(Collectors.toList());
     }
     
     @Override
@@ -86,19 +89,24 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     }
     
     @Override
-    public void changeSlotstatusToClosed(Slot slot, boolean createConfirmCode) {
+    public Slot changeSlotstatusToClosed(Slot slot, boolean createConfirmCode) {
         Status slotStatus = slot.getStatus();
-        if(!slotStatus.getId().equals(slotstatusOpen.getId())) {
+        if (!slotStatus.getId().equals(slotstatusOpen.getId())) {
             log.warn("The status on slot id {} is not open", slot.getId());
+            return null;
         }
-        if(slotStatus.getId().equals(slotstatusClosed.getId())) {
+        if (slotStatus.getId().equals(slotstatusClosed.getId())) {
             log.warn("The status on slot id {} already is closed", slot.getId());
-            return;
+            return null;
         }
-        
-        slot.setConfirmCode(RandomStringUtils.randomAlphabetic(6).toUpperCase());
+
+        slot.setClosedAt(DateTimeUtil.getDateTime());
         slot.setStatus(slotstatusClosed);
-        slotRepository.save(slot);
+        if (createConfirmCode) {
+            slot.setConfirmCode(RandomStringUtils.randomAlphabetic(6).toUpperCase());
+            slot.setStatus(slotstatusClosedForSend);
+        }
+        return slotRepository.save(slot);
     }
     
     private int getNextSlotNumber(List<Status> slotStatuses, Local local) {
@@ -168,6 +176,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Override
     public Slot getSlotForQsl(String callsignTo, Local local) throws MaximumSlotNumberReachedException {
         //apply rules of redirect
+        System.out.println(callsignTo);
         String newCallsignTo = this.applyCallsignRule(callsignTo);
         
         // find some slot open or created that is used by newCallsignTo
@@ -227,6 +236,12 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Override
     public List<Slot> getSlotsOfLocal(Local local) {
         return slotRepository.findByLocal(local);
+    }
+  
+  
+    @Override
+    public List<Slot> orderAndFilterForFront(List<Slot> slots) {
+        return orderAndFilter(slots);
     }
 }
 

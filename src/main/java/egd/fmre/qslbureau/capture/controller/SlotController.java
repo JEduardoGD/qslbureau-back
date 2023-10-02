@@ -1,9 +1,8 @@
 package egd.fmre.qslbureau.capture.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +18,6 @@ import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
-import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.LocalService;
@@ -37,13 +35,6 @@ public class SlotController {
     @Autowired SlotLogicService slotLogicService;
     @Autowired LocalService     localService;
     @Autowired QslService       qslService;
-    
-    private List<Status> createdAndOpenStatuses;
-    
-    @PostConstruct
-    private void init() {
-        createdAndOpenStatuses = slotLogicService.getCreatedAndOpenStatuses();
-    }
 
     @GetMapping("/list/bylocalid/{localid}")
     public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable int localid) {
@@ -59,7 +50,36 @@ public class SlotController {
         }
 
         List<SlotDto> slotDtoList = slots.stream().map(s -> {
-            List<Qsl> qsls = qslService.getBySlotAndStatus(s, QslstatusEnum.QSL_VIGENTE);
+            List<Qsl> qsls = qslService.getBySlotAndStatus(s, Arrays.asList(QslstatusEnum.QSL_VIGENTE));
+            return QsldtoTransformer.map(s, qsls.size());
+        }).collect(Collectors.toList());
+
+        StandardResponse standardResponse;
+        try {
+            standardResponse = new StandardResponse(JsonParserUtil.parseSlotList(slotDtoList));
+        } catch (QslcaptureException e) {
+            log.error(e.getMessage());
+            standardResponse = new StandardResponse(true, e.getLocalizedMessage());
+        }
+        return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/bylocalid/{localid}")
+    public ResponseEntity<StandardResponse> getSlotsByLocalId(@PathVariable int localid) {
+        List<Slot> slots;
+        Local local = localService.getById(localid);
+        if (local != null) {
+            slots = slotLogicService.getSlotsOfLocal(local);
+        } else {
+            return new ResponseEntity<StandardResponse>(
+                    new StandardResponse(true, String.format("cant found local with id: %s", localid)),
+                    new HttpHeaders(), HttpStatus.CREATED);
+        }
+        
+        slots = slotLogicService.orderAndFilterForFront(slots);
+
+        List<SlotDto> slotDtoList = slots.stream().map(s -> {
+            List<Qsl> qsls = qslService.getBySlotAndStatus(s, Arrays.asList(QslstatusEnum.QSL_VIGENTE));
             return QsldtoTransformer.map(s, qsls.size());
         }).collect(Collectors.toList());
 
@@ -74,7 +94,7 @@ public class SlotController {
     }
 
     @GetMapping("/close/byid/{slotid}")
-    public ResponseEntity<StandardResponse> closeSlot(@PathVariable int slotid) {
+    public ResponseEntity<StandardResponse> closeSlotForSend(@PathVariable int slotid) {
         Slot slot = slotLogicService.findById(slotid);
         if (slot == null) {
             return new ResponseEntity<StandardResponse>(
@@ -82,9 +102,18 @@ public class SlotController {
                     new HttpHeaders(), HttpStatus.CREATED);
         }
         
-        slotLogicService.changeSlotstatusToClosed(slot, true);
+        slot = slotLogicService.changeSlotstatusToClosed(slot, true);
+        
+        SlotDto slotDto = QsldtoTransformer.map(slot, 0);
 
-        return null;
+        StandardResponse standardResponse;
+        try {
+            standardResponse = new StandardResponse(JsonParserUtil.parse(slotDto));
+        } catch (QslcaptureException e) {
+            log.error(e.getMessage());
+            standardResponse = new StandardResponse(true, e.getLocalizedMessage());
+        }
+        return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
     }
 
 }

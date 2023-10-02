@@ -29,7 +29,7 @@ public class QslServiceImpl implements QslService {
     }
     
     @Override
-    public List<Qsl> getActiveQslsForLocal(Slot slot) {
+    public List<Qsl> getActiveQslsForSlot(Slot slot) {
         Set<Qsl> qsls = qslRepository.findBySlot(slot);
         return qsls.stream().filter(q -> statusQslVigente.equals(q.getStatus())).collect(Collectors.toList());
         
@@ -41,9 +41,9 @@ public class QslServiceImpl implements QslService {
     }
 
     @Override
-    public List<Qsl> getBySlotAndStatus(Slot slot, QslstatusEnum qslstatusEnum) {
-        Status status = new Status();
-        status.setId(qslstatusEnum.getIdstatus());
-        return qslRepository.findBySlotAndStatus(slot, status);
+    public List<Qsl> getBySlotAndStatus(Slot slot, List<QslstatusEnum> qslstatusEnumList) {
+        List<Status> statuseList = qslstatusEnumList.stream().map(s -> new Status(s.getIdstatus()))
+                .collect(Collectors.toList());
+        return qslRepository.findBySlotAndStatuses(slot, statuseList);
     }
 }

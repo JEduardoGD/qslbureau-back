@@ -8,10 +8,10 @@ import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 
 public interface QslService {
 
-    List<Qsl> getActiveQslsForLocal(Slot slot);
+    List<Qsl> getActiveQslsForSlot(Slot slot);
     
     Qsl save(Qsl qsl);
 
-    List<Qsl> getBySlotAndStatus(Slot slot, QslstatusEnum qslstatusEnum);
+    List<Qsl> getBySlotAndStatus(Slot slot, List<QslstatusEnum> qslstatusEnumList);
 
 }

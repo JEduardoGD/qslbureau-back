@@ -82,6 +82,7 @@ public abstract class QsldtoTransformer {
         s.setCreatedAt(slot.getCreatedAt());
         s.setClosedAt(slot.getCreatedAt());
         s.setStatusId(slot.getStatus().getId());
+        s.setConfirmCode(slot.getConfirmCode());
         s.setQslsInSlot(qslsInSlot);
         return s;
     }

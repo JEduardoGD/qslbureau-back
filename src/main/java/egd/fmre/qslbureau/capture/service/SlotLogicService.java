@@ -33,5 +33,7 @@ public interface SlotLogicService {
 
 	List<SlotCountqslDTO> getQslsBySlotIdList(List<Integer> slotIds);
 
-	void changeSlotstatusToClosed(Slot slot, boolean createConfirmCode);
+    Slot changeSlotstatusToClosed(Slot slot, boolean createConfirmCode);
+
+    List<Slot> orderAndFilterForFront(List<Slot> slots);
 }

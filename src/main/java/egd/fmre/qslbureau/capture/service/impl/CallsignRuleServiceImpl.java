@@ -73,7 +73,7 @@ public class CallsignRuleServiceImpl implements CallsignRuleService {
             return createdAndOpenSlotStatusesIds.contains(s.getStatus().getId());
         }).collect(Collectors.toList());
         for (Slot activeSlot : activeSlots) {
-            List<Qsl> activeQsls = qslService.getActiveQslsForLocal(activeSlot);
+            List<Qsl> activeQsls = qslService.getActiveQslsForSlot(activeSlot);
             for (Qsl activeQsl : activeQsls) {
                 String effectiveCallsign = activeQsl.getVia() != null ? activeQsl.getVia() : activeQsl.getTo();
                 CallsignRule activeCallsignRule = activeCallsignRules.stream()
@@ -112,7 +112,7 @@ public class CallsignRuleServiceImpl implements CallsignRuleService {
                 continue;
             }
             if (newSlot.getSlotNumber() == oldSlot.getSlotNumber()) {
-                log.warn("newSlot and oldSlot are same");
+                log.debug("newSlot and oldSlot are same");
                 continue;
             }
             if(!isSimulated) {

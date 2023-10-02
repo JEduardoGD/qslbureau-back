@@ -30,6 +30,7 @@ public interface QslRepository extends JpaRepository<Qsl, Integer> {
     		@Param("qslStatus") Status qslStatus,
             @Param("slotStatuses") List<Status> slotStatuses);
 
-    List<Qsl> findBySlotAndStatus(Slot slot, Status status);
+    @Query(value = "SELECT q From Qsl q WHERE q.slot = :slot and q.status IN :statuses")
+    List<Qsl> findBySlotAndStatuses(@Param("slot") Slot slot, @Param("statuses") List<Status> statuses);
     
 }
