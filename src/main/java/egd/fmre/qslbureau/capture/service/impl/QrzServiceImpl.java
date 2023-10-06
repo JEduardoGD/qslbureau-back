@@ -22,10 +22,8 @@ import egd.fmre.qslbureau.capture.repo.QrzsessionRepository;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.QrzUtil;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 public class QrzServiceImpl implements QrzService {
     @Value("${QRZ.SESSIONTTL}")
     private int qrzsessionttlindays;
@@ -62,51 +60,54 @@ public class QrzServiceImpl implements QrzService {
     	return qrzregRepository.findByCallsignInPeriod(callsign, calendar.getTime());
     }
     
-    private boolean aksQrzAndRegister(Qrzsession qrzsession, String callsign) throws QrzException {
-        Qrzreg qrzreg;
-        QRZDatabaseDto qrzDtabaseDto = QrzUtil
-                .callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzsession.getKey(), callsign));
-        String error = qrzDtabaseDto.getSession().getError();
-        if (error != null && !StaticValuesHelper.QRZ_ERROR_INVALID_SESSION_KEY.equals(error)) {
-            log.warn(StaticValuesHelper.QRZ_NEW_SESSION_MESSAGE, error);
-            qrzsession.setError(error);
-            qrzsessionRepository.save(qrzsession);
-            qrzsession = this.getSession();
-            qrzDtabaseDto = QrzUtil.callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzsession.getKey(), callsign));
-        }
+    
+	private void manageQrzError(Qrzsession qrzSession, String qrzDtabaseDtoError) throws QrzException {
+		if (qrzDtabaseDtoError == null || StaticValuesHelper.EMPTY_STRING.equals(qrzDtabaseDtoError)) {
+			return;
+		}
+		if (StaticValuesHelper.QRZ_ERROR_INVALID_SESSION_KEY.equals(qrzDtabaseDtoError)
+				|| StaticValuesHelper.QRZ_ERROR_SESSION_TIMEOUT.equals(qrzDtabaseDtoError)) {
+			qrzSession.setError(qrzDtabaseDtoError);
+			qrzsessionRepository.save(qrzSession);
+		}
+	}
+    
+	private boolean aksQrzAndRegister(String callsign) throws QrzException {
+		Qrzsession qrzSession = this.getSession();
+		QRZDatabaseDto qrzDtabaseDto = QrzUtil
+				.callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzSession.getKey(), callsign));
 
-        if (qrzDtabaseDto != null && qrzDtabaseDto.getCallsign() != null) {
-            qrzreg = QrzUtil.parse(qrzDtabaseDto.getCallsign());
-            qrzreg.setUpdatedAt(DateTimeUtil.getDateTime());
-            qrzregRepository.save(qrzreg);
-            return true;
-        }
-        return false;
-    }
+		String error = qrzDtabaseDto.getSession().getError();
+
+		if (StaticValuesHelper.QRZ_ERROR_INVALID_SESSION_KEY.equals(error)
+				|| StaticValuesHelper.QRZ_ERROR_SESSION_TIMEOUT.equals(error)) {
+			manageQrzError(qrzSession, error);
+			qrzSession = this.getSession();
+			qrzDtabaseDto = QrzUtil.callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzSession.getKey(), callsign));
+		}
+
+		Qrzreg qrzreg;
+		if (qrzDtabaseDto != null && qrzDtabaseDto.getCallsign() != null) {
+			qrzreg = QrzUtil.parse(qrzDtabaseDto.getCallsign());
+			qrzreg.setUpdatedAt(DateTimeUtil.getDateTime());
+			qrzregRepository.save(qrzreg);
+			return true;
+		}
+		return false;
+	}
 
 	@Override
-	public String getCountryOfCallsign(String callsign) {
-    	Qrzsession qrzsession;
-		try {
-			qrzsession = getSession();
-		} catch (QrzException e) {
-			log.error(e.getMessage());
-			return null;
-		}
+	public String getCountryOfCallsign(String callsign) throws QrzException {
 		List<Qrzreg> qrzregList = this.getActiveQrzregList(callsign);
 
-		try {
-			if (qrzregList == null || qrzregList.isEmpty()) {
-				aksQrzAndRegister(qrzsession, callsign);
-				qrzregList = this.getActiveQrzregList(callsign);
-			}
-		} catch (QrzException e) {
-			log.error(e.getMessage());
+		if (qrzregList == null || qrzregList.isEmpty()) {
+			aksQrzAndRegister(callsign);
+			qrzregList = this.getActiveQrzregList(callsign);
 		}
 
 		if (qrzregList != null && !qrzregList.isEmpty()) {
-			Qrzreg res = qrzregList.stream().sorted(Comparator.comparingInt(Qrzreg::getId).reversed())
-					.findFirst().get();
+			Qrzreg res = qrzregList.stream().sorted(Comparator.comparingInt(Qrzreg::getId).reversed()).findFirst()
+					.get();
 			return res.getCountry();
 		}
 		return null;
@@ -114,11 +115,10 @@ public class QrzServiceImpl implements QrzService {
 
     @Override
     public Boolean checkCallsignOnQrz(String callsign) throws QrzException {
-    	Qrzsession qrzsession = getSession();
         List<Qrzreg> qrzregList = this.getActiveQrzregList(callsign);
 
         if (qrzregList == null || qrzregList.isEmpty()) {
-        	return aksQrzAndRegister(qrzsession, callsign);
+        	return aksQrzAndRegister(callsign);
         }
 
         if (qrzregList != null && !qrzregList.isEmpty()) {
