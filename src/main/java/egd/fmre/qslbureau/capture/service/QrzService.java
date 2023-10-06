@@ -15,6 +15,6 @@ public interface QrzService {
 
 	Boolean checkCallsignOnQrz(String callsign) throws QrzException;
 
-	String getCountryOfCallsign(String callsign);
+	String getCountryOfCallsign(String callsign) throws QrzException;
 
 }

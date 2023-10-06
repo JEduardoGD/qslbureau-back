@@ -30,6 +30,7 @@ public class ReportController {
 	public @ResponseBody byte[] getImageWithMediaType() throws IOException {
 		List<QslsReport> map = reportsService.gettingCallsignsMap();
 		return reportsService.writeReport(map);
+		
 	}
 
 }

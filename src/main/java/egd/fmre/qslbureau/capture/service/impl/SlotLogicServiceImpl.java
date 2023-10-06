@@ -20,6 +20,7 @@ import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.SlotstatusEnum;
 import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
+import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.repo.CallsignruleRepository;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
 import egd.fmre.qslbureau.capture.repo.SlotRepository;
@@ -108,7 +109,12 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     
 	@Override
 	public Slot getSlotByCountry(String callsign, Local local) throws MaximumSlotNumberReachedException {
-		String country = qrzService.getCountryOfCallsign(callsign);
+		String country = null;
+		try {
+			country = qrzService.getCountryOfCallsign(callsign);
+		} catch (QrzException e) {
+			log.warn(e.getMessage());
+		}
 		country= TextUtil.sanitize(country);
 		List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
 		List<Slot> slots = slotRepository.findByLocalAndCountryAndStatuses(country, slotStatuses, local);
