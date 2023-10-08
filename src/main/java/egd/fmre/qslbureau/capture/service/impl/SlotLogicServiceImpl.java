@@ -34,8 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService {
-    
-    //@Autowired CallsignRuleService callsignRuleService;
+
     @Autowired CallsignruleRepository callsignruleRepository;
     @Autowired SlotRepository      slotRepository;
     @Autowired LocalRepository     localRepository;
@@ -47,13 +46,15 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     private Status slotstatusOpen;
     private Status slotstatusClosed;
     private Status slotstatusClosedForSend;
+    private Status slotstatusSent;
     
     @PostConstruct
     private void Init(){
-        slotstatusCreated        = new Status(SlotstatusEnum.CREATED.getIdstatus());
-        slotstatusOpen           = new Status(SlotstatusEnum.OPEN.getIdstatus());
-        slotstatusClosed         = new Status(SlotstatusEnum.CLOSED.getIdstatus());
-        slotstatusClosedForSend  = new Status(SlotstatusEnum.CLOSED_FOR_SEND.getIdstatus());
+        slotstatusCreated       = new Status(SlotstatusEnum.CREATED.getIdstatus());
+        slotstatusOpen          = new Status(SlotstatusEnum.OPEN.getIdstatus());
+        slotstatusClosed        = new Status(SlotstatusEnum.CLOSED.getIdstatus());
+        slotstatusClosedForSend = new Status(SlotstatusEnum.CLOSED_FOR_SEND.getIdstatus());
+        slotstatusSent          = new Status(SlotstatusEnum.SENT.getIdstatus());
     }
     
     @Override
@@ -242,6 +243,29 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Override
     public List<Slot> orderAndFilterForFront(List<Slot> slots) {
         return orderAndFilter(slots);
+    }
+  
+  
+    @Override
+    public List<Slot> orderAndFilterReadyForSend(List<Slot> slots) {
+        return orderAndFilter(slots, slotstatusClosedForSend);
+    }
+    
+    @Override
+    public Slot changeSlotstatusToSend(Slot slot) {
+        Status slotStatus = slot.getStatus();
+        if (!slotStatus.getId().equals(slotstatusClosedForSend.getId())) {
+            log.warn("The status on slot id {} is not closed for send", slot.getId());
+            return null;
+        }
+        if (slotStatus.getId().equals(slotstatusSent.getId())) {
+            log.warn("The status on slot id {} already is on sent status", slot.getId());
+            return null;
+        }
+
+        slot.setClosedAt(DateTimeUtil.getDateTime());
+        slot.setStatus(slotstatusSent);
+        return slotRepository.save(slot);
     }
 }
 

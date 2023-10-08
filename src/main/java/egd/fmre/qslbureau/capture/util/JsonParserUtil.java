@@ -9,8 +9,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import egd.fmre.qslbureau.capture.dto.CallsignRuleDto;
 import egd.fmre.qslbureau.capture.dto.QslDto;
+import egd.fmre.qslbureau.capture.dto.RegionalRepresentativeDto;
+import egd.fmre.qslbureau.capture.dto.ShipDto;
+import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.SummaryQslDto;
+import egd.fmre.qslbureau.capture.dto.ZoneruleDto;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.exception.JsonParserException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
@@ -78,5 +82,65 @@ public abstract class JsonParserUtil {
         }
         stringBuilder.append(StaticValuesHelper.JSON_ARRAY_CLOSE);
         return stringBuilder.toString().replaceAll("\\,\\]$", "]");
+    }
+
+    private static String parse(ShippingMethodDto slotDto) throws JsonParserException {
+        try {
+            return objectMapper.writeValueAsString(slotDto);
+        } catch (JsonProcessingException e) {
+            throw new JsonParserException(e);
+        }
+    }
+
+    public static String parseList(List<ShippingMethodDto> shippingMethodDtoList) throws JsonParserException {
+        if (shippingMethodDtoList == null) {
+            return null;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(StaticValuesHelper.JSON_ARRAY_OPEN);
+        for (ShippingMethodDto slotDto : shippingMethodDtoList) {
+            stringBuilder.append(JsonParserUtil.parse(slotDto));
+            stringBuilder.append(StaticValuesHelper.COMMA);
+        }
+        stringBuilder.append(StaticValuesHelper.JSON_ARRAY_CLOSE);
+        return stringBuilder.toString().replaceAll("\\,\\]$", "]");
+    }
+
+    public static String parse(ShipDto shipDto) throws JsonParserException {
+        try {
+            return objectMapper.writeValueAsString(shipDto);
+        } catch (JsonProcessingException e) {
+            throw new JsonParserException(e);
+        }
+    }
+
+    public static String parseList(ZoneruleDto zoneruleDtoForCallsing) throws JsonParserException {
+        try {
+            return objectMapper.writeValueAsString(zoneruleDtoForCallsing);
+        } catch (JsonProcessingException e) {
+            throw new JsonParserException(e);
+        }
+    }
+
+    public static String parseListRegionalRepresentatives(List<RegionalRepresentativeDto> regionalRepresentatives) throws JsonParserException {
+        if (regionalRepresentatives == null) {
+            return null;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(StaticValuesHelper.JSON_ARRAY_OPEN);
+        for (RegionalRepresentativeDto regionalRepresentative : regionalRepresentatives) {
+            stringBuilder.append(JsonParserUtil.parse(regionalRepresentative));
+            stringBuilder.append(StaticValuesHelper.COMMA);
+        }
+        stringBuilder.append(StaticValuesHelper.JSON_ARRAY_CLOSE);
+        return stringBuilder.toString().replaceAll("\\,\\]$", "]");
+    }
+
+    private static Object parse(RegionalRepresentativeDto regionalRepresentative) throws JsonParserException {
+        try {
+            return objectMapper.writeValueAsString(regionalRepresentative);
+        } catch (JsonProcessingException e) {
+            throw new JsonParserException(e);
+        }
     }
 }

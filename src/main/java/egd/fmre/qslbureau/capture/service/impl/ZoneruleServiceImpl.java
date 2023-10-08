@@ -27,4 +27,9 @@ public class ZoneruleServiceImpl implements ZoneruleService {
 				|| (zr.getEnd() != null && zr.getStart().before(now) && now.before(zr.getEnd())))
 		.findFirst().orElse(null);
 	}
+
+    @Override
+    public Zonerule findById(Integer id) {
+        return zoneruleRepository.findById(id).get();
+    }
 }

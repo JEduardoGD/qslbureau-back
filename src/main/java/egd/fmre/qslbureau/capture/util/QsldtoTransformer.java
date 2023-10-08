@@ -24,6 +24,7 @@ public abstract class QsldtoTransformer {
         qslDto.setVia(qsl.getVia());
         qslDto.setSlotNumber(qsl.getSlot().getSlotNumber());
         qslDto.setDateTimeCapture(qsl.getDatetimecapture());
+        
         qslDto.setStatus(qsl.getStatus().getId());
         return qslDto;
     }
@@ -81,6 +82,8 @@ public abstract class QsldtoTransformer {
         s.setCountry(slot.getCountry());
         s.setCreatedAt(slot.getCreatedAt());
         s.setClosedAt(slot.getCreatedAt());
+        s.setSendAt(slot.getSendAt());
+        s.setMovedToIntAt(slot.getMovedToIntAt());
         s.setStatusId(slot.getStatus().getId());
         s.setConfirmCode(slot.getConfirmCode());
         s.setQslsInSlot(qslsInSlot);

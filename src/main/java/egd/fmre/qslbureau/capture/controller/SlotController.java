@@ -93,6 +93,35 @@ public class SlotController {
         return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
     }
 
+    @GetMapping("/forSend/bylocalid/{localid}")
+    public ResponseEntity<StandardResponse> getSlotsForSendByLocalId(@PathVariable int localid) {
+        List<Slot> slots;
+        Local local = localService.getById(localid);
+        if (local != null) {
+            slots = slotLogicService.getSlotsOfLocal(local);
+        } else {
+            return new ResponseEntity<StandardResponse>(
+                    new StandardResponse(true, String.format("cant found local with id: %s", localid)),
+                    new HttpHeaders(), HttpStatus.CREATED);
+        }
+        
+        slots = slotLogicService.orderAndFilterReadyForSend(slots);
+
+        List<SlotDto> slotDtoList = slots.stream().map(s -> {
+            List<Qsl> qsls = qslService.getBySlotAndStatus(s, Arrays.asList(QslstatusEnum.QSL_VIGENTE));
+            return QsldtoTransformer.map(s, qsls.size());
+        }).collect(Collectors.toList());
+
+        StandardResponse standardResponse;
+        try {
+            standardResponse = new StandardResponse(JsonParserUtil.parseSlotList(slotDtoList));
+        } catch (QslcaptureException e) {
+            log.error(e.getMessage());
+            standardResponse = new StandardResponse(true, e.getLocalizedMessage());
+        }
+        return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
+    }
+
     @GetMapping("/close/byid/{slotid}")
     public ResponseEntity<StandardResponse> closeSlotForSend(@PathVariable int slotid) {
         Slot slot = slotLogicService.findById(slotid);
@@ -106,6 +135,27 @@ public class SlotController {
         
         SlotDto slotDto = QsldtoTransformer.map(slot, 0);
 
+        StandardResponse standardResponse;
+        try {
+            standardResponse = new StandardResponse(JsonParserUtil.parse(slotDto));
+        } catch (QslcaptureException e) {
+            log.error(e.getMessage());
+            standardResponse = new StandardResponse(true, e.getLocalizedMessage());
+        }
+        return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/byid/{slotid}")
+    public ResponseEntity<StandardResponse> getSlotById(@PathVariable int slotid) {
+        Slot slot = slotLogicService.findById(slotid);
+        if (slot == null) {
+            return new ResponseEntity<StandardResponse>(
+                    new StandardResponse(true, String.format("El slot con id %s no se encuentra", slotid)),
+                    new HttpHeaders(), HttpStatus.CREATED);
+        }
+        
+        SlotDto slotDto = QsldtoTransformer.map(slot, qslService.getActiveQslsForSlot(slot).size());
+        
         StandardResponse standardResponse;
         try {
             standardResponse = new StandardResponse(JsonParserUtil.parse(slotDto));

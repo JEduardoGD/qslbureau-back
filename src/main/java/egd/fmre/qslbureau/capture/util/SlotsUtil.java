@@ -42,4 +42,10 @@ public class SlotsUtil {
         }
         return new ArrayList<Slot>(map.values());
     }
+
+    protected List<Slot> orderAndFilter(List<Slot> slots, Status status) {
+        return slots.stream().sorted(Comparator.comparingInt(Slot::getSlotNumber))
+                .filter(s -> s.getStatus().equals(status))
+                .collect(Collectors.toList());
+    }
 }
