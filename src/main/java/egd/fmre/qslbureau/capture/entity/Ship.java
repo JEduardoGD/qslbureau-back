@@ -39,6 +39,10 @@ public class Ship implements Serializable {
     private ShippingMethod shippingMethod;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDCAPTURER")
+    private Capturer capturer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDZONE")
     private Zone zone;
 

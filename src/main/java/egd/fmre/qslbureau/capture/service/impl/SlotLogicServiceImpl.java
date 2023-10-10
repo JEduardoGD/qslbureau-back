@@ -248,7 +248,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
   
     @Override
     public List<Slot> orderAndFilterReadyForSend(List<Slot> slots) {
-        return orderAndFilter(slots, slotstatusClosedForSend);
+        return orderAndFilter(slots, Arrays.asList(slotstatusClosedForSend, slotstatusSent));
     }
     
     @Override

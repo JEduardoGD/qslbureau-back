@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import egd.fmre.qslbureau.capture.dto.CallsignRuleDto;
+import egd.fmre.qslbureau.capture.dto.InputValidationDto;
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.RegionalRepresentativeDto;
 import egd.fmre.qslbureau.capture.dto.ShipDto;
@@ -139,6 +140,14 @@ public abstract class JsonParserUtil {
     private static Object parse(RegionalRepresentativeDto regionalRepresentative) throws JsonParserException {
         try {
             return objectMapper.writeValueAsString(regionalRepresentative);
+        } catch (JsonProcessingException e) {
+            throw new JsonParserException(e);
+        }
+    }
+
+    public static String parse(InputValidationDto validateInputs) throws JsonParserException {
+        try {
+            return objectMapper.writeValueAsString(validateInputs);
         } catch (JsonProcessingException e) {
             throw new JsonParserException(e);
         }

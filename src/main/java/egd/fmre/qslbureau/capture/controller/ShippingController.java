@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import egd.fmre.qslbureau.capture.dto.InputValidationDto;
 import egd.fmre.qslbureau.capture.dto.RegionalRepresentativeDto;
 import egd.fmre.qslbureau.capture.dto.ShipDto;
 import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
@@ -139,14 +140,14 @@ public class ShippingController {
     }
 
     @PostMapping
-    public ResponseEntity<StandardResponse> ship(@RequestBody ShipDto shipDto) {
-        Ship ship = shipSevice.registerNewShip(shipDto);
+    public ResponseEntity<StandardResponse> ship(@RequestBody InputValidationDto inputValidationDto) {
+        Ship ship = shipSevice.registerNewShip(inputValidationDto);
         
-        shipDto = shipModelMapper.map(ship, ShipDto.class);
+        inputValidationDto = shipModelMapper.map(ship, InputValidationDto.class);
 
         StandardResponse standardResponse;
         try {
-            standardResponse = new StandardResponse(JsonParserUtil.parse(shipDto));
+            standardResponse = new StandardResponse(JsonParserUtil.parse(inputValidationDto));
         } catch (QslcaptureException e) {
             standardResponse = new StandardResponse(true, e.getMessage());
         }
@@ -166,6 +167,13 @@ public class ShippingController {
         } catch (QslcaptureException e) {
             standardResponse = new StandardResponse(true, e.getMessage());
         }
+        return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/inputvalidation")
+    public ResponseEntity<StandardResponse> regionalRepsForCallsign(@RequestBody InputValidationDto inputValidationDto) throws QslcaptureException {
+        StandardResponse standardResponse;
+        standardResponse = new StandardResponse(JsonParserUtil.parse(shipSevice.validateInputs(inputValidationDto)));
         return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
     }
 }

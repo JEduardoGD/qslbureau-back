@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import egd.fmre.qslbureau.capture.dto.InputValidationDto;
 import egd.fmre.qslbureau.capture.dto.LocalDto;
 import egd.fmre.qslbureau.capture.dto.ShipDto;
 import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
@@ -54,18 +55,21 @@ public class ModelMapperConfiguration {
     ModelMapper shipModelMapper() {
         ModelMapper shipModelMapper = new ModelMapper();
 
-        shipModelMapper.addConverter(new AbstractConverter<Ship, ShipDto>() {
+        shipModelMapper.addConverter(new AbstractConverter<Ship, InputValidationDto>() {
             @Override
-            protected ShipDto convert(Ship s) {
-                ShipDto shipDto = new ShipDto();
-                shipDto.setId(s.getId());
-                shipDto.setDatetime(s.getDatetime());
-                shipDto.setSlotId(s.getSlot() != null ? s.getSlot().getId() : null);
-                shipDto.setShippingMethodId(s.getShippingMethod() != null ? s.getShippingMethod().getId() : null);
-                shipDto.setZoneId(s.getZone() != null ? s.getZone().getId() : null);
-                shipDto.setAddress(s.getAddress());
-                shipDto.setTrackingCode(s.getTrackingCode());
-                return shipDto;
+            protected InputValidationDto convert(Ship s) {
+                InputValidationDto inputValidationDto = new InputValidationDto();
+                inputValidationDto.setShipId(s.getId());
+                inputValidationDto.setIdSlot(s.getSlot() != null ? s.getSlot().getId() : null);
+                inputValidationDto
+                        .setShippingMethodId(s.getShippingMethod() != null ? s.getShippingMethod().getId() : null);
+                inputValidationDto.setAddress(s.getAddress());
+                inputValidationDto
+                        .setRegionalRepresentativeId(s.getCapturer() != null ? s.getCapturer().getId() : null);
+                inputValidationDto.setTrackingCode(s.getTrackingCode());
+                inputValidationDto.setValid(null);
+                inputValidationDto.setError(null);
+                return inputValidationDto;
             }
         });
         return shipModelMapper;

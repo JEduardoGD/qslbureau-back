@@ -6,28 +6,41 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import egd.fmre.qslbureau.capture.dto.ShipDto;
+import egd.fmre.qslbureau.capture.dto.InputValidationDto;
+import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Ship;
 import egd.fmre.qslbureau.capture.entity.ShippingMethod;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Zone;
+import egd.fmre.qslbureau.capture.entity.Zonerule;
+import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.repo.ShipRepository;
+import egd.fmre.qslbureau.capture.service.CapturerService;
 import egd.fmre.qslbureau.capture.service.ShipSevice;
 import egd.fmre.qslbureau.capture.service.ShippingMethodService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneService;
+import egd.fmre.qslbureau.capture.service.ZoneruleService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 
 @Service
 public class ShipSeviceImpl implements ShipSevice {
 
-    @Autowired private ShippingMethodService shippingMethodService;
-    @Autowired private ShipRepository        shipRepository;
-    @Autowired private SlotLogicService      slotLogicService;
-    @Autowired ZoneService zoneService;
-    
+    @Autowired
+    private ShippingMethodService shippingMethodService;
+    @Autowired
+    private ShipRepository shipRepository;
+    @Autowired
+    private SlotLogicService slotLogicService;
+    @Autowired
+    ZoneService zoneService;
+    @Autowired
+    ZoneruleService zoneruleService;
+    @Autowired
+    CapturerService capturerService;
+
     private ShippingMethod shippingMethodRegional;
-    
+
     @PostConstruct
     private void init() {
         shippingMethodRegional = shippingMethodService.findByKey("REGIONAL");
@@ -41,12 +54,12 @@ public class ShipSeviceImpl implements ShipSevice {
         }
         return shipRepository.findBySlot(slot);
     }
-    
+
     @Override
     @Transactional
-    public Ship registerNewShip(ShipDto shipDto) {
+    public Ship registerNewShip(InputValidationDto inputValidationDto) {
         Slot slot = null;
-        Integer slotId = shipDto.getSlotId();
+        Integer slotId = inputValidationDto.getIdSlot();
         if (slotId != null) {
             slot = slotLogicService.findById(slotId);
             slotLogicService.changeSlotstatusToSend(slot);
@@ -54,23 +67,77 @@ public class ShipSeviceImpl implements ShipSevice {
 
         Zone zone = null;
         ShippingMethod shippingMethod = null;
-        Integer shippingMethodId = shipDto.getShippingMethodId();
+        Integer shippingMethodId = inputValidationDto.getShippingMethodId();
         if (shippingMethodId != null) {
             shippingMethod = shippingMethodService.findById(shippingMethodId);
-            if(shippingMethod.equals(shippingMethodRegional) && shipDto.getZoneId() !=null) {
-                zone = zoneService.findById(shipDto.getZoneId());
+            Zonerule zr = zoneruleService.findActiveByCallsign(slot.getCallsignto());
+            Integer zoneId = null;
+            if (zr != null) {
+                zoneId = zr.getZone().getId();
             }
+            if (shippingMethod.equals(shippingMethodRegional) && zoneId != null) {
+                zone = zoneService.findById(zoneId);
+            }
+        }
+        
+        Integer regionalRepresentativeId = inputValidationDto.getRegionalRepresentativeId();
+        Capturer capturer = null;
+        if (regionalRepresentativeId != null) {
+            capturer = capturerService.findById(regionalRepresentativeId);
         }
 
         Ship ship = new Ship();
-        ship.setId(shipDto.getId());
+        ship.setId(inputValidationDto.getShipId());
         ship.setDatetime(DateTimeUtil.getDateTime());
         ship.setSlot(slot);
         ship.setShippingMethod(shippingMethod);
         ship.setZone(zone);
-        ship.setAddress(shipDto.getAddress());
-        ship.setTrackingCode(shipDto.getTrackingCode());
+        ship.setAddress(inputValidationDto.getAddress());
+        ship.setCapturer(capturer);
+        ship.setTrackingCode(inputValidationDto.getTrackingCode());
         return shipRepository.save(ship);
+    }
+
+    @Override
+    public InputValidationDto validateInputs(InputValidationDto inputValidationDto) {
+        Integer shippingMethodId;
+        shippingMethodId = inputValidationDto.getShippingMethodId();
+
+        boolean valid = true;
+        String error = "";
+
+        ShippingMethod shippingMethod = null;
+        if (shippingMethodId == null) {
+            valid = false;
+            error += "El método de envío es requerido\n";
+        } else {
+            shippingMethod = shippingMethodService.findById(shippingMethodId);
+        }
+
+        if (shippingMethod != null && shippingMethod.isRequireAddress()) {
+            String address = inputValidationDto.getAddress() != null ? inputValidationDto.getAddress().trim() : null;
+            address = StaticValuesHelper.EMPTY_STRING.equals(address) ? null : address;
+            if (address == null) {
+                valid = false;
+                error += "La dirección de envío es requerido\n";
+            }
+        }
+        
+        Integer regionalRepresentativeId = inputValidationDto.getRegionalRepresentativeId();
+        Capturer capturer = null;
+        if (regionalRepresentativeId != null) {
+            capturer = capturerService.findById(regionalRepresentativeId);
+        }
+        
+        if(shippingMethod.equals(shippingMethodRegional) && capturer==null) {
+            valid = false;
+            error += "Se requiere seleccionar un representante regional\n";
+        }
+        
+
+        inputValidationDto.setValid(valid);
+        inputValidationDto.setError(error);
+        return inputValidationDto;
     }
 
 }

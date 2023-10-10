@@ -35,6 +35,9 @@ public class ShippingMethod implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "REQUIRE_ADDRESS")
+    private boolean requireAddress;
+
     @Column(name = "HAVE_TRACKING")
     private boolean tracking;
 }
