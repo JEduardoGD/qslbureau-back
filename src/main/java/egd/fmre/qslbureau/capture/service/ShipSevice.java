@@ -1,8 +1,8 @@
 package egd.fmre.qslbureau.capture.service;
 
 import egd.fmre.qslbureau.capture.dto.InputValidationDto;
-import egd.fmre.qslbureau.capture.dto.ShipDto;
 import egd.fmre.qslbureau.capture.entity.Ship;
+import egd.fmre.qslbureau.capture.entity.Slot;
 
 public interface ShipSevice {
 
@@ -11,5 +11,7 @@ public interface ShipSevice {
     InputValidationDto validateInputs(InputValidationDto inputValidationDto);
 
     Ship registerNewShip(InputValidationDto inputValidationDto);
+
+    Ship findBySlot(Slot slot);
 
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import egd.fmre.qslbureau.capture.dto.InputValidationDto;
 import egd.fmre.qslbureau.capture.dto.RegionalRepresentativeDto;
-import egd.fmre.qslbureau.capture.dto.ShipDto;
 import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.dto.ZoneruleDto;
@@ -76,10 +75,11 @@ public class ShippingController {
             standardResponse = new StandardResponse(StaticValuesHelper.JSON_ARRAY_EMPTY);
             return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
         }
-        ShipDto slotDto = shipModelMapper.map(ship, ShipDto.class);
-
+        
+        InputValidationDto inputValidationDto = shipModelMapper.map(ship, InputValidationDto.class);
+        
         try {
-            standardResponse = new StandardResponse(JsonParserUtil.parse(slotDto));
+            standardResponse = new StandardResponse(JsonParserUtil.parse(inputValidationDto));
         } catch (QslcaptureException e) {
             standardResponse = new StandardResponse(true, e.getMessage());
         }

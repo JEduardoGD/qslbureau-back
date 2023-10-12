@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 import egd.fmre.qslbureau.capture.dto.InputValidationDto;
 import egd.fmre.qslbureau.capture.dto.LocalDto;
-import egd.fmre.qslbureau.capture.dto.ShipDto;
 import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Ship;

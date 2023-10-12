@@ -25,11 +25,12 @@ import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 
 @Service
 public class ShipSeviceImpl implements ShipSevice {
+    
+    @Autowired
+    private ShipRepository shipRepository;
 
     @Autowired
     private ShippingMethodService shippingMethodService;
-    @Autowired
-    private ShipRepository shipRepository;
     @Autowired
     private SlotLogicService slotLogicService;
     @Autowired
@@ -104,12 +105,12 @@ public class ShipSeviceImpl implements ShipSevice {
         shippingMethodId = inputValidationDto.getShippingMethodId();
 
         boolean valid = true;
-        String error = "";
+        StringBuilder errorSb = new StringBuilder();
 
         ShippingMethod shippingMethod = null;
         if (shippingMethodId == null) {
             valid = false;
-            error += "El método de envío es requerido\n";
+            errorSb.append("|El método de envío es requerido");
         } else {
             shippingMethod = shippingMethodService.findById(shippingMethodId);
         }
@@ -119,7 +120,7 @@ public class ShipSeviceImpl implements ShipSevice {
             address = StaticValuesHelper.EMPTY_STRING.equals(address) ? null : address;
             if (address == null) {
                 valid = false;
-                error += "La dirección de envío es requerido\n";
+                errorSb.append("|La dirección de envío es requerido");
             }
         }
         
@@ -129,15 +130,20 @@ public class ShipSeviceImpl implements ShipSevice {
             capturer = capturerService.findById(regionalRepresentativeId);
         }
         
-        if(shippingMethod.equals(shippingMethodRegional) && capturer==null) {
+        if(shippingMethod != null && shippingMethod.equals(shippingMethodRegional) && capturer==null) {
             valid = false;
-            error += "Se requiere seleccionar un representante regional\n";
+            errorSb.append("|Se requiere seleccionar un representante regional");
         }
         
 
         inputValidationDto.setValid(valid);
-        inputValidationDto.setError(error);
+        inputValidationDto.setError(errorSb.toString());
         return inputValidationDto;
+    }
+    
+    @Override
+    public Ship findBySlot(Slot slot) {
+        return shipRepository.findBySlot(slot);
     }
 
 }

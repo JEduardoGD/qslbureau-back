@@ -22,6 +22,7 @@ import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.LocalService;
 import egd.fmre.qslbureau.capture.service.QslService;
+import egd.fmre.qslbureau.capture.service.ShipSevice;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
@@ -35,6 +36,7 @@ public class SlotController {
     @Autowired SlotLogicService slotLogicService;
     @Autowired LocalService     localService;
     @Autowired QslService       qslService;
+    @Autowired ShipSevice       shipSevice; 
 
     @GetMapping("/list/bylocalid/{localid}")
     public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable int localid) {
@@ -155,6 +157,9 @@ public class SlotController {
         }
         
         SlotDto slotDto = QsldtoTransformer.map(slot, qslService.getActiveQslsForSlot(slot).size());
+        
+        //Ship ship = shipSevice.findBySlot(slot);
+        //slotDto.
         
         StandardResponse standardResponse;
         try {

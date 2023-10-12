@@ -11,7 +11,6 @@ import egd.fmre.qslbureau.capture.dto.CallsignRuleDto;
 import egd.fmre.qslbureau.capture.dto.InputValidationDto;
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.RegionalRepresentativeDto;
-import egd.fmre.qslbureau.capture.dto.ShipDto;
 import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.SummaryQslDto;
@@ -105,14 +104,6 @@ public abstract class JsonParserUtil {
         }
         stringBuilder.append(StaticValuesHelper.JSON_ARRAY_CLOSE);
         return stringBuilder.toString().replaceAll("\\,\\]$", "]");
-    }
-
-    public static String parse(ShipDto shipDto) throws JsonParserException {
-        try {
-            return objectMapper.writeValueAsString(shipDto);
-        } catch (JsonProcessingException e) {
-            throw new JsonParserException(e);
-        }
     }
 
     public static String parseList(ZoneruleDto zoneruleDtoForCallsing) throws JsonParserException {
