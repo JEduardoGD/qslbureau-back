@@ -34,4 +34,7 @@ public interface SlotRepository extends JpaRepository<Slot, Integer> {
 	List<Slot> findByStatusesForLocal(@Param("slotStatuses") List<Status> slotStatuses);
   
 	List<Slot> findByLocal(Local local);
+	
+	@Query("SELECT s FROM Slot s WHERE s.status IN :slotStatuses and s.callsignto is null and s.country is null")
+	List<Slot> getNullSlots(@Param("slotStatuses") List<Status> slotStatuses);
 }

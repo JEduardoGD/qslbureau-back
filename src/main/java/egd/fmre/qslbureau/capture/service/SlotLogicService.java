@@ -40,4 +40,6 @@ public interface SlotLogicService {
     List<Slot> orderAndFilterReadyForSend(List<Slot> slots);
 
     Slot changeSlotstatusToSend(Slot slot);
+
+	Slot getNullSlot();
 }
