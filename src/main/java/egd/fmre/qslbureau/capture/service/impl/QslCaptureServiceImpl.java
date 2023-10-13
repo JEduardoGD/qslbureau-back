@@ -106,8 +106,16 @@ public class QslCaptureServiceImpl implements QslCaptureService {
 				log.error(e.getMessage());
 				return null;
 			}
-            
-            
+			
+			if(slot == null) {
+				slot = slotLogicService.getNullSlot();
+			}
+			
+			if(slot == null) {
+				throw new QslcaptureException("No pudo generarse el slot");
+			}
+			
+
             slotLogicService.changeSlotstatusToOpen(slot);
             Qsl qsl = QsldtoTransformer.map(qslDto, capturer, slot, statusQslVigente);
             qsl = qslRepository.save(qsl);
