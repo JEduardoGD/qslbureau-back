@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService {
-    
-    //@Autowired CallsignRuleService callsignRuleService;
+
     @Autowired CallsignruleRepository callsignruleRepository;
     @Autowired SlotRepository      slotRepository;
     @Autowired LocalRepository     localRepository;
@@ -47,12 +47,16 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     private Status slotstatusCreated;
     private Status slotstatusOpen;
     private Status slotstatusClosed;
+    private Status slotstatusClosedForSend;
+    private Status slotstatusSent;
     
     @PostConstruct
     private void Init(){
-        slotstatusCreated = new Status(SlotstatusEnum.SLOT_CREATED.getIdstatus());
-        slotstatusOpen    = new Status(SlotstatusEnum.SLOT_OPEN.getIdstatus());
-        slotstatusClosed  = new Status(SlotstatusEnum.SLOT_CLOSED.getIdstatus());
+        slotstatusCreated       = new Status(SlotstatusEnum.CREATED.getIdstatus());
+        slotstatusOpen          = new Status(SlotstatusEnum.OPEN.getIdstatus());
+        slotstatusClosed        = new Status(SlotstatusEnum.CLOSED.getIdstatus());
+        slotstatusClosedForSend = new Status(SlotstatusEnum.CLOSED_FOR_SEND.getIdstatus());
+        slotstatusSent          = new Status(SlotstatusEnum.SENT.getIdstatus());
     }
     
     @Override
@@ -64,12 +68,13 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Override
     public List<Slot> getOpenedOrCreatedSlotsForCallsignInLocal(String callsign, Local local) {
         List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
-        return openedOrCreatedSlotsInLocal.stream().filter(s -> callsign.equals(s.getCallsignto())).collect(Collectors.toList());
+        return openedOrCreatedSlotsInLocal.stream().filter(s -> callsign.equals(s.getCallsignto()))
+                .collect(Collectors.toList());
     }
     
     @Override
-    public List<SlotCountqslDTO> getQslsBySlot(List<Integer> SlotsInLocalIds) {
-        return slotRepository.getQslsBySlot(SlotsInLocalIds);
+    public List<SlotCountqslDTO> getQslsBySlotIdList(List<Integer> slotIdList) {
+        return slotRepository.getQslsBySlotIdList(slotIdList);
     }
     
     @Override
@@ -87,17 +92,24 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     }
     
     @Override
-    public void changeSlotstatusToClosed(Slot slot) {
+    public Slot changeSlotstatusToClosed(Slot slot, boolean createConfirmCode) {
         Status slotStatus = slot.getStatus();
-        if(!slotStatus.getId().equals(slotstatusOpen.getId())) {
+        if (!slotStatus.getId().equals(slotstatusOpen.getId())) {
             log.warn("The status on slot id {} is not open", slot.getId());
+            return null;
         }
-        if(slotStatus.getId().equals(slotstatusClosed.getId())) {
+        if (slotStatus.getId().equals(slotstatusClosed.getId())) {
             log.warn("The status on slot id {} already is closed", slot.getId());
-            return;
+            return null;
         }
+
+        slot.setClosedAt(DateTimeUtil.getDateTime());
         slot.setStatus(slotstatusClosed);
-        slotRepository.save(slot);
+        if (createConfirmCode) {
+            slot.setConfirmCode(RandomStringUtils.randomAlphabetic(6).toUpperCase());
+            slot.setStatus(slotstatusClosedForSend);
+        }
+        return slotRepository.save(slot);
     }
     
 	@Override
@@ -153,10 +165,10 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         List<Slot> closeableList = new ArrayList<>();
         closeableList.addAll(openedOrCreatedSlotsInLocal);
         List<Integer> openedOrCreatedSlotsInLocalIdsInLocal = openedOrCreatedSlotsInLocal.stream().map(Slot::getId).collect(Collectors.toList());
-        List<SlotCountqslDTO> slotCountList = getQslsBySlot(openedOrCreatedSlotsInLocalIdsInLocal);
+        List<SlotCountqslDTO> slotCountList = getQslsBySlotIdList(openedOrCreatedSlotsInLocalIdsInLocal);
         List<Slot> slotsInUse = slotCountList.stream().map(SlotCountqslDTO::getSlot).collect(Collectors.toList());
         closeableList.removeAll(slotsInUse);
-        closeableList.forEach(slot -> this.changeSlotstatusToClosed(slot));
+        closeableList.forEach(slot -> this.changeSlotstatusToClosed(slot, false));
 	}
     
     //filter that happends in time
@@ -189,6 +201,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Override
     public Slot getSlotForQsl(String callsignTo, Local local) throws MaximumSlotNumberReachedException {
         //apply rules of redirect
+        System.out.println(callsignTo);
         String newCallsignTo = this.applyCallsignRule(callsignTo);
         
         // find some slot open or created that is used by newCallsignTo
@@ -246,6 +259,34 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Override
     public List<Slot> getSlotsOfLocal(Local local) {
         return slotRepository.findByLocal(local);
+    }
+  
+    @Override
+    public List<Slot> orderAndFilterForFront(List<Slot> slots) {
+        return orderAndFilter(slots);
+    }
+  
+  
+    @Override
+    public List<Slot> orderAndFilterReadyForSend(List<Slot> slots) {
+        return orderAndFilter(slots, Arrays.asList(slotstatusClosedForSend, slotstatusSent));
+    }
+    
+    @Override
+    public Slot changeSlotstatusToSend(Slot slot) {
+        Status slotStatus = slot.getStatus();
+        if (!slotStatus.getId().equals(slotstatusClosedForSend.getId())) {
+            log.warn("The status on slot id {} is not closed for send", slot.getId());
+            return null;
+        }
+        if (slotStatus.getId().equals(slotstatusSent.getId())) {
+            log.warn("The status on slot id {} already is on sent status", slot.getId());
+            return null;
+        }
+
+        slot.setClosedAt(DateTimeUtil.getDateTime());
+        slot.setStatus(slotstatusSent);
+        return slotRepository.save(slot);
     }
     
 	@Override

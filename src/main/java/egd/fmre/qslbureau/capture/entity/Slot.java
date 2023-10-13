@@ -45,8 +45,17 @@ public class Slot implements Serializable {
 
     @Column(name = "CLOSED_AT")
     private Date closedAt;
+
+    @Column(name = "SENT_AT")
+    private Date sendAt;
+
+    @Column(name = "MOVED_TO_INT_AT")
+    private Date movedToIntAt;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="IDSTATUS")
     private Status status;
+
+    @Column(name = "CONFIRM_CODE")
+    private String confirmCode;
 }
