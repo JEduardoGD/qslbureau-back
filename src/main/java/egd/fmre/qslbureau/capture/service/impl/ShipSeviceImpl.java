@@ -58,7 +58,7 @@ public class ShipSeviceImpl implements ShipSevice {
 
     @Override
     @Transactional
-    public Ship registerNewShip(InputValidationDto inputValidationDto) {
+    public Ship registerOrUpdateShip(InputValidationDto inputValidationDto) {
         Slot slot = null;
         Integer slotId = inputValidationDto.getIdSlot();
         if (slotId != null) {

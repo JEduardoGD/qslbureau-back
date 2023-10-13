@@ -44,6 +44,7 @@ public class ModelMapperConfiguration {
                 spDto.setName(sp.getName());
                 spDto.setDescription(sp.getDescription());
                 spDto.setHaveTracking(sp.isTracking());
+                spDto.setRequireAddress(sp.isRequireAddress());
                 return spDto;
             }
         });

@@ -141,7 +141,7 @@ public class ShippingController {
 
     @PostMapping
     public ResponseEntity<StandardResponse> ship(@RequestBody InputValidationDto inputValidationDto) {
-        Ship ship = shipSevice.registerNewShip(inputValidationDto);
+        Ship ship = shipSevice.registerOrUpdateShip(inputValidationDto);
         
         inputValidationDto = shipModelMapper.map(ship, InputValidationDto.class);
 

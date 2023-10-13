@@ -10,8 +10,7 @@ public interface ShipSevice {
 
     InputValidationDto validateInputs(InputValidationDto inputValidationDto);
 
-    Ship registerNewShip(InputValidationDto inputValidationDto);
+    Ship registerOrUpdateShip(InputValidationDto inputValidationDto);
 
     Ship findBySlot(Slot slot);
-
 }

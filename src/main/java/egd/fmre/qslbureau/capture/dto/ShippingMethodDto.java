@@ -13,4 +13,5 @@ public class ShippingMethodDto implements Serializable {
     private String description;
     private boolean haveTracking;
     private String localPartner;
+    private boolean requireAddress;
 }
