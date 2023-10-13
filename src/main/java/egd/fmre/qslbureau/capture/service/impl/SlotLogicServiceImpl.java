@@ -21,6 +21,7 @@ import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.SlotstatusEnum;
 import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
 import egd.fmre.qslbureau.capture.exception.QrzException;
+import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.repo.CallsignruleRepository;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
 import egd.fmre.qslbureau.capture.repo.SlotRepository;
@@ -99,14 +100,6 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         slotRepository.save(slot);
     }
     
-    private int getNextSlotNumber(List<Status> slotStatuses, Local local) {
-        Integer slotNumber = slotRepository.getLastSlotNumberByLocal(slotStatuses, local);
-        if (slotNumber != null) {
-            return slotNumber.intValue() + 1;
-        }
-        return 1;
-    }
-    
 	@Override
 	public Slot getSlotByCountry(String callsign, Local local) throws MaximumSlotNumberReachedException {
 		String country = null;
@@ -115,17 +108,42 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 		} catch (QrzException e) {
 			log.warn(e.getMessage());
 		}
-		country= TextUtil.sanitize(country);
+		country = TextUtil.sanitize(country);
+
+		if (country == null) {
+			return null;
+		}
 		List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
 		List<Slot> slots = slotRepository.findByLocalAndCountryAndStatuses(country, slotStatuses, local);
 
 		if (slots != null && !slots.isEmpty()) {
 			return slots.stream().sorted(Comparator.comparingInt(Slot::getId).reversed()).findFirst().get();
 		}
-
-		int slotNumber = this.getNextSlotNumber(slotStatuses, local);
-		Slot newSlot = generateSlotCountry(country, DateTimeUtil.getDateTime(), local, slotNumber);
-		return slotRepository.save(newSlot);
+		
+		List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
+        
+        if (openedOrCreatedSlotsInLocal.size() <= 0 && local.getMaxSlots() > 0) {
+            Slot newSlot = generateSlotCountry(country, DateTimeUtil.getDateTime(), local, 1);
+            return slotRepository.save(newSlot);
+        }
+        openedOrCreatedSlotsInLocal.sort(Comparator.comparing(Slot::getSlotNumber));
+        
+        if (openedOrCreatedSlotsInLocal.size() >= local.getMaxSlots()) {
+            throw new MaximumSlotNumberReachedException(MAX_NUMBER_SLOTS_REACHED);
+        }
+        
+        int i = 1;
+        for (Slot s : openedOrCreatedSlotsInLocal) {
+            if (i == s.getSlotNumber()) {
+                i++;
+                continue;
+            } else {
+                Slot newSlot = generateSlot(null, DateTimeUtil.getDateTime(), local, i);
+                return slotRepository.save(newSlot);
+            }
+        }
+        Slot newSlot = generateSlot(null, DateTimeUtil.getDateTime(), local, i);
+        return slotRepository.save(newSlot);
 	}
 	
 	@Override
@@ -184,8 +202,6 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         
         List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
         
-        openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
-        
         if (openedOrCreatedSlotsInLocal.size() <= 0 && local.getMaxSlots() > 0) {
             Slot newSlot = generateSlot(newCallsignTo, DateTimeUtil.getDateTime(), local, 1);
             return slotRepository.save(newSlot);
@@ -231,5 +247,15 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     public List<Slot> getSlotsOfLocal(Local local) {
         return slotRepository.findByLocal(local);
     }
+    
+	@Override
+	public Slot getNullSlot() {
+		List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
+		List<Slot> slots = slotRepository.getNullSlots(slotStatuses);
+		if (slots != null && !slots.isEmpty()) {
+			return slots.get(StaticValuesHelper.ZERO);
+		}
+		return null;
+	}
 }
 

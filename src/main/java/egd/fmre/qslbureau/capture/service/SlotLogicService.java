@@ -11,27 +11,29 @@ import egd.fmre.qslbureau.capture.exception.QrzException;
 
 public interface SlotLogicService {
 
-    public Slot getSlotForQsl(String callsignTo, Local local) throws MaximumSlotNumberReachedException;
-    
-    public Slot findById(int slotId);
+	public Slot getSlotForQsl(String callsignTo, Local local) throws MaximumSlotNumberReachedException;
 
-    List<SlotCountqslDTO> getQslsBySlot(List<Integer> SlotsInLocalIds);
+	public Slot findById(int slotId);
 
-    void changeSlotstatusToOpen(Slot slot);
+	List<SlotCountqslDTO> getQslsBySlot(List<Integer> SlotsInLocalIds);
 
-    List<Slot> getOpenedOrCreatedSlotsInLocal(Local local);
+	void changeSlotstatusToOpen(Slot slot);
 
-    List<Slot> getOpenedOrCreatedSlotsForCallsignInLocal(String callsign, Local local);
+	List<Slot> getOpenedOrCreatedSlotsInLocal(Local local);
 
-    List<Status> getCreatedAndOpenStatuses();
+	List<Slot> getOpenedOrCreatedSlotsForCallsignInLocal(String callsign, Local local);
+
+	List<Status> getCreatedAndOpenStatuses();
 
 	Slot getSlotByCountry(String callsignTo, Local local) throws MaximumSlotNumberReachedException, QrzException;
-  
-  List<Slot> getOpenedOrCreatedSlots();
-  
-  List<Slot> getSlotsOfLocal(Local local);
-  
-  void changeSlotstatusToClosed(Slot slot);
-  
-  void runCloseCloseableLocals(Local local);
+
+	List<Slot> getOpenedOrCreatedSlots();
+
+	List<Slot> getSlotsOfLocal(Local local);
+
+	void changeSlotstatusToClosed(Slot slot);
+
+	void runCloseCloseableLocals(Local local);
+
+	Slot getNullSlot();
 }
