@@ -1,5 +1,7 @@
 package egd.fmre.qslbureau.capture.service;
 
+import java.util.List;
+
 import egd.fmre.qslbureau.capture.entity.Capturer;
 
 public interface CapturerService {
@@ -9,4 +11,6 @@ public interface CapturerService {
     Capturer findByUsername(String username);
 
     Capturer getActiveCapturerById(int idCapturer);
+    
+    List<Capturer> getCapturersforCallsign(String callsign);
 }

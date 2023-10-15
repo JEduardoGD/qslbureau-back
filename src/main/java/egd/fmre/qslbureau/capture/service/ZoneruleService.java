@@ -6,4 +6,6 @@ public interface ZoneruleService {
 
 	Zonerule findActiveByCallsign(String callsign);
 
+    Zonerule findById(Integer id);
+
 }
