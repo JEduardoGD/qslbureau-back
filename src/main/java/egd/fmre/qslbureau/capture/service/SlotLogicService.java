@@ -15,8 +15,6 @@ public interface SlotLogicService {
 
 	public Slot findById(int slotId);
 
-	List<SlotCountqslDTO> getQslsBySlot(List<Integer> SlotsInLocalIds);
-
 	void changeSlotstatusToOpen(Slot slot);
 
 	List<Slot> getOpenedOrCreatedSlotsInLocal(Local local);
@@ -31,9 +29,17 @@ public interface SlotLogicService {
 
 	List<Slot> getSlotsOfLocal(Local local);
 
-	void changeSlotstatusToClosed(Slot slot);
-
 	void runCloseCloseableLocals(Local local);
+
+	List<SlotCountqslDTO> getQslsBySlotIdList(List<Integer> slotIds);
+
+    Slot changeSlotstatusToClosed(Slot slot, boolean createConfirmCode);
+
+    List<Slot> orderAndFilterForFront(List<Slot> slots);
+
+    List<Slot> orderAndFilterReadyForSend(List<Slot> slots);
+
+    Slot changeSlotstatusToSend(Slot slot);
 
 	Slot getNullSlot();
 }
