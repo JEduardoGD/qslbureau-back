@@ -59,6 +59,8 @@ public class RulesController {
            return new CallsignRuleDto(qslDto, newSlotDto, oldSlotDto);
         }).collect(Collectors.toList());
         
+        
+        
 
         StandardResponse standardResponse;
         try {
