@@ -67,7 +67,6 @@ public class ShippingController {
     @GetMapping("/ship/byslotid/{slotid}")
     public ResponseEntity<StandardResponse> getActiveShippingMethodsForSlotId(
             @PathVariable(value = "slotid") int slotid) throws QslcaptureException {
-
         Ship ship = shipSevice.getBySlotId(slotid);
 
         StandardResponse standardResponse;

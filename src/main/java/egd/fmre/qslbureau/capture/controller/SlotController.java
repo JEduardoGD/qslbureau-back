@@ -170,5 +170,4 @@ public class SlotController {
         }
         return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
     }
-
 }
