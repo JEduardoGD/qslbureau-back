@@ -16,4 +16,6 @@ public class CallsignRuleDto implements Serializable {
     private QslDto qslDto;
     private SlotDto newSlotDto;
     private SlotDto oldSlotDto;
+    
+    
 }
