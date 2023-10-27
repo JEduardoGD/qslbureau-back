@@ -19,7 +19,6 @@ import egd.fmre.qslbureau.capture.dto.QslSlotTraslade;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Local;
-import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.CallsignRuleService;
@@ -50,8 +49,7 @@ public class RulesController {
     private ResponseEntity<StandardResponse> applyRules(int localid, boolean isSimulated) {
         List<Status> slotStatus = slotLogicService.getCreatedAndOpenStatuses();
         Local local = localService.getById(localid);
-        List<Slot> allSlots = slotLogicService.getSlotsOfLocal(local);
-        List<QslCallsignRule> aplicableRulesForLocal = callsignRuleService.getApplicableRules(slotStatus, allSlots);
+        List<QslCallsignRule> aplicableRulesForLocal = callsignRuleService.getApplicableRules(slotStatus, local);
         List<QslSlotTraslade> qslSlotTrasladeList = callsignRuleService.aplyRules(aplicableRulesForLocal, isSimulated);
         
         List<CallsignRuleDto> callsignRuleDtoList = qslSlotTrasladeList.stream().map(q -> {
@@ -60,6 +58,8 @@ public class RulesController {
             SlotDto oldSlotDto = QsldtoTransformer.map(q.getOldSlot());
            return new CallsignRuleDto(qslDto, newSlotDto, oldSlotDto);
         }).collect(Collectors.toList());
+        
+        
         
 
         StandardResponse standardResponse;

@@ -18,7 +18,7 @@ public interface SlotRepository extends JpaRepository<Slot, Integer> {
             + "FROM Slot s INNER JOIN Qsl qsl on qsl.slot = s " 
             + "where s.id in :slotsIds AND qsl.status.id = 1001 "
             + "GROUP BY s")
-    List<SlotCountqslDTO> getQslsBySlot(@Param("slotsIds") List<Integer> slotsIds);
+    List<SlotCountqslDTO> getQslsBySlotIdList(@Param("slotsIds") List<Integer> slotsIds);
     
     @Query("SELECT s FROM Slot s WHERE s.status IN :statuses AND s.local = :local")
 	List<Slot> findByStatusesForLocal(@Param("statuses") List<Status> statuses, @Param("local") Local local);

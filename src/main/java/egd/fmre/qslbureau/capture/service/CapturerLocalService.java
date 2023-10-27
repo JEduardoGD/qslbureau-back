@@ -8,5 +8,7 @@ import egd.fmre.qslbureau.capture.entity.CapturerLocal;
 public interface CapturerLocalService {
 
     Set<CapturerLocal> findCapturerLocalActiveByCapturer(Capturer capturer);
+    
+    
 
 }
