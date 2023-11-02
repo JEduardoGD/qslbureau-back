@@ -35,6 +35,8 @@ public interface SlotLogicService {
 
     Slot changeSlotstatusToClosed(Slot slot, boolean createConfirmCode);
 
+    Slot changeSlotstatusToIntl(Slot slot);
+
     List<Slot> orderAndFilterForFront(List<Slot> slots);
 
     List<Slot> orderAndFilterReadyForSend(List<Slot> slots);

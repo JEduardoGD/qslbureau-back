@@ -49,6 +49,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     private Status slotstatusClosed;
     private Status slotstatusClosedForSend;
     private Status slotstatusSent;
+    private Status slotstatusMovedToIntl;
     
     @PostConstruct
     private void Init(){
@@ -57,6 +58,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         slotstatusClosed        = new Status(SlotstatusEnum.CLOSED.getIdstatus());
         slotstatusClosedForSend = new Status(SlotstatusEnum.CLOSED_FOR_SEND.getIdstatus());
         slotstatusSent          = new Status(SlotstatusEnum.SENT.getIdstatus());
+        slotstatusMovedToIntl   = new Status(SlotstatusEnum.MOVED_TO_INTERNATIONAL.getIdstatus());
     }
     
     @Override
@@ -94,21 +96,42 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Override
     public Slot changeSlotstatusToClosed(Slot slot, boolean createConfirmCode) {
         Status slotStatus = slot.getStatus();
+
         if (!slotStatus.getId().equals(slotstatusOpen.getId())) {
             log.warn("The status on slot id {} is not open", slot.getId());
-            return null;
+            return slot;
         }
         if (slotStatus.getId().equals(slotstatusClosed.getId())) {
             log.warn("The status on slot id {} already is closed", slot.getId());
-            return null;
+            return slot;
         }
-
-        slot.setClosedAt(DateTimeUtil.getDateTime());
+        
         slot.setStatus(slotstatusClosed);
+        slot.setClosedAt(DateTimeUtil.getDateTime());
+
         if (createConfirmCode) {
             slot.setConfirmCode(RandomStringUtils.randomAlphabetic(6).toUpperCase());
             slot.setStatus(slotstatusClosedForSend);
         }
+        return slotRepository.save(slot);
+    }
+
+    @Override
+    public Slot changeSlotstatusToIntl(Slot slot) {
+        Status slotStatus = slot.getStatus();
+
+        if (!slotStatus.getId().equals(slotstatusClosedForSend.getId())) {
+            log.warn("The status on slot id {} is not closed for send", slot.getId());
+            return slot;
+        }
+        if (slotStatus.getId().equals(slotstatusMovedToIntl.getId())) {
+            log.warn("The status on slot id {} already is moved to international", slot.getId());
+            return slot;
+        }
+        
+        slot.setStatus(slotstatusMovedToIntl);
+        slot.setClosedAt(DateTimeUtil.getDateTime());
+
         return slotRepository.save(slot);
     }
     
