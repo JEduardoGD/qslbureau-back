@@ -105,7 +105,8 @@ public class CallsignRuleServiceImpl implements CallsignRuleService {
 				qsl.setSlot(newSlot);
 				qsl = qslService.save(qsl);
 				qslSlotTraslade.setNewSlot(qsl.getSlot());
-				slotLogicService.runCloseCloseableLocals(local);
+				slotLogicService.runCloseCloseableSlots(local);
+				slotLogicService.runOpenOpenableSlots(local);
 			} else {
 				qslSlotTraslade.setNewSlot(newSlot);
 			}

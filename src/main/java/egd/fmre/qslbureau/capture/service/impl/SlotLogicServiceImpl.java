@@ -1,11 +1,8 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -38,9 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService {
 
     @Autowired CallsignruleRepository callsignruleRepository;
-    @Autowired SlotRepository      slotRepository;
-    @Autowired LocalRepository     localRepository;
-    @Autowired QrzService          qrzService;
+    @Autowired SlotRepository         slotRepository;
+    @Autowired LocalRepository        localRepository;
+    @Autowired QrzService             qrzService;
     
     private static String MAX_NUMBER_SLOTS_REACHED = "Se ha alcanzado el número máximo de slots para este local";
     
@@ -50,6 +47,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     private Status slotstatusClosedForSend;
     private Status slotstatusSent;
     private Status slotstatusMovedToIntl;
+    private Status slotstatusUnconfirmable;
     
     @PostConstruct
     private void Init(){
@@ -59,6 +57,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         slotstatusClosedForSend = new Status(SlotstatusEnum.CLOSED_FOR_SEND.getIdstatus());
         slotstatusSent          = new Status(SlotstatusEnum.SENT.getIdstatus());
         slotstatusMovedToIntl   = new Status(SlotstatusEnum.MOVED_TO_INTERNATIONAL.getIdstatus());
+        slotstatusUnconfirmable = new Status(SlotstatusEnum.UNCONFIRMABLE.getIdstatus());
     }
     
     @Override
@@ -134,6 +133,25 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 
         return slotRepository.save(slot);
     }
+
+    @Override
+    public Slot changeSlotstatusToUnconfirmable(Slot slot) {
+        Status slotStatus = slot.getStatus();
+
+        if (!slotStatus.getId().equals(slotstatusClosedForSend.getId())) {
+            log.warn("The status on slot id {} is not closed for send", slot.getId());
+            return slot;
+        }
+        if (slotStatus.getId().equals(slotstatusUnconfirmable.getId())) {
+            log.warn("The status on slot id {} already marked as unconfirmable", slot.getId());
+            return slot;
+        }
+        
+        slot.setStatus(slotstatusUnconfirmable);
+        slot.setClosedAt(DateTimeUtil.getDateTime());
+
+        return slotRepository.save(slot);
+    }
     
 	@Override
 	public Slot getSlotByCountry(String callsign, Local local) throws MaximumSlotNumberReachedException {
@@ -181,26 +199,21 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         return slotRepository.save(newSlot);
 	}
 	
-	@Override
-	public void runCloseCloseableLocals(Local local) {
-        //checking if some slot could be closed
-	    List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
-        List<Slot> closeableList = new ArrayList<>();
-        closeableList.addAll(openedOrCreatedSlotsInLocal);
-        List<Integer> openedOrCreatedSlotsInLocalIdsInLocal = openedOrCreatedSlotsInLocal.stream().map(Slot::getId).collect(Collectors.toList());
-        List<SlotCountqslDTO> slotCountList = getQslsBySlotIdList(openedOrCreatedSlotsInLocalIdsInLocal);
-        List<Slot> slotsInUse = slotCountList.stream().map(SlotCountqslDTO::getSlot).collect(Collectors.toList());
-        closeableList.removeAll(slotsInUse);
+    @Override
+    public void runCloseCloseableSlots(Local local) {
+        List<Integer> closeableSlotIds = slotRepository.gettingCloseableSlotIds(local.getId());
+        List<Slot> closeableList = closeableSlotIds.stream().map(slotId -> slotRepository.findById(slotId).get())
+                .collect(Collectors.toList());
         closeableList.forEach(slot -> this.changeSlotstatusToClosed(slot, false));
-	}
+    }
     
-    //filter that happends in time
-    public static BiPredicate<CallsignRule, Date> isOntime = (c, d) -> {
-        if (c.getEnd() == null) {
-            return c.getStart().before(d);
-        }
-        return c.getStart().before(d) && c.getEnd().after(d);
-    };
+    @Override
+    public void runOpenOpenableSlots(Local local) {
+        List<Integer> opneableSlotIds = slotRepository.gettingOpenableSlotIds(local.getId());
+        List<Slot> opneableSlots = opneableSlotIds.stream().map(slotId -> slotRepository.findById(slotId).get())
+                .collect(Collectors.toList());
+        opneableSlots.forEach(slot -> this.changeSlotstatusToOpen(slot));
+    }
 	
     private String applyCallsignRule(String callsignTo) {
         // get applicable rules for callsignTo
@@ -224,7 +237,6 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Override
     public Slot getSlotForQsl(String callsignTo, Local local) throws MaximumSlotNumberReachedException {
         //apply rules of redirect
-        System.out.println(callsignTo);
         String newCallsignTo = this.applyCallsignRule(callsignTo);
         
         // find some slot open or created that is used by newCallsignTo
@@ -233,8 +245,6 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         if (openedOrCreatedSlotsForCallsignInLocal != null && !openedOrCreatedSlotsForCallsignInLocal.isEmpty()) {
             return openedOrCreatedSlotsForCallsignInLocal.get(0);
         }
-        
-        this.runCloseCloseableLocals(local);
         
         List<Slot> openedOrCreatedSlotsInLocal = getOpenedOrCreatedSlotsInLocal(local);
         
