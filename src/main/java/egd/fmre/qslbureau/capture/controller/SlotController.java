@@ -209,9 +209,6 @@ public class SlotController {
         
         SlotDto slotDto = QsldtoTransformer.map(slot, qslService.getActiveQslsForSlot(slot).size());
         
-        //Ship ship = shipSevice.findBySlot(slot);
-        //slotDto.
-        
         StandardResponse standardResponse;
         try {
             standardResponse = new StandardResponse(JsonParserUtil.parse(slotDto));
