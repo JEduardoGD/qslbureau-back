@@ -26,11 +26,10 @@ public class ReportController {
 
 	}
 
-	@GetMapping(value = "/get-image-with-media-type", produces = "application/vnd.ms-excel")
+	@GetMapping(value = "/createshippinglabel", produces = "application/vnd.ms-excel")
 	public @ResponseBody byte[] getImageWithMediaType() throws IOException {
 		List<QslsReport> map = reportsService.gettingCallsignsMap();
 		return reportsService.writeReport(map);
-		
 	}
 
 }
