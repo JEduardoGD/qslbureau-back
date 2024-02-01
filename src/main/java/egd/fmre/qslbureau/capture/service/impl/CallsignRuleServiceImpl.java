@@ -120,10 +120,5 @@ public class CallsignRuleServiceImpl implements CallsignRuleService {
 	public List<QslRuleDto> getQslsRules(int idlocal) {
 		Collection<QslRuleDto> objects = callsignruleRepository.getQslsRules(idlocal);
 		return objects.stream().collect(Collectors.toList());
-		/*
-		 * return objects.stream().map(o->{ Integer idqsl = o[0] !=null? && (o
-		 * instanceof Integer) ? (Integer)o[0]:null; return new QslRuleDto();
-		 * }).collect(Collectors.toList());
-		 */
 	}
 }
