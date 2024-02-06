@@ -10,4 +10,6 @@ public interface ReportsService {
 
 	byte[] writeReport(List<QslsReport> list);
 
+	String write(byte[] b);
+
 }

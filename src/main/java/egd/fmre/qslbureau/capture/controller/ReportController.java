@@ -14,7 +14,7 @@ import egd.fmre.qslbureau.capture.service.ReportsService;
 
 @RestController
 @RequestMapping("reports")
-public class ReportController {
+public class ReportController{
 
 	@Autowired
 	ReportsService reportsService;
@@ -26,10 +26,10 @@ public class ReportController {
 
 	}
 
-	@GetMapping(value = "/createshippinglabel", produces = "application/vnd.ms-excel")
-	public @ResponseBody byte[] getImageWithMediaType() throws IOException {
+	//@GetMapping(value = "/createshippinglabel", produces = "application/vnd.ms-excel")
+	@GetMapping(value = "/createshippinglabel")
+	public @ResponseBody String getImageWithMediaType() throws IOException {
 		List<QslsReport> map = reportsService.gettingCallsignsMap();
-		return reportsService.writeReport(map);
+		return reportsService.write(reportsService.writeReport(map));
 	}
-
 }

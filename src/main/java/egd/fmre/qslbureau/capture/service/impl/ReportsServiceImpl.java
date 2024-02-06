@@ -1,7 +1,11 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +26,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.QslDto;
@@ -30,23 +35,28 @@ import egd.fmre.qslbureau.capture.dto.QslsReportKey;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.entity.Zonerule;
+import egd.fmre.qslbureau.capture.exception.FileException;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.ReportsService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
+import egd.fmre.qslbureau.capture.util.DateTimeUtil;
+import egd.fmre.qslbureau.capture.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class ReportsServiceImpl implements ReportsService {
+public class ReportsServiceImpl extends FileUtil implements ReportsService {
 
-	@Autowired
-	private SlotLogicService slotLogicService;
-	@Autowired
-	private QslCaptureService qslCaptureService;
-	@Autowired
-	private ZoneruleService zoneruleService;
+	@Autowired private SlotLogicService  slotLogicService;
+	@Autowired private QslCaptureService qslCaptureService;
+	@Autowired private ZoneruleService   zoneruleService;
+	
+	@Value("${FILE.LOCATION.OUTPUT.REPORTS}")
+	private String fileLocationOutputReports;
+	
+	private static final DateFormat DF = new SimpleDateFormat("yyyyDDMM_HHmmss");
 	
 	private Status statusQslVigente;
 	
@@ -77,6 +87,20 @@ public class ReportsServiceImpl implements ReportsService {
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public String write(byte[] b) {
+		String filename = DF.format(DateTimeUtil.getDateTime()) + "_report.xslx";
+		String fileLocation = fileLocationOutputReports + File.pathSeparator + filename;
+		File f = Paths.get(fileLocation).toFile();
+		try {
+			write(f, b);
+		} catch (FileException e) {
+			log.error(e.getMessage());
+			return null;
+		}
+		return filename;
 	}
 
 	@Override
