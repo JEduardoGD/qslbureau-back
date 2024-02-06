@@ -2,10 +2,12 @@ package egd.fmre.qslbureau.capture.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Zonerule;
 import egd.fmre.qslbureau.capture.repo.ZoneruleRepository;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
@@ -32,4 +34,13 @@ public class ZoneruleServiceImpl implements ZoneruleService {
     public Zonerule findById(Integer id) {
         return zoneruleRepository.findById(id).get();
     }
+
+	@Override
+	public List<Zonerule> findByCapturer(Capturer capturer) {
+		Date now = DateTimeUtil.getDateTime();
+		return zoneruleRepository.findByCapturer(capturer).stream().filter(zr -> zr != null)
+				.filter(zr -> (zr.getStart().before(now) && zr.getEnd() == null)
+						|| (zr.getEnd() != null && zr.getStart().before(now) && now.before(zr.getEnd())))
+				.collect(Collectors.toList());
+	}
 }

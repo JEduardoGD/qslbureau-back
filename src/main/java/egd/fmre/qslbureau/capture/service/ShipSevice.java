@@ -13,4 +13,6 @@ public interface ShipSevice {
     Ship registerOrUpdateShip(InputValidationDto inputValidationDto);
 
     Ship findBySlot(Slot slot);
+
+	InputValidationDto createShipLabel(int slotId);
 }

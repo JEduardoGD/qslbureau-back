@@ -1,8 +1,12 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,7 @@ import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
+import egd.fmre.qslbureau.capture.util.ReportUtil;
 
 @Service
 public class ShipSeviceImpl implements ShipSevice {
@@ -146,4 +151,15 @@ public class ShipSeviceImpl implements ShipSevice {
         return shipRepository.findBySlot(slot);
     }
 
+    @Override
+    public InputValidationDto createShipLabel(int slotId) {
+    	Slot slot = slotLogicService.findById(slotId);
+    	try {
+			ReportUtil.createShipLabel(slot);
+		} catch (InvalidFormatException | IOException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+    }
 }

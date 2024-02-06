@@ -175,6 +175,12 @@ public class ShippingController {
         standardResponse = new StandardResponse(JsonParserUtil.parse(shipSevice.validateInputs(inputValidationDto)));
         return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
     }
+
+    @GetMapping("/createshiplabel/byslotid/{slotid}")
+    public int createshiplabel( @PathVariable(value = "slotid") int slotid) throws QslcaptureException {
+    	shipSevice.createShipLabel(slotid);
+        return 1;
+    }
 }
 
 

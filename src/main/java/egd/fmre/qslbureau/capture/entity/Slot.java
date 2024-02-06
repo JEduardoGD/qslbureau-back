@@ -14,10 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "T_SLOT")
+@ToString
 public class Slot implements Serializable {
 
     private static final long serialVersionUID = -8116369935021235688L;
@@ -58,4 +60,6 @@ public class Slot implements Serializable {
 
     @Column(name = "CONFIRM_CODE")
     private String confirmCode;
+    
+    
 }
