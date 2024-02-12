@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import egd.fmre.qslbureau.capture.dto.InputValidationDto;
 import egd.fmre.qslbureau.capture.dto.RegionalRepresentativeDto;
+import egd.fmre.qslbureau.capture.dto.ShippingLabelDto;
 import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.dto.ZoneruleDto;
@@ -177,9 +178,8 @@ public class ShippingController {
     }
 
     @GetMapping("/createshiplabel/byslotid/{slotid}")
-    public int createshiplabel( @PathVariable(value = "slotid") int slotid) throws QslcaptureException {
-    	shipSevice.createShipLabel(slotid);
-        return 1;
+    public ShippingLabelDto createshiplabel( @PathVariable(value = "slotid") int slotid) throws QslcaptureException {
+    	return shipSevice.createShipLabel(slotid);
     }
 }
 

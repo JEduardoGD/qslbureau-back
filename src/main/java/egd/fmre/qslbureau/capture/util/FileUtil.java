@@ -34,6 +34,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import egd.fmre.qslbureau.capture.dto.imageutil.Dimensions;
+import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -163,5 +164,22 @@ public abstract class FileUtil {
 	    } catch (IOException | URISyntaxException e) {
 	        return null;
 	    }
+	}
+	
+	public static boolean deleteFile(String fileName) {
+		if (fileName == null || fileName.equals(StaticValuesHelper.EMPTY_STRING)) {
+			return false;
+		}
+		Path p = Paths.get(fileName);
+		File f = p.toFile();
+		if (f.exists()) {
+			if (f.canWrite() && f.delete()) {
+				return true;
+			} else {
+				log.error("No se puede eliminar el archivo {}", f.getPath());
+			}
+			return false;
+		}
+		return true;
 	}
 }

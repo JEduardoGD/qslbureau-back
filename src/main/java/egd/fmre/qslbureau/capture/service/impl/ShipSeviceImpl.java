@@ -1,22 +1,21 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.InputValidationDto;
+import egd.fmre.qslbureau.capture.dto.ShippingLabelDto;
 import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Ship;
 import egd.fmre.qslbureau.capture.entity.ShippingMethod;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Zone;
 import egd.fmre.qslbureau.capture.entity.Zonerule;
+import egd.fmre.qslbureau.capture.exception.CreateShiplabelException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.repo.ShipRepository;
 import egd.fmre.qslbureau.capture.service.CapturerService;
@@ -27,8 +26,10 @@ import egd.fmre.qslbureau.capture.service.ZoneService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.ReportUtil;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class ShipSeviceImpl implements ShipSevice {
     
     @Autowired
@@ -44,6 +45,9 @@ public class ShipSeviceImpl implements ShipSevice {
     ZoneruleService zoneruleService;
     @Autowired
     CapturerService capturerService;
+    
+    @Value("${shippinglabel.ubication}")
+    private String shippingLabelUbication;
 
     private ShippingMethod shippingMethodRegional;
 
@@ -152,13 +156,12 @@ public class ShipSeviceImpl implements ShipSevice {
     }
 
     @Override
-    public InputValidationDto createShipLabel(int slotId) {
+    public ShippingLabelDto createShipLabel(int slotId) {
     	Slot slot = slotLogicService.findById(slotId);
     	try {
-			ReportUtil.createShipLabel(slot);
-		} catch (InvalidFormatException | IOException | URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return ReportUtil.createShipLabel(shippingLabelUbication, slot);
+		} catch (CreateShiplabelException e) {
+			log.error(e.getMessage());
 		}
 		return null;
     }

@@ -2,11 +2,11 @@ package egd.fmre.qslbureau.capture.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -36,9 +36,11 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPageSz;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
 
 import egd.fmre.qslbureau.capture.dto.QslsReport;
+import egd.fmre.qslbureau.capture.dto.ShippingLabelDto;
 import egd.fmre.qslbureau.capture.dto.SlotReport;
 import egd.fmre.qslbureau.capture.dto.imageutil.Dimensions;
 import egd.fmre.qslbureau.capture.entity.Slot;
+import egd.fmre.qslbureau.capture.exception.CreateShiplabelException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
 import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
@@ -277,50 +279,61 @@ public abstract class ReportUtil {
 		return bos.toByteArray();
 	}
 
-	public static void createShipLabel(Slot slot) throws InvalidFormatException, IOException, URISyntaxException {
-		XWPFDocument document = new XWPFDocument();
+	public static ShippingLabelDto createShipLabel(String labelUbication, Slot slot) throws CreateShiplabelException
+	{
+		ByteArrayOutputStream out = null;
+		try (XWPFDocument document = new XWPFDocument()) {
 
-		// XWPFStyles styles = document.createStyles();
-		document.createStyles();
+			// XWPFStyles styles = document.createStyles();
+			document.createStyles();
 
-		// there must be section properties for the page having at least the page size
-		// set
-		CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
-		CTPageSz pageSz = sectPr.addNewPgSz();
-		pageSz.setW(BigInteger.valueOf(StaticsShipLabelUtil.LETTER_DIMENSION.getWidth()));
-		pageSz.setH(BigInteger.valueOf(StaticsShipLabelUtil.LETTER_DIMENSION.getHeight()));
+			// there must be section properties for the page having at least the page size
+			// set
+			CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
+			CTPageSz pageSz = sectPr.addNewPgSz();
+			pageSz.setW(BigInteger.valueOf(StaticsShipLabelUtil.LETTER_DIMENSION.getWidth()));
+			pageSz.setH(BigInteger.valueOf(StaticsShipLabelUtil.LETTER_DIMENSION.getHeight()));
 
-		createImage(document, "FMRE.png", 0.15);
+			createImage(document, "FMRE.png", 0.15);
 
-		createTitle(document, StaticsShipLabelUtil.HEADER);
+			createTitle(document, StaticsShipLabelUtil.HEADER);
 
-		createHorizontalRect(document);
+			createHorizontalRect(document);
 
-		createParagrap(document, StaticsShipLabelUtil.PARAGRAPH_1);
+			createParagrap(document, StaticsShipLabelUtil.PARAGRAPH_1);
 
-		createParagrap(document, StaticsShipLabelUtil.PARAGRAPH_2);
+			createParagrap(document, StaticsShipLabelUtil.PARAGRAPH_2);
 
-		String confirmUrl = StaticsShipLabelUtil.CONFIRM_URL + StaticValuesHelper.SLASH + slot.getConfirmCode();
+			String confirmUrl = StaticsShipLabelUtil.CONFIRM_URL + StaticValuesHelper.SLASH + slot.getConfirmCode();
 
-		createParagrap(document, String.format(StaticsShipLabelUtil.PARAGRAPH_3, confirmUrl));
+			createParagrap(document, String.format(StaticsShipLabelUtil.PARAGRAPH_3, confirmUrl));
 
-		createParagrap(document, StaticsShipLabelUtil.PARAGRAPH_4);
+			createParagrap(document, StaticsShipLabelUtil.PARAGRAPH_4);
 
-		byte[] ba = FileUtil.generateQRCodeImage(
-				StaticsShipLabelUtil.CONFIRM_URL + StaticValuesHelper.SLASH + slot.getConfirmCode());
-		createImage(document, ba, 01.0);
+			byte[] ba = FileUtil.generateQRCodeImage(
+					StaticsShipLabelUtil.CONFIRM_URL + StaticValuesHelper.SLASH + slot.getConfirmCode());
+			createImage(document, ba, 01.0);
 
-		// document must be written so underlaaying objects will be committed
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		document.write(out);
-		document.close();
+			// document must be written so underlaaying objects will be committed
+			out = new ByteArrayOutputStream();
+			document.write(out);
+		} catch (IOException e) {
+			throw new CreateShiplabelException(e);
+		}
 
-		document = new XWPFDocument(new ByteArrayInputStream(out.toByteArray()));
-		PdfOptions options = PdfOptions.create();
-		PdfConverter converter = (PdfConverter) PdfConverter.getInstance();
-		converter.convert(document, new FileOutputStream("XWPFToPDFConverterSampleMin.pdf"), options);
-
-		document.close();
+		try (XWPFDocument pdfDocument = new XWPFDocument(new ByteArrayInputStream(out.toByteArray()))) {
+			PdfOptions options = PdfOptions.create();
+			PdfConverter converter = (PdfConverter) PdfConverter.getInstance();
+			String filename = labelUbication + File.separator + "SL" + "_" + String.format("%06d", slot.getId()) + "_"
+					+ slot.getConfirmCode() + ".pdf";
+			if (FileUtil.deleteFile(filename)) {
+				converter.convert(pdfDocument, new FileOutputStream(filename), options);
+				return new ShippingLabelDto(true, null, filename);
+			}
+			return new ShippingLabelDto(false, "Error al generar el archivo de etiqueta", filename);
+		} catch (IOException e) {
+			throw new CreateShiplabelException(e);
+		}
 	}
 
 	private static void createTitle(XWPFDocument document, String textOfTitle) {

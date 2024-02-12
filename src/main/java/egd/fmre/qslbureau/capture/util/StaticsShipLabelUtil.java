@@ -11,7 +11,7 @@ public abstract class StaticsShipLabelUtil {
 	public static final Dimensions LETTER_DIMENSION = new Dimensions(12240, 15840);
 	// 12240 Twips = 12240/20 = 612 pt = 612/72 = 8.5"
 	// 15840 Twips = 15840/20 = 792 pt = 792/72 = 11"
-	public static final Dimensions QRCODE_DIMENSION = new Dimensions(100, 100);
+	public static final Dimensions QRCODE_DIMENSION = new Dimensions(130, 130);
 	public static final String CONFIRM_URL = "https://buro.fmre.mx/confirm";
 
 	public static final String HEADER = "QSL BURÓ | Federación Mexicana de Radioexperimentadores.";
