@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -40,6 +38,7 @@ import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.CompareNacionalityUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

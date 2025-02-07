@@ -5,8 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +26,7 @@ import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.SlotsUtil;
 import egd.fmre.qslbureau.capture.util.TextUtil;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

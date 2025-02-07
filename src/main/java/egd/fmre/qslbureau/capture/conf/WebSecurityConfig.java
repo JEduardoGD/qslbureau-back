@@ -1,7 +1,10 @@
 package egd.fmre.qslbureau.capture.conf;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -12,11 +15,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import egd.fmre.qslbureau.capture.component.JwtAuthenticationEntryPoint;
 import egd.fmre.qslbureau.capture.component.JwtRequestFilter;
 import egd.fmre.qslbureau.capture.service.impl.JwtUserDetailsService;
 
+@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
     @Autowired          JwtUserDetailsService      jwtUserDetailsService;
@@ -47,6 +52,7 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /*
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
@@ -68,4 +74,27 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+    */
+    
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		return http
+				.authorizeHttpRequests(
+						c -> c.requestMatchers("/authenticate", "/actuator/**", "/portal/**", "/actuator/**")
+								.permitAll().anyRequest().authenticated())
+				// .formLogin(c -> c.loginPage("/login").permitAll())
+				// .logout(LogoutConfigurer::permitAll)
+				.exceptionHandling(r -> r.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+				.sessionManagement(r -> r.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+				.cors(cors -> cors.configurationSource(request -> {
+					CorsConfiguration configuration = new CorsConfiguration();
+					configuration.setAllowedOrigins(Arrays.asList("*"));
+					configuration.setAllowedMethods(Arrays.asList("*"));
+					configuration.setAllowedHeaders(Arrays.asList("*"));
+					return configuration;
+				})).csrf(c -> c.disable()).build();
+	}
+    
+    
 }

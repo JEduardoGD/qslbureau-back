@@ -1,7 +1,5 @@
 package egd.fmre.qslbureau.capture.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +15,7 @@ import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.service.PortalService;
 import egd.fmre.qslbureau.capture.service.QuerylogService;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("portal")

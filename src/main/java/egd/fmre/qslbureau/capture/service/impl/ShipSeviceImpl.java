@@ -1,8 +1,5 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +19,8 @@ import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ShipSeviceImpl implements ShipSevice {
