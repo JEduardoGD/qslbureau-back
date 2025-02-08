@@ -16,41 +16,28 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "T_SHIP")
-public class Ship implements Serializable {
-
-    private static final long serialVersionUID = -2394359175484220680L;
-
+@Table(name = "D_REPRESENTATIVE_ZONE")
+public class RepresentativeZone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDSHIP")
+    @Column(name = "IDREPRESENTATIVEZONE")
     private Integer id;
-
-    @Column(name = "DATETIME")
-    private Date datetime;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDSLOT")
-    private Slot slot;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDSHIPPINGMETHOD")
-    private ShippingMethod shippingMethod;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDREPRESENTATIVE")
-    private Representative representative;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDZONE")
     private Zone zone;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDREPRESENTATIVE")
+    private Representative representative;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDCAPTURER")
+    private Capturer capturer;
 
-    @Column(name = "ADDRESS")
-    private String address;
+    @Column(name = "START")
+    private Date start;
 
-    @Column(name = "TRACKING_CODE")
-    private String trackingCode;
-
-    @Column(name = "COMMENTS")
-    private String comments;
+    @Column(name = "END")
+    private Date end;   
 }

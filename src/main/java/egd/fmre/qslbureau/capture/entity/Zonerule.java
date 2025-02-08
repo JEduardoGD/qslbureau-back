@@ -28,10 +28,6 @@ public class Zonerule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDZONERULE")
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    //@MapsId("capturerId")
-    @JoinColumn(name = "IDCAPTURER")
     private Capturer capturer;
     
     @ManyToOne(fetch = FetchType.LAZY)
