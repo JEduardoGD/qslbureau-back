@@ -2,6 +2,7 @@ package egd.fmre.qslbureau.capture.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -28,7 +29,6 @@ public class Zonerule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDZONERULE")
     private Integer id;
-    private Capturer capturer;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="IDZONE")

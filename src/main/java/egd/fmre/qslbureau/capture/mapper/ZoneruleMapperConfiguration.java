@@ -20,7 +20,6 @@ public class ZoneruleMapperConfiguration {
             protected ZoneruleDto convert(Zonerule zonerule) {
                 ZoneruleDto zoneruleDto = new ZoneruleDto();
                 zoneruleDto.setId(zonerule.getId());
-                zoneruleDto.setCapturerId(zonerule.getCapturer() != null ? zonerule.getCapturer().getId() : null);
                 zoneruleDto.setZoneId(zonerule.getZone() != null ? zonerule.getZone().getId() : null);
                 zoneruleDto.setCallsign(zonerule.getCallsign());
                 zoneruleDto.setStart(zonerule.getStart());

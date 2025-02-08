@@ -30,7 +30,6 @@ public class CapturerLocal implements Serializable {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    //@MapsId("capturerId")
     @JoinColumn(name = "IDCAPTURER")
     private Capturer capturer;
 

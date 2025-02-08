@@ -2,6 +2,7 @@ package egd.fmre.qslbureau.capture.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +12,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -18,16 +21,21 @@ import lombok.Data;
 @Entity
 @Table(name = "D_REPRESENTATIVE_ZONE")
 public class RepresentativeZone implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5883039339026685347L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDREPRESENTATIVEZONE")
     private Integer id;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDZONE")
     private Zone zone;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDREPRESENTATIVE")
     private Representative representative;
     
@@ -39,5 +47,5 @@ public class RepresentativeZone implements Serializable {
     private Date start;
 
     @Column(name = "END")
-    private Date end;   
+    private Date end;
 }

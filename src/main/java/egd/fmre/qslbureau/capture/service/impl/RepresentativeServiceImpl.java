@@ -1,5 +1,7 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,10 @@ public class RepresentativeServiceImpl implements RepresentativeService {
     @Override
     public Representative findById(Integer id) {
         return representativeRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Representative> getRepresentativesForCallsign(String callsign) {
+        return representativeRepository.getRepresentativesForCallsign(callsign);
     }
 }

@@ -43,9 +43,4 @@ public class CapturerServiceImpl implements CapturerService {
     public Capturer findByUsername(String username) {
         return capturerRepository.findByUsername(username);
     }
-
-    @Override
-    public List<Capturer> getCapturersforCallsign(String callsign) {
-        return capturerRepository.getCapturersForCallsign(callsign);
-    }
 }

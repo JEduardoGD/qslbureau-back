@@ -1,5 +1,6 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -182,6 +183,12 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         if (statusQslVigente.equals(qsl.getStatus())) {
             qsl.setStatus(statusQslEliminada);
             qsl = qslRepository.save(qsl);
+			Slot affectedSlot = qsl.getSlot();
+			List<Qsl> qslsOfSlotVigentes = qslRepository.findBySlotAndStatuses(affectedSlot,
+					Arrays.asList(statusQslVigente));
+			if (qslsOfSlotVigentes.isEmpty()) {
+				slotLogicService.changeSlotstatusToClosed(affectedSlot, false);
+			}
             QslDto qslDtoRet = QsldtoTransformer.map(qsl);
             return new StandardResponse(JsonParserUtil.parse(qslDtoRet));
         } else {

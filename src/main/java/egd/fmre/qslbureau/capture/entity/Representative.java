@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -15,7 +17,12 @@ import lombok.Data;
 @Entity
 @Table(name = "C_REPRESENTATIVE")
 public class Representative implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4921645362017391197L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDREPRESENTATIVE")
     private Integer id;
@@ -34,4 +41,7 @@ public class Representative implements Serializable {
     
     @Column(name = "END")
     private Date end;
+    
+    @OneToOne(mappedBy = "representative")
+    private RepresentativeZone representativeZone;
 }
