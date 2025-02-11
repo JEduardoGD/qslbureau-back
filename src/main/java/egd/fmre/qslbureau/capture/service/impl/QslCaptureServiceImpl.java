@@ -25,6 +25,7 @@ import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
+import egd.fmre.qslbureau.capture.enums.SlotstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.exception.SlotLogicServiceException;
@@ -59,10 +60,16 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     private Status statusQslVigente;
     private Status statusQslEliminada;
     
+    private Status slotStatusCreated;
+    private Status slotStatusOpen;
+    
     @PostConstruct
     private void Init(){
         statusQslVigente = new Status(QslstatusEnum.QSL_VIGENTE.getIdstatus());
         statusQslEliminada = new Status(QslstatusEnum.QSL_ELIMINADA.getIdstatus());
+        
+        slotStatusCreated = new Status(SlotstatusEnum.OPEN.getIdstatus());
+        slotStatusOpen = new Status(SlotstatusEnum.CREATED.getIdstatus());
     }
     
     @Override
@@ -157,7 +164,7 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         Local local = localRepository.findById(localId);
 
         Pageable sortedByPriceDesc = PageRequest.of(0, 20, Sort.by("id").descending());
-        List<Qsl> qsls = qslRepository.findByPaggeable(local, sortedByPriceDesc);
+        List<Qsl> qsls = qslRepository.findByPaggeable(local, Arrays.asList(slotStatusCreated, slotStatusOpen), sortedByPriceDesc);
         
         List<Qrzreg> qrzregs = qrzService.getQrzregOf(qsls);
 
