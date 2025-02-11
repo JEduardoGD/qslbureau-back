@@ -1,4 +1,4 @@
-FROM ibmjava:11-jdk
+FROM openjdk:21-ea-14-jdk-slim
 LABEL maintainer="eduardo_gd@hotmail.com"
 VOLUME /tmp
 #EXPOSE 8080
