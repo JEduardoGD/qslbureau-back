@@ -62,20 +62,22 @@ public class ShipSeviceImpl implements ShipSevice {
             slotLogicService.changeSlotstatusToSend(slot);
         }
 
-        Zone zone = null;
-        ShippingMethod shippingMethod = null;
-        Integer shippingMethodId = inputValidationDto.getShippingMethodId();
-        if (shippingMethodId != null) {
-            shippingMethod = shippingMethodService.findById(shippingMethodId);
-            Zonerule zr = zoneruleService.findActiveByCallsign(slot.getCallsignto());
-            Integer zoneId = null;
-            if (zr != null) {
-                zoneId = zr.getZone().getId();
-            }
-            if (shippingMethod.equals(shippingMethodRegional) && zoneId != null) {
-                zone = zoneService.findById(zoneId);
-            }
-        }
+		Zone zone = null;
+		ShippingMethod shippingMethod = null;
+		Integer shippingMethodId = inputValidationDto.getShippingMethodId();
+		if (shippingMethodId != null) {
+			shippingMethod = shippingMethodService.findById(shippingMethodId);
+			Integer zoneId = null;
+			if (slot != null) {
+				Zonerule zr = zoneruleService.findActiveByCallsign(slot.getCallsignto());
+				if (zr != null) {
+					zoneId = zr.getZone().getId();
+				}
+			}
+			if (shippingMethod.equals(shippingMethodRegional) && zoneId != null) {
+				zone = zoneService.findById(zoneId);
+			}
+		}
         
         Integer regionalRepresentativeId = inputValidationDto.getRegionalRepresentativeId();
         Representative representative = null;

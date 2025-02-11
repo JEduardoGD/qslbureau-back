@@ -174,6 +174,7 @@ public class ReportsServiceImpl implements ReportsService {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		try {
 			workbook.write(bos);
+			return bos.toByteArray();
 		} catch (IOException e) {
 			log.error(e.getMessage());
 			return null;
@@ -195,7 +196,6 @@ public class ReportsServiceImpl implements ReportsService {
 				}
 			}
 		}
-		return bos.toByteArray();
 	}
 
 	private void processCallsign(List<QslsReport> list, QslsReportKey key, Date dateTimeCapture) {
