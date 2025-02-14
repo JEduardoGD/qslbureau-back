@@ -1,13 +1,12 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +25,7 @@ import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
+import egd.fmre.qslbureau.capture.enums.SlotstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.exception.SlotLogicServiceException;
@@ -40,6 +40,7 @@ import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.CompareNacionalityUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -59,10 +60,16 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     private Status statusQslVigente;
     private Status statusQslEliminada;
     
+    private Status slotStatusCreated;
+    private Status slotStatusOpen;
+    
     @PostConstruct
     private void Init(){
         statusQslVigente = new Status(QslstatusEnum.QSL_VIGENTE.getIdstatus());
         statusQslEliminada = new Status(QslstatusEnum.QSL_ELIMINADA.getIdstatus());
+        
+        slotStatusCreated = new Status(SlotstatusEnum.OPEN.getIdstatus());
+        slotStatusOpen = new Status(SlotstatusEnum.CREATED.getIdstatus());
     }
     
     @Override
@@ -157,7 +164,7 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         Local local = localRepository.findById(localId);
 
         Pageable sortedByPriceDesc = PageRequest.of(0, 20, Sort.by("id").descending());
-        List<Qsl> qsls = qslRepository.findByPaggeable(local, sortedByPriceDesc);
+        List<Qsl> qsls = qslRepository.findByPaggeable(local, Arrays.asList(slotStatusCreated, slotStatusOpen), sortedByPriceDesc);
         
         List<Qrzreg> qrzregs = qrzService.getQrzregOf(qsls);
 
@@ -183,6 +190,12 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         if (statusQslVigente.equals(qsl.getStatus())) {
             qsl.setStatus(statusQslEliminada);
             qsl = qslRepository.save(qsl);
+			Slot affectedSlot = qsl.getSlot();
+			List<Qsl> qslsOfSlotVigentes = qslRepository.findBySlotAndStatuses(affectedSlot,
+					Arrays.asList(statusQslVigente));
+			if (qslsOfSlotVigentes.isEmpty()) {
+				slotLogicService.changeSlotstatusToClosed(affectedSlot, false);
+			}
             QslDto qslDtoRet = QsldtoTransformer.map(qsl);
             return new StandardResponse(JsonParserUtil.parse(qslDtoRet));
         } else {

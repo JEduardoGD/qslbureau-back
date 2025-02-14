@@ -2,12 +2,15 @@ package egd.fmre.qslbureau.capture.service;
 
 import java.util.List;
 
+import egd.fmre.qslbureau.capture.controller.MigrationSlotDto;
 import egd.fmre.qslbureau.capture.dto.SlotCountqslDTO;
+import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
 import egd.fmre.qslbureau.capture.exception.QrzException;
+import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 
 public interface SlotLogicService {
 
@@ -48,4 +51,6 @@ public interface SlotLogicService {
     void runCloseCloseableSlots(Local local);
 
     void runOpenOpenableSlots(Local local);
+
+	SlotDto migrateSlot(MigrationSlotDto migrationSlotDto) throws QslcaptureException;
 }

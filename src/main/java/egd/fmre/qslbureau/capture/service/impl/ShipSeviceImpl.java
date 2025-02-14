@@ -1,13 +1,11 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.InputValidationDto;
 import egd.fmre.qslbureau.capture.entity.Capturer;
+import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Ship;
 import egd.fmre.qslbureau.capture.entity.ShippingMethod;
 import egd.fmre.qslbureau.capture.entity.Slot;
@@ -16,29 +14,27 @@ import egd.fmre.qslbureau.capture.entity.Zonerule;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.repo.ShipRepository;
 import egd.fmre.qslbureau.capture.service.CapturerService;
+import egd.fmre.qslbureau.capture.service.RepresentativeService;
 import egd.fmre.qslbureau.capture.service.ShipSevice;
 import egd.fmre.qslbureau.capture.service.ShippingMethodService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ShipSeviceImpl implements ShipSevice {
     
-    @Autowired
-    private ShipRepository shipRepository;
+    @Autowired private ShipRepository shipRepository;
 
-    @Autowired
-    private ShippingMethodService shippingMethodService;
-    @Autowired
-    private SlotLogicService slotLogicService;
-    @Autowired
-    ZoneService zoneService;
-    @Autowired
-    ZoneruleService zoneruleService;
-    @Autowired
-    CapturerService capturerService;
+    @Autowired private ShippingMethodService shippingMethodService;
+    @Autowired private SlotLogicService slotLogicService;
+    @Autowired private ZoneService zoneService;
+    @Autowired private ZoneruleService zoneruleService;
+    @Autowired private CapturerService capturerService;
+    @Autowired private RepresentativeService representativeService;
 
     private ShippingMethod shippingMethodRegional;
 
@@ -66,25 +62,27 @@ public class ShipSeviceImpl implements ShipSevice {
             slotLogicService.changeSlotstatusToSend(slot);
         }
 
-        Zone zone = null;
-        ShippingMethod shippingMethod = null;
-        Integer shippingMethodId = inputValidationDto.getShippingMethodId();
-        if (shippingMethodId != null) {
-            shippingMethod = shippingMethodService.findById(shippingMethodId);
-            Zonerule zr = zoneruleService.findActiveByCallsign(slot.getCallsignto());
-            Integer zoneId = null;
-            if (zr != null) {
-                zoneId = zr.getZone().getId();
-            }
-            if (shippingMethod.equals(shippingMethodRegional) && zoneId != null) {
-                zone = zoneService.findById(zoneId);
-            }
-        }
+		Zone zone = null;
+		ShippingMethod shippingMethod = null;
+		Integer shippingMethodId = inputValidationDto.getShippingMethodId();
+		if (shippingMethodId != null) {
+			shippingMethod = shippingMethodService.findById(shippingMethodId);
+			Integer zoneId = null;
+			if (slot != null) {
+				Zonerule zr = zoneruleService.findActiveByCallsign(slot.getCallsignto());
+				if (zr != null) {
+					zoneId = zr.getZone().getId();
+				}
+			}
+			if (shippingMethod.equals(shippingMethodRegional) && zoneId != null) {
+				zone = zoneService.findById(zoneId);
+			}
+		}
         
         Integer regionalRepresentativeId = inputValidationDto.getRegionalRepresentativeId();
-        Capturer capturer = null;
+        Representative representative = null;
         if (regionalRepresentativeId != null) {
-            capturer = capturerService.findById(regionalRepresentativeId);
+            representative = representativeService.findById(regionalRepresentativeId);
         }
 
         Ship ship = new Ship();
@@ -94,7 +92,7 @@ public class ShipSeviceImpl implements ShipSevice {
         ship.setShippingMethod(shippingMethod);
         ship.setZone(zone);
         ship.setAddress(inputValidationDto.getAddress());
-        ship.setCapturer(capturer);
+        ship.setRepresentative(representative);
         ship.setTrackingCode(inputValidationDto.getTrackingCode());
         return shipRepository.save(ship);
     }

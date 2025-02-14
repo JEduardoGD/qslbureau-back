@@ -7,8 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -35,6 +33,7 @@ import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.ReportsService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -175,6 +174,7 @@ public class ReportsServiceImpl implements ReportsService {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		try {
 			workbook.write(bos);
+			return bos.toByteArray();
 		} catch (IOException e) {
 			log.error(e.getMessage());
 			return null;
@@ -196,7 +196,6 @@ public class ReportsServiceImpl implements ReportsService {
 				}
 			}
 		}
-		return bos.toByteArray();
 	}
 
 	private void processCallsign(List<QslsReport> list, QslsReportKey key, Date dateTimeCapture) {
