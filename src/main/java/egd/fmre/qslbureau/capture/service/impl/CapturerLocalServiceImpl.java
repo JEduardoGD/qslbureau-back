@@ -11,8 +11,10 @@ import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.CapturerLocal;
 import egd.fmre.qslbureau.capture.repo.CapturerLocalRepository;
 import egd.fmre.qslbureau.capture.service.CapturerLocalService;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class CapturerLocalServiceImpl implements CapturerLocalService {
     @Autowired
     CapturerLocalRepository capturerLocalRepository;

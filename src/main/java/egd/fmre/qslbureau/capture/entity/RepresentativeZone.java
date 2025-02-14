@@ -11,29 +11,35 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "C_CALLSIGNRULE")
-public class CallsignRule implements Serializable {
-    private static final long serialVersionUID = -5553927775606824170L;
+@Table(name = "D_REPRESENTATIVE_ZONE")
+public class RepresentativeZone implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5883039339026685347L;
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDCALLSIGNRULE")
+    @Column(name = "IDREPRESENTATIVEZONE")
     private Integer id;
     
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDZONE")
+    private Zone zone;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDREPRESENTATIVE")
+    private Representative representative;
+    
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="IDCAPTURER")
+    @JoinColumn(name = "IDCAPTURER")
     private Capturer capturer;
-
-    @Column(name = "CALLSIGNTO")
-    private String callsignTo;
-
-    @Column(name = "CALLSIGNREDIRECT")
-    private String callsignRedirect;
 
     @Column(name = "START")
     private Date start;

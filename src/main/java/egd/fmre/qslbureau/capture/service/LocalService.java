@@ -14,4 +14,5 @@ public interface LocalService {
 
     List<Local> getActiveLocals();
 
+	Set<Local> getLocalsForCapturer(Capturer capturer);
 }

@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +15,7 @@ import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.repo.QslRepository;
 import egd.fmre.qslbureau.capture.service.QslService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class QslServiceImpl implements QslService {

@@ -6,8 +6,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
+import egd.fmre.qslbureau.capture.entity.CallsignRule;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
@@ -48,4 +50,12 @@ public class SlotsUtil {
                 .filter(s -> statuses.contains(s.getStatus()))
                 .collect(Collectors.toList());
     }
+    
+    //filter that happends in time
+    protected static BiPredicate<CallsignRule, Date> isOntime = (c, d) -> {
+        if (c.getEnd() == null) {
+            return c.getStart().before(d);
+        }
+        return c.getStart().before(d) && c.getEnd().after(d);
+    };
 }

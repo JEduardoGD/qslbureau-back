@@ -14,6 +14,28 @@ import egd.fmre.qslbureau.capture.entity.Status;
 
 @Repository
 public interface SlotRepository extends JpaRepository<Slot, Integer> {
+    static final String QUERY_CLOSEABLE_SLOTS = "" +
+            "SELECT TBL.IDSLOT FROM (" +
+            "    SELECT SLOT.IDSLOT, SLOT.SLOTNUMBER, COUNT(*) AS 'C' FROM T_SLOT SLOT" +
+            "    INNER JOIN T_QSL QSL ON QSL.IDSLOT = SLOT.IDSLOT" +
+            "    INNER JOIN C_STATUS SLOT_STATUS ON SLOT_STATUS.IDSTATUS = SLOT.IDSTATUS" +
+            "    INNER JOIN C_STATUS QSL_STATUS  ON  QSL_STATUS.IDSTATUS = QSL.IDSTATUS" +
+            "    WHERE SLOT.IDLOCAL = :IDLOCAL" +
+            "    AND SLOT_STATUS.STATUS IN ('OPEN', 'CREATED') AND QSL_STATUS.STATUS IN ('VIGENTE')" +
+            "    GROUP BY SLOT.IDSLOT" +
+            ") TBL WHERE TBL.C <= 0" ;
+    
+    static final String QUERY_OPENABLE_SLOTS = "" +
+            "SELECT TBL.IDSLOT, TBL.C FROM (" +
+            "    SELECT SLOT.IDSLOT, SLOT.SLOTNUMBER, COUNT(*) AS 'C' FROM T_SLOT SLOT" +
+            "    INNER JOIN T_QSL QSL ON QSL.IDSLOT = SLOT.IDSLOT" +
+            "    INNER JOIN C_STATUS SLOT_STATUS ON SLOT_STATUS.IDSTATUS = SLOT.IDSTATUS" +
+            "    INNER JOIN C_STATUS QSL_STATUS  ON  QSL_STATUS.IDSTATUS = QSL.IDSTATUS" +
+            "    WHERE SLOT.IDLOCAL = :IDLOCAL" +
+            "    AND SLOT_STATUS.STATUS IN ('CREATED') AND QSL_STATUS.STATUS IN ('VIGENTE')" +
+            "    GROUP BY SLOT.IDSLOT" +
+            ") TBL WHERE TBL.C > 0" ;
+    
     @Query("SELECT new egd.fmre.qslbureau.capture.dto.SlotCountqslDTO(s, count(*)) "
             + "FROM Slot s INNER JOIN Qsl qsl on qsl.slot = s " 
             + "where s.id in :slotsIds AND qsl.status.id = 1001 "
@@ -37,4 +59,11 @@ public interface SlotRepository extends JpaRepository<Slot, Integer> {
 	
 	@Query("SELECT s FROM Slot s WHERE s.status IN :slotStatuses and s.callsignto is null and s.country is null")
 	List<Slot> getNullSlots(@Param("slotStatuses") List<Status> slotStatuses);
+	
+	@Query(value = QUERY_CLOSEABLE_SLOTS, nativeQuery = true)
+    List<Integer> gettingCloseableSlotIds(@Param("IDLOCAL") int idlocal);
+    
+    @Query(value = QUERY_OPENABLE_SLOTS, nativeQuery = true)
+    List<Integer> gettingOpenableSlotIds(@Param("IDLOCAL") int idlocal);
+	
 }

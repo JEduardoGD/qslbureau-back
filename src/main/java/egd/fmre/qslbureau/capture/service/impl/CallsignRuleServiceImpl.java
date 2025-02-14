@@ -105,7 +105,8 @@ public class CallsignRuleServiceImpl implements CallsignRuleService {
 				qsl.setSlot(newSlot);
 				qsl = qslService.save(qsl);
 				qslSlotTraslade.setNewSlot(qsl.getSlot());
-				slotLogicService.runCloseCloseableLocals(local);
+				slotLogicService.runCloseCloseableSlots(local);
+				slotLogicService.runOpenOpenableSlots(local);
 			} else {
 				qslSlotTraslade.setNewSlot(newSlot);
 			}
@@ -119,10 +120,5 @@ public class CallsignRuleServiceImpl implements CallsignRuleService {
 	public List<QslRuleDto> getQslsRules(int idlocal) {
 		Collection<QslRuleDto> objects = callsignruleRepository.getQslsRules(idlocal);
 		return objects.stream().collect(Collectors.toList());
-		/*
-		 * return objects.stream().map(o->{ Integer idqsl = o[0] !=null? && (o
-		 * instanceof Integer) ? (Integer)o[0]:null; return new QslRuleDto();
-		 * }).collect(Collectors.toList());
-		 */
 	}
 }

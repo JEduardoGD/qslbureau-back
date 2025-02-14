@@ -5,39 +5,42 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "C_ZONERULE")
-public class Zonerule implements Serializable {
-	
-	/**
+@Table(name = "C_REPRESENTATIVE")
+public class Representative implements Serializable {
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -8081936013467456964L;
+	private static final long serialVersionUID = 4921645362017391197L;
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDZONERULE")
+    @Column(name = "IDREPRESENTATIVE")
     private Integer id;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="IDZONE")
-    private Zone zone;
 
-    @Column(name = "CALLSIGN")
-    private String callsign;
+    @Column(name = "NAME")
+    private String name;
+
+    @Column(name = "LASTNAME")
+    private String lastName;
+
+    @Column(name = "USERNAME")
+    private String username;
 
     @Column(name = "START")
     private Date start;
-
+    
     @Column(name = "END")
     private Date end;
+    
+    @OneToOne(mappedBy = "representative")
+    private RepresentativeZone representativeZone;
 }

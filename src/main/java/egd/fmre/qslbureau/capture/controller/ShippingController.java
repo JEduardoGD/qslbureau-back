@@ -20,19 +20,20 @@ import egd.fmre.qslbureau.capture.dto.RegionalRepresentativeDto;
 import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.dto.ZoneruleDto;
-import egd.fmre.qslbureau.capture.entity.Capturer;
+import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Ship;
 import egd.fmre.qslbureau.capture.entity.ShippingMethod;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Zonerule;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
-import egd.fmre.qslbureau.capture.service.CapturerService;
+import egd.fmre.qslbureau.capture.service.RepresentativeService;
 import egd.fmre.qslbureau.capture.service.ShipSevice;
 import egd.fmre.qslbureau.capture.service.ShippingMethodService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
+
 
 @RestController
 @RequestMapping("shipping")
@@ -41,11 +42,11 @@ public class ShippingController {
     @Autowired private SlotLogicService slotLogicService;
     @Autowired private ZoneruleService zoneruleService;
     @Autowired private ShipSevice shipSevice;
-    @Autowired private CapturerService capturerService;
     @Autowired private ModelMapper shippingMethodModelMapper;
     @Autowired private ModelMapper shipModelMapper;
     @Autowired private ModelMapper zoneruleModelMapper;
     @Autowired private ModelMapper regionalRepresentativeModelMapper;
+    @Autowired private RepresentativeService representativeService;
     
 
     @GetMapping("/all")
@@ -156,9 +157,9 @@ public class ShippingController {
 
     @GetMapping("/regionalrepresentatives/forcallsign/{callsign}")
     public ResponseEntity<StandardResponse> regionalRepsForCallsign(@PathVariable(value = "callsign") String callsign) throws QslcaptureException {
-        List<Capturer> capturers = capturerService.getCapturersforCallsign(callsign);
+        List<Representative> representatives = representativeService.getRepresentativesForCallsign(callsign);
         
-        List<RegionalRepresentativeDto> regionalRepresentatives = capturers.stream().map(c -> regionalRepresentativeModelMapper.map(c, RegionalRepresentativeDto.class)).collect(Collectors.toList());
+        List<RegionalRepresentativeDto> regionalRepresentatives = representatives.stream().map(c -> regionalRepresentativeModelMapper.map(c, RegionalRepresentativeDto.class)).collect(Collectors.toList());
 
         StandardResponse standardResponse;
         try {

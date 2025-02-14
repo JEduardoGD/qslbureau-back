@@ -65,7 +65,7 @@ public class ModelMapperConfiguration {
                         .setShippingMethodId(s.getShippingMethod() != null ? s.getShippingMethod().getId() : null);
                 inputValidationDto.setAddress(s.getAddress());
                 inputValidationDto
-                        .setRegionalRepresentativeId(s.getCapturer() != null ? s.getCapturer().getId() : null);
+                        .setRegionalRepresentativeId(s.getRepresentative() != null ? s.getRepresentative().getId() : null);
                 inputValidationDto.setTrackingCode(s.getTrackingCode());
                 inputValidationDto.setValid(null);
                 inputValidationDto.setError(null);
