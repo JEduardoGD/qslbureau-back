@@ -7,26 +7,36 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import egd.fmre.qslbureau.capture.controller.MigrationSlotDto;
 import egd.fmre.qslbureau.capture.dto.SlotCountqslDTO;
+import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.entity.CallsignRule;
 import egd.fmre.qslbureau.capture.entity.Local;
+import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
+import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.enums.SlotstatusEnum;
 import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
 import egd.fmre.qslbureau.capture.exception.QrzException;
+import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.repo.CallsignruleRepository;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
+import egd.fmre.qslbureau.capture.repo.QslRepository;
 import egd.fmre.qslbureau.capture.repo.SlotRepository;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.util.CompareNacionalityUtil;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
+import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
 import egd.fmre.qslbureau.capture.util.SlotsUtil;
 import egd.fmre.qslbureau.capture.util.TextUtil;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -37,6 +47,10 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     @Autowired SlotRepository         slotRepository;
     @Autowired LocalRepository        localRepository;
     @Autowired QrzService             qrzService;
+    @Autowired QslRepository          qslRepository;
+    
+    @Value("${MX_PREFIXES}")
+    private String mxPrefixes;
     
     private static String MAX_NUMBER_SLOTS_REACHED = "Se ha alcanzado el número máximo de slots para este local";
     
@@ -48,6 +62,9 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
     private Status slotstatusMovedToIntl;
     private Status slotstatusUnconfirmable;
     
+    private Status qslStatusVigente;
+    private Status qslStatusEliminada;
+    
     @PostConstruct
     private void Init(){
         slotstatusCreated       = new Status(SlotstatusEnum.CREATED.getIdstatus());
@@ -57,6 +74,9 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         slotstatusSent          = new Status(SlotstatusEnum.SENT.getIdstatus());
         slotstatusMovedToIntl   = new Status(SlotstatusEnum.MOVED_TO_INTERNATIONAL.getIdstatus());
         slotstatusUnconfirmable = new Status(SlotstatusEnum.UNCONFIRMABLE.getIdstatus());
+        
+        qslStatusVigente = new Status(QslstatusEnum.QSL_VIGENTE.getIdstatus());
+        qslStatusEliminada = new Status(QslstatusEnum.QSL_ELIMINADA.getIdstatus());
     }
     
     @Override
@@ -329,6 +349,49 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 			return slots.get(StaticValuesHelper.ZERO);
 		}
 		return null;
+	}
+	
+	@Override
+	@Transactional
+	public SlotDto migrateSlot(MigrationSlotDto migrationSlotDto) throws QslcaptureException {
+        Local local = localRepository.findById(migrationSlotDto.getNewlocalid()).orElse(null);
+        
+		Slot oldSlot = slotRepository.findById(migrationSlotDto.getSlotid()).orElse(null);
+		List<Qsl> qsls = qslRepository.findBySlotAndStatuses(oldSlot,
+				Arrays.asList(qslStatusVigente, qslStatusEliminada));
+		Slot slot = null;
+		for(Qsl qsl:qsls) {
+			String effectiveCallsign = qsl.getVia() != null
+                    && !StaticValuesHelper.EMPTY_STRING.equals(qsl.getVia()) ? qsl.getVia() : qsl.getTo();
+			boolean isMexican = CompareNacionalityUtil.isMexican(effectiveCallsign, mxPrefixes);
+
+			try {
+				if (isMexican) {
+					slot = getSlotForQsl(effectiveCallsign, local);
+				} else {
+					slot = getSlotByCountry(effectiveCallsign, local);
+				}
+			} catch (MaximumSlotNumberReachedException e) {
+				log.error(e.getMessage());
+				return null;
+			}
+			
+			if(slot == null) {
+				slot = getNullSlot();
+			}
+			
+			if(slot == null) {
+				throw new QslcaptureException("No pudo generarse el slot");
+			}
+			
+			changeSlotstatusToOpen(slot);
+			qsl.setSlot(slot);
+			qsl = qslRepository.save(qsl);
+		}
+		
+		changeSlotstatusToClosed(oldSlot, false);
+		
+		return QsldtoTransformer.map(slot);
 	}
 }
 

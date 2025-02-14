@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -217,5 +219,20 @@ public class SlotController {
             standardResponse = new StandardResponse(true, e.getLocalizedMessage());
         }
         return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/migrate")
+    public ResponseEntity<StandardResponse> migrateSlot(@RequestBody MigrationSlotDto migrationSlotDto) {
+    	log.info(migrationSlotDto.toString());
+    	SlotDto slotDto;
+    	StandardResponse standardResponse;
+		try {
+			slotDto = slotLogicService.migrateSlot(migrationSlotDto);
+			standardResponse = new StandardResponse(slotDto);
+		} catch (QslcaptureException e) {
+            log.error(e.getMessage());
+            standardResponse = new StandardResponse(true, e.getLocalizedMessage());
+		}
+    	return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
     }
 }

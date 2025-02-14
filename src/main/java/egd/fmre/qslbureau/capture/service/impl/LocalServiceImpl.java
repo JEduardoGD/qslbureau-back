@@ -29,9 +29,7 @@ public class LocalServiceImpl implements LocalService {
 
     @Override
     public Set<Local> findByCapturer(Capturer capturer) {
-        // 1 find CapturerLocal objects
         Set<CapturerLocal> capturerLocals = capturerLocalService.findCapturerLocalActiveByCapturer(capturer);
-
         return localRepository.findByCapturerLocalsIn(capturerLocals);
     }
     
@@ -39,4 +37,10 @@ public class LocalServiceImpl implements LocalService {
     public List<Local> getActiveLocals() {
         return localRepository.findAll();
     }
+
+	@Override
+	public Set<Local> getLocalsForCapturer(Capturer capturer) {
+        Set<CapturerLocal> capturerLocals = capturerLocalService.findCapturerLocalActiveByCapturer(capturer);
+        return localRepository.findByCapturerLocalsIn(capturerLocals);
+	}
 }

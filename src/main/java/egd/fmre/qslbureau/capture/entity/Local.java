@@ -17,11 +17,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "C_LOCAL")
 @EqualsAndHashCode(of = {"id"})
+@ToString
 public class Local implements Serializable {
     
     @Getter(AccessLevel.NONE)

@@ -14,5 +14,4 @@ public interface LocalRepository extends JpaRepository<Local, Integer> {
     public Local findById(int id);
     
     public Set<Local>findByCapturerLocalsIn(Set<CapturerLocal> capturerLocals);
-    
 }

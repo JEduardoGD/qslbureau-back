@@ -3,18 +3,21 @@ package egd.fmre.qslbureau.capture.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import egd.fmre.qslbureau.capture.dto.CallsignRuleDto;
 import egd.fmre.qslbureau.capture.dto.InputValidationDto;
+import egd.fmre.qslbureau.capture.dto.LocalDto;
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.RegionalRepresentativeDto;
 import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.SummaryQslDto;
 import egd.fmre.qslbureau.capture.dto.ZoneruleDto;
+import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.exception.JsonParserException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
@@ -143,4 +146,26 @@ public abstract class JsonParserUtil {
             throw new JsonParserException(e);
         }
     }
+
+	private static Object parse(LocalDto localDto) throws JsonParserException {
+        try {
+            return objectMapper.writeValueAsString(localDto);
+        } catch (JsonProcessingException e) {
+            throw new JsonParserException(e);
+        }
+	}
+
+	public static String parse(Set<LocalDto> localDtoSet) throws JsonParserException {
+		if (localDtoSet == null) {
+            return null;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(StaticValuesHelper.JSON_ARRAY_OPEN);
+        for (LocalDto localDto : localDtoSet) {
+            stringBuilder.append(JsonParserUtil.parse(localDto));
+            stringBuilder.append(StaticValuesHelper.COMMA);
+        }
+        stringBuilder.append(StaticValuesHelper.JSON_ARRAY_CLOSE);
+        return stringBuilder.toString().replaceAll("\\,\\]$", "]");
+	}
 }
