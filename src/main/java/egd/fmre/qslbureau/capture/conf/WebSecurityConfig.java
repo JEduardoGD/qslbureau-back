@@ -83,7 +83,7 @@ public class WebSecurityConfig {
 		return http
 				.authorizeHttpRequests(authz -> authz
 						.requestMatchers(new AntPathRequestMatcher("/authenticate/**", HttpMethod.POST.name())).permitAll()
-						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
 						//.requestMatchers("/authenticate", "/actuator/**", "/portal/**", "/actuator/**", "/swagger-ui/**").permitAll()
 						//.requestMatchers("/**").permitAll()
 						.anyRequest().authenticated())
