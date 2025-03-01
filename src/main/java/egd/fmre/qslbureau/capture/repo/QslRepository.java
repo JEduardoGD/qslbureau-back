@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import egd.fmre.qslbureau.capture.dto.CapturedCallsign;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
@@ -38,4 +39,7 @@ public interface QslRepository extends JpaRepository<Qsl, Integer> {
 			+ "and q.status = :qslStatus and s.status IN :slotStatuses and s.local = :local")
 	List<Qsl> findQslsInSystem(@Param("callsignlist") List<String> callsignlist, @Param("qslStatus") Status qslStatus,
 			@Param("slotStatuses") List<Status> slotStatuses, @Param("local") Local local);
+
+	@Query(value = "SELECT C.CALLSIGN, C.OLDESTDATETIME FROM V_CAPTUREDCALLSIGNS C", nativeQuery = true)
+	List<CapturedCallsign> getCapturedCallsigns();
 }
