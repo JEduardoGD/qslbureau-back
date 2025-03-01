@@ -2,9 +2,12 @@ package egd.fmre.qslbureau.capture.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -22,6 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import egd.fmre.qslbureau.capture.dto.CapturedCallsign;
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.QslsReport;
 import egd.fmre.qslbureau.capture.dto.QslsReportKey;
@@ -30,6 +34,7 @@ import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.entity.Zonerule;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
+import egd.fmre.qslbureau.capture.service.QslService;
 import egd.fmre.qslbureau.capture.service.ReportsService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
@@ -38,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class ReportsServiceImpl implements ReportsService {
+public class ReportsServiceImpl extends ReportServiceActions implements ReportsService {
 
 	@Autowired
 	private SlotLogicService slotLogicService;
@@ -46,6 +51,8 @@ public class ReportsServiceImpl implements ReportsService {
 	private QslCaptureService qslCaptureService;
 	@Autowired
 	private ZoneruleService zoneruleService;
+	@Autowired
+	private QslService qslService;
 	
 	private Status statusQslVigente;
 	
@@ -197,26 +204,126 @@ public class ReportsServiceImpl implements ReportsService {
 			}
 		}
 	}
+	
+	@Override
+	public List<CapturedCallsign> getReportOfCapturedCallsigns() {
+		return qslService.getCapturedCallsigns();
+	}
 
-	private void processCallsign(List<QslsReport> list, QslsReportKey key, Date dateTimeCapture) {
-		QslsReport qslsReport;
-		int i = list.indexOf(new QslsReport(key));
-		if (i == -1) {
-			qslsReport = new QslsReport(key);
-			qslsReport.setCount(0);
-			list.add(qslsReport);
-			i = list.indexOf(new QslsReport(key));
+	@Override
+	public byte[] writeReportOfCapturedCallsigns(List<CapturedCallsign> captiredCallsigns) {
+		Workbook workbook = new XSSFWorkbook();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+		//SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
+		
+
+		CreationHelper creationHelper = workbook.getCreationHelper();
+		CellStyle cellStyle = workbook.createCellStyle();
+		cellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("dd/mm/yyyy hh:mm"));
+		
+
+		Sheet sheet = workbook.createSheet("indicativos");
+		sheet.setColumnWidth(1, 3000);
+		sheet.setColumnWidth(2, 7500);
+
+		CellStyle firstHeaderStyle = workbook.createCellStyle();
+		firstHeaderStyle.setFillForegroundColor(IndexedColors.BLACK.index);
+		firstHeaderStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		firstHeaderStyle.setAlignment(HorizontalAlignment.CENTER);
+		
+
+		CellStyle headerStyle = workbook.createCellStyle();
+		headerStyle.setFillForegroundColor(IndexedColors.BLACK.index);
+		headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+		font.setFontName("Arial");
+		font.setFontHeightInPoints((short) 10);
+		font.setBold(true);
+		font.setColor(IndexedColors.WHITE.index);
+		headerStyle.setFont(font);
+		firstHeaderStyle.setFont(font);
+
+		Cell headerCell;
+		
+		Row headerRow = sheet.createRow(0);
+		
+		headerCell = headerRow.createCell(1);
+		headerCell.setCellValue("QSL's en poder del QSL Bureau de la FMRE");
+		headerCell.setCellStyle(firstHeaderStyle);
+		
+		Row dateRow = sheet.createRow(1);
+		
+		Cell dateCell = dateRow.createCell(1);
+		dateCell.setCellValue(String.format("Fecha de generacion: %s", sdf.format(new Date())));
+		dateCell.setCellStyle(firstHeaderStyle);
+		
+		headerRow = sheet.createRow(2);
+
+		headerCell = headerRow.createCell(1);
+		headerCell.setCellValue("callsign");
+		headerCell.setCellStyle(headerStyle);
+
+		headerCell = headerRow.createCell(2);
+		headerCell.setCellValue("Fecha de captura");
+		headerCell.setCellStyle(headerStyle);
+
+		CellStyle style = workbook.createCellStyle();
+		style.setWrapText(true);
+
+		Row row;
+		
+		TimeZone timeZoneMexico = TimeZone.getTimeZone("America/Mexico_City");
+		TimeZone timeZoneUtc = TimeZone.getTimeZone("Etc/UTC");
+		
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(timeZoneUtc);
+
+		int c = 3;
+		for (CapturedCallsign capturedCallsign : captiredCallsigns) {
+	        calendar.setTime(capturedCallsign.getOldestdatetime());
+	        calendar.setTimeZone(timeZoneMexico);
+	        
+			Cell cell;
+
+			row = sheet.createRow(c++);
+
+			cell = row.createCell(1);
+			cell.setCellValue(capturedCallsign.getCallsign());
+
+			cell = row.createCell(2);
+			cell.setCellValue(calendar.getTime());
+			cell.setCellStyle(cellStyle);
 		}
-		qslsReport = list.get(i);
-		Date oldEst = (qslsReport.getOldest() == null || dateTimeCapture.before(qslsReport.getOldest()))
-				? dateTimeCapture
-				: qslsReport.getOldest();
-		Date newEst = (qslsReport.getNewEst() == null || dateTimeCapture.after(qslsReport.getNewEst()))
-				? dateTimeCapture
-				: qslsReport.getNewEst();
-		qslsReport.setCount(qslsReport.getCount() + 1);
-		qslsReport.setOldest(oldEst);
-		qslsReport.setNewEst(newEst);
-		list.set(i, qslsReport);
+		
+		sheet.addMergedRegion(new CellRangeAddress(0,0,1,2));
+		sheet.addMergedRegion(new CellRangeAddress(1,1,1,2));
+
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			workbook.write(bos);
+			return bos.toByteArray();
+		} catch (IOException e) {
+			log.error(e.getMessage());
+			return null;
+		} finally {
+			if (bos != null) {
+				try {
+					bos.close();
+				} catch (IOException e) {
+					log.error("Error closing ByteArrayOutputStream");
+					log.error(e.getMessage());
+				}
+			}
+			if (workbook != null) {
+				try {
+					workbook.close();
+				} catch (IOException e) {
+					log.error("Error closing Workbook");
+					log.error(e.getMessage());
+				}
+			}
+		}
 	}
 }

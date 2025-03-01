@@ -2,6 +2,7 @@ package egd.fmre.qslbureau.capture.service;
 
 import java.util.List;
 
+import egd.fmre.qslbureau.capture.dto.CapturedCallsign;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
@@ -17,4 +18,6 @@ public interface QslService {
 	List<Qsl> listOfActiveQslsWithCallsign(List<String> callsigns, Local local);
 
 	Qsl getById(Integer id);
+
+	List<CapturedCallsign> getCapturedCallsigns();
 }
