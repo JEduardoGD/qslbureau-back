@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import egd.fmre.qslbureau.capture.dto.CapturedCallsign;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
@@ -59,5 +60,10 @@ public class QslServiceImpl implements QslService {
 	@Override
 	public Qsl getById(Integer id) {
         return qslRepository.findById(id).orElse(null);
+	}
+	
+	@Override
+	public List<CapturedCallsign> getCapturedCallsigns() {
+		return qslRepository.getCapturedCallsigns();
 	}
 }
