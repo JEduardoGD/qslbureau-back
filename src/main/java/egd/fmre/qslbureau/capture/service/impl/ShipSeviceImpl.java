@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.InputValidationDto;
-import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Ship;
 import egd.fmre.qslbureau.capture.entity.ShippingMethod;
@@ -13,7 +12,6 @@ import egd.fmre.qslbureau.capture.entity.Zone;
 import egd.fmre.qslbureau.capture.entity.Zonerule;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.repo.ShipRepository;
-import egd.fmre.qslbureau.capture.service.CapturerService;
 import egd.fmre.qslbureau.capture.service.RepresentativeService;
 import egd.fmre.qslbureau.capture.service.ShipSevice;
 import egd.fmre.qslbureau.capture.service.ShippingMethodService;
@@ -33,7 +31,6 @@ public class ShipSeviceImpl implements ShipSevice {
     @Autowired private SlotLogicService slotLogicService;
     @Autowired private ZoneService zoneService;
     @Autowired private ZoneruleService zoneruleService;
-    @Autowired private CapturerService capturerService;
     @Autowired private RepresentativeService representativeService;
 
     private ShippingMethod shippingMethodRegional;
@@ -122,16 +119,16 @@ public class ShipSeviceImpl implements ShipSevice {
             }
         }
         
-        Integer regionalRepresentativeId = inputValidationDto.getRegionalRepresentativeId();
-        Capturer capturer = null;
-        if (regionalRepresentativeId != null) {
-            capturer = capturerService.findById(regionalRepresentativeId);
-        }
-        
-        if(shippingMethod != null && shippingMethod.equals(shippingMethodRegional) && capturer==null) {
-            valid = false;
-            errorSb.append("|Se requiere seleccionar un representante regional");
-        }
+		Integer regionalRepresentativeId = inputValidationDto.getRegionalRepresentativeId();
+		Representative regionalRepresentative = null;
+		if (regionalRepresentativeId != null) {
+			regionalRepresentative = representativeService.findById(regionalRepresentativeId);
+		}
+
+		if (shippingMethod != null && shippingMethod.equals(shippingMethodRegional) && regionalRepresentative == null) {
+			valid = false;
+			errorSb.append("|Se requiere seleccionar un representante regional");
+		}
         
 
         inputValidationDto.setValid(valid);
