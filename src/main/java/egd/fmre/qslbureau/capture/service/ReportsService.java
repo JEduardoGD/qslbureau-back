@@ -15,4 +15,6 @@ public interface ReportsService {
 
 	List<CapturedCallsign> getReportOfCapturedCallsigns();
 
+	//List<CapturedCallsign> getOrphansCallsigns();
+
 }

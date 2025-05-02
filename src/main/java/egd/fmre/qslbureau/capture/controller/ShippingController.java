@@ -87,7 +87,7 @@ public class ShippingController {
     }
 
     @GetMapping("/zonerules/forcallsign/{callsign}")
-    public ResponseEntity<StandardResponse> getZonerulesForCallsign(@PathVariable(value = "callsign") String callsign) throws QslcaptureException {
+    public ResponseEntity<StandardResponse> getZonerulesForCallsign(@PathVariable String callsign) throws QslcaptureException {
         Zonerule zoneruleForCallsing = zoneruleService.findActiveByCallsign(callsign);
         
         ZoneruleDto zoneruleDtoForCallsing = zoneruleModelMapper.map(zoneruleForCallsing, ZoneruleDto.class);
@@ -102,7 +102,7 @@ public class ShippingController {
     }
 
     @GetMapping("/forslotid/{slotid}")
-    public ResponseEntity<StandardResponse> getShippingMethodBySlotId(@PathVariable(value = "slotid") int slotid) throws QslcaptureException {
+    public ResponseEntity<StandardResponse> getShippingMethodBySlotId(@PathVariable int slotid) throws QslcaptureException {
         
         List<ShippingMethod> shippingMethodList = shippingMethodService.getAll();
 
@@ -156,7 +156,7 @@ public class ShippingController {
     }
 
     @GetMapping("/regionalrepresentatives/forcallsign/{callsign}")
-    public ResponseEntity<StandardResponse> regionalRepsForCallsign(@PathVariable(value = "callsign") String callsign) throws QslcaptureException {
+    public ResponseEntity<StandardResponse> regionalRepsForCallsign(@PathVariable String callsign) throws QslcaptureException {
         List<Representative> representatives = representativeService.getRepresentativesForCallsign(callsign);
         
         List<RegionalRepresentativeDto> regionalRepresentatives = representatives.stream().map(c -> regionalRepresentativeModelMapper.map(c, RegionalRepresentativeDto.class)).collect(Collectors.toList());

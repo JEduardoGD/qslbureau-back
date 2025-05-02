@@ -7,7 +7,7 @@ public class StandardResponse {
     private boolean error;
     private String errorMessage;
     private String jsonPayload;
-    private Object objectPaypload;
+    private Object objectPayload;
     
     public StandardResponse(String jsonPayload) {
         this.jsonPayload = jsonPayload;
@@ -20,6 +20,6 @@ public class StandardResponse {
     }
     
     public StandardResponse(Object objectPaypload) {
-        this.objectPaypload = objectPaypload;
+        this.objectPayload = objectPaypload;
     }
 }
