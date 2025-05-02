@@ -23,10 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmailServiceImpl implements EmailService {
 
-	@Value("${MAIL_USER}")
+	@Value("${MAIL.USER}")
 	private String mailUser;
 	
-	@Value("${MAIL_PASSWORD}")
+	@Value("${MAIL.PASSWORD}")
 	private String mailPassword;
 	
 	private static final String EMAIL_FROM = "qslbureau@fmre.mx";
