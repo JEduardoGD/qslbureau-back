@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import egd.fmre.qslbureau.capture.dto.CapturedCallsign;
+import egd.fmre.qslbureau.capture.dto.QslSumatoryDto;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;

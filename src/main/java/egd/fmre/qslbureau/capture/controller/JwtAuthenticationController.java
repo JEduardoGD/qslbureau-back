@@ -74,7 +74,7 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken(userDetails);
         
         JwtResponse jwtResponse = new JwtResponse(token);
-        if (capturer != null) {
+        if (capturer != null && locals != null) {
             jwtResponse.setCapturerId(capturer.getId());
             jwtResponse.setCapturerName(capturer.getName());
             jwtResponse.setCapturerLastName(capturer.getLastName());

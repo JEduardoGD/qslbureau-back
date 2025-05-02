@@ -1,5 +1,6 @@
 package egd.fmre.qslbureau.capture.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import egd.fmre.qslbureau.capture.dto.QslSumatoryDto;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Local;
@@ -24,7 +26,6 @@ import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.LocalService;
 import egd.fmre.qslbureau.capture.service.QslService;
-import egd.fmre.qslbureau.capture.service.ShipSevice;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
@@ -38,7 +39,6 @@ public class SlotController {
     @Autowired SlotLogicService slotLogicService;
     @Autowired LocalService     localService;
     @Autowired QslService       qslService;
-    @Autowired ShipSevice       shipSevice; 
 
     @GetMapping("/list/bylocalid/{localid}")
     public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable int localid) {
@@ -235,4 +235,28 @@ public class SlotController {
 		}
     	return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
     }
+
+	@GetMapping("/detail/{slotid}")
+	public ResponseEntity<StandardResponse> detail(@PathVariable int slotid) {
+		Slot slot = slotLogicService.findById(slotid);
+		List<Qsl> qsls = qslService.getActiveQslsForSlot(slot);
+		List<QslSumatoryDto> qslsSumatory = new ArrayList<>();
+		for (Qsl qsl : qsls) {
+			QslSumatoryDto qslSumatoryDto = new QslSumatoryDto();
+			qslSumatoryDto.setLocalId(slot.getLocal().getId());
+			qslSumatoryDto.setSlotNumber(slot.getSlotNumber());
+			qslSumatoryDto.setToCallsign(qsl.getTo());
+			qslSumatoryDto.setVia(qsl.getVia());
+			int index = qslsSumatory.indexOf(qslSumatoryDto);
+			if (index > -1) {
+				qslsSumatory.get(index).setC(qslsSumatory.get(index).getC() + 1);
+			} else {
+				qslSumatoryDto.setC(1);
+				qslsSumatory.add(qslSumatoryDto);
+			}
+		}
+		StandardResponse standardResponse;
+		standardResponse = new StandardResponse(qslsSumatory);
+		return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
+	}
 }
