@@ -54,4 +54,11 @@ public class ReportController {
 		        .body(resByteArray);
 	}
 
+	/*
+	@GetMapping(value = "/orphans-calls-report", produces = "application/vnd.ms-excel")
+	public @ResponseBody ResponseEntity<byte[]> generateOrphanCallsReport() throws IOException {
+		 reportsService.getOrphansCallsigns();
+		return null;
+	}
+	*/
 }

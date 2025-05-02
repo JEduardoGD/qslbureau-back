@@ -4,9 +4,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
@@ -29,13 +32,19 @@ import egd.fmre.qslbureau.capture.dto.CapturedCallsign;
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.QslsReport;
 import egd.fmre.qslbureau.capture.dto.QslsReportKey;
+import egd.fmre.qslbureau.capture.dto.RepresentativeInfo;
+import egd.fmre.qslbureau.capture.entity.Qsl;
+import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
+import egd.fmre.qslbureau.capture.entity.Zone;
 import egd.fmre.qslbureau.capture.entity.Zonerule;
+import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.QslService;
 import egd.fmre.qslbureau.capture.service.ReportsService;
+import egd.fmre.qslbureau.capture.service.RepresentativeService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
 import jakarta.annotation.PostConstruct;
@@ -53,6 +62,8 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 	private ZoneruleService zoneruleService;
 	@Autowired
 	private QslService qslService;
+	@Autowired
+	private RepresentativeService representativeService;
 	
 	private Status statusQslVigente;
 	
@@ -326,4 +337,39 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 			}
 		}
 	}
+	
+	/*
+	@Override
+	public List<CapturedCallsign> getOrphansCallsigns() {
+		// 1. obtener lista de callsigns para sin via vigentes que se encuentren en slots abiertos o creados
+		List<Slot> openedOrCreatedSlots = slotLogicService.getOpenedOrCreatedSlots();
+		Set<String> hashSetCallsigns = new HashSet<>();
+		for (Slot openedOrCreatedSlot : openedOrCreatedSlots) {
+			List<Qsl> qsls = qslService.getBySlotAndStatus(openedOrCreatedSlot,
+					Arrays.asList(QslstatusEnum.QSL_VIGENTE));
+			//tomar el callsign, para los que tienen via tomar el via y para los que tienen to y no via tomar el to
+			List<String> allCallsigns = qsls.stream().map(qsl -> qsl.getVia() !=null ? qsl.getVia() : qsl.getTo() ).collect(Collectors.toList());
+			//se agregan
+			hashSetCallsigns.addAll(allCallsigns);
+		}
+		
+		List<Zonerule> activeZoneRules = zoneruleService.getAllActives();
+		// List<RepresentativeInfo> representativeInfoList = new ArrayList<String>();
+		for (Zonerule activeZoneRule : activeZoneRules) {
+			// representativeInfoList.stream().map(r->r.getRepresentativeId().equals(activeZoneRule.get))
+			Zone zone = activeZoneRule.getZone();
+			List<Representative> representatives = representativeService.getRepresentativesByZone(zone);
+			// System.out.println(representatives);
+			RepresentativeInfo representativeInfo = new RepresentativeInfo();
+			for(String )
+			representativeInfo.setRepresentativeId(activeZoneRule.g);
+			
+		}
+		List<String> activeZoneRulesCallsigns = activeZoneRules.stream().map(zr -> zr.getCallsign())
+				.collect(Collectors.toList());
+		hashSetCallsigns.removeAll(activeZoneRulesCallsigns);
+
+		return null;
+	}
+	*/
 }
