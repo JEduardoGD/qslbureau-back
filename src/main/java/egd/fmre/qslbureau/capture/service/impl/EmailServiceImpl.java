@@ -1,14 +1,15 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -88,10 +89,25 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	private String loadEmailFile() throws SendMailException {
-		try (FileInputStream fis = new FileInputStream("src/main/resources/email.html")) {
-			return IOUtils.toString(fis, "UTF-8");
+		Class<EmailServiceImpl> clazz = EmailServiceImpl.class;
+	    InputStream inputStream = clazz.getResourceAsStream("/email.html");
+	    try {
+			return readFromInputStream(inputStream);
 		} catch (IOException e) {
 			throw new SendMailException(e);
 		}
+	}
+	
+	private String readFromInputStream(InputStream inputStream)
+			  throws IOException {
+	    StringBuilder resultStringBuilder = new StringBuilder();
+	    try (BufferedReader br
+	      = new BufferedReader(new InputStreamReader(inputStream))) {
+	        String line;
+	        while ((line = br.readLine()) != null) {
+	            resultStringBuilder.append(line).append("\n");
+	        }
+	    }
+	  return resultStringBuilder.toString();
 	}
 }
