@@ -12,8 +12,8 @@ import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 
 @Service
 public class ContactBitacoreServiceImpl implements ContactBitacoreService {
-	@Autowired
-	ContactBitacoreRepository contactBitacoreRepository;
+	
+	@Autowired ContactBitacoreRepository contactBitacoreRepository;
 	
 	@Override
 	public ContactBitacore saveContact(Contact contact, Representative representative) {

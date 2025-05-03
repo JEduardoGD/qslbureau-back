@@ -50,23 +50,31 @@ public class ContactController {
 		return ResponseEntity.ok(standardResponse);
 	}
 
-	@GetMapping("/sendmail/slotid/{slotid}/representativeId/{representativeId}")
-	public ResponseEntity<StandardResponse> sendMail(@PathVariable int slotid, @PathVariable int representativeId) {
+	@GetMapping("/sendmail/slotid/{slotId}/contactid/{contactId}/representativeid/{representativeId}")
+	public ResponseEntity<StandardResponse> sendMail(@PathVariable Integer slotId, @PathVariable Integer contactId,
+			@PathVariable Integer representativeId) {
 		StandardResponse standardResponse;
-		Representative representative = representativeService.findById(representativeId);
+		ContactDataDto contactData = contactService.findActiveById(contactId);
+		if (contactData == null) {
+			standardResponse = new StandardResponse(true,
+					String.format("Error con el contact id %d", contactId));
+			return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
+		}
+		Slot slot = slotLogicService.findById(slotId);
+		if (slot == null) {
+			standardResponse = new StandardResponse(true,
+					String.format("Error con el slot id %d", contactId));
+			return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
+		}
+		Representative representative;
+		representative = representativeService.findById(representativeId);
 		if (representative == null) {
 			standardResponse = new StandardResponse(true,
-					String.format("Error con el representate id %d", representativeId));
+					String.format("Error con el representative id %d", representativeId));
 			return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
 		}
-		Slot slot = slotLogicService.findById(slotid);
 		List<Qsl> qsls = qslService.getActiveQslsForSlot(slot);
 		List<QslSumatoryDto> qslsSumatory = new ArrayList<>();
-		ContactDataDto contactData = contactService.findActiveForCallsign(slot.getCallsignto());
-		if(contactData == null) {
-			standardResponse = new StandardResponse(true, "No existen datos de contacto para el callsign");
-			return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
-		}
 		for (Qsl qsl : qsls) {
 			QslSumatoryDto qslSumatoryDto = new QslSumatoryDto();
 			qslSumatoryDto.setLocalId(slot.getLocal().getId());
