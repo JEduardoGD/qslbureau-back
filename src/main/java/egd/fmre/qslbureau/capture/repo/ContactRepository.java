@@ -11,4 +11,7 @@ import egd.fmre.qslbureau.capture.entity.Contact;
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
 	@Query("SELECT c FROM Contact c WHERE c.callsign = :callsign and ((c.start < now() and c.end is null) or (c.start < now() and now() < c.end))")
 	public Contact findActiveForCallsign(@Param("callsign") String callsign);
+	
+	@Query("SELECT c FROM Contact c WHERE c.id = :id and ((c.start < now() and c.end is null) or (c.start < now() and now() < c.end))")
+	public Contact findActiveById(@Param("id") Integer id);
 }

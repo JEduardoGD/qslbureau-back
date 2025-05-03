@@ -16,6 +16,16 @@ public class ContactServiceImpl implements ContactService {
 	@Override
 	public ContactDataDto findActiveForCallsign(String callsign) {
 		Contact contact = contactRepository.findActiveForCallsign(callsign);
+		return map(contact);
+	}
+	
+	@Override
+	public ContactDataDto findActiveById(Integer contactId) {
+		Contact contact = contactRepository.findActiveById(contactId);
+		return map(contact);
+	}
+
+	private ContactDataDto map(Contact contact) {
 		ContactDataDto contactDataDto = null;
 		if (contact != null) {
 			contactDataDto = new ContactDataDto();

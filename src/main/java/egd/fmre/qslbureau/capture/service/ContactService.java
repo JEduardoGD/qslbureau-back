@@ -6,4 +6,6 @@ public interface ContactService {
 
 	ContactDataDto findActiveForCallsign(String callsign);
 
+	ContactDataDto findActiveById(Integer contactId);
+
 }
