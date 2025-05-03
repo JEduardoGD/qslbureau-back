@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "MX_PREFIXES",
+  "type": "java.lang.String",
+  "description": "A description for 'MX_PREFIXES'"
+}]}
