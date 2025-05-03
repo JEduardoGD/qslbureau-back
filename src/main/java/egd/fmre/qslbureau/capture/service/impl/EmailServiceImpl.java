@@ -60,7 +60,7 @@ public class EmailServiceImpl implements EmailService {
 		String contentEmail = loadEmailFile();
 		
 		contentEmail = contentEmail.replace(STR_NOMBRE, emailData.getNombre());
-		contentEmail = contentEmail.replace(STR_APELLIDO, emailData.getApellido());
+		contentEmail = contentEmail.replace(STR_APELLIDO, emailData.getApellido() != null ? emailData.getApellido() : "");
 		contentEmail = contentEmail.replace(STR_INDICATIVO, emailData.getIndicativo());
 		contentEmail = contentEmail.replace(STR_GRID, emailData.getGrid());
 		
