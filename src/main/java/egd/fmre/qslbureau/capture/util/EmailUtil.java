@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -53,8 +54,9 @@ public abstract class EmailUtil {
 			msg.setSentDate(new Date());
 
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDetailsObject.getEmailTo(), false));
+			msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse("eduardo_gd@hotmail.com", false));
 			log.info("Message is ready");
-			//Transport.send(msg);
+			Transport.send(msg);
 
 			log.info("EMail Sent Successfully!!");
 		} catch (MessagingException | UnsupportedEncodingException e) {
