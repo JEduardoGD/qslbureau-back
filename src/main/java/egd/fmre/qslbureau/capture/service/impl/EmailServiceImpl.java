@@ -84,7 +84,7 @@ public class EmailServiceImpl implements EmailService {
 		System.out.println("Session created");
 		EmailDetailsObject emailDetailsObject = new EmailDetailsObject(session, emailFrom, emailFromName, emailTo, emailSubject, contentEmail);
 		EmailUtil.sendEmail(emailDetailsObject);
-		return false;
+		return true;
 	}
 
 	private String loadEmailFile() throws SendMailException {
