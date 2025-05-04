@@ -4,12 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
@@ -32,19 +29,13 @@ import egd.fmre.qslbureau.capture.dto.CapturedCallsign;
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.QslsReport;
 import egd.fmre.qslbureau.capture.dto.QslsReportKey;
-import egd.fmre.qslbureau.capture.dto.RepresentativeInfo;
-import egd.fmre.qslbureau.capture.entity.Qsl;
-import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
-import egd.fmre.qslbureau.capture.entity.Zone;
 import egd.fmre.qslbureau.capture.entity.Zonerule;
-import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.QslService;
 import egd.fmre.qslbureau.capture.service.ReportsService;
-import egd.fmre.qslbureau.capture.service.RepresentativeService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
 import jakarta.annotation.PostConstruct;
@@ -54,16 +45,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReportsServiceImpl extends ReportServiceActions implements ReportsService {
 
-	@Autowired
-	private SlotLogicService slotLogicService;
-	@Autowired
-	private QslCaptureService qslCaptureService;
-	@Autowired
-	private ZoneruleService zoneruleService;
-	@Autowired
-	private QslService qslService;
-	@Autowired
-	private RepresentativeService representativeService;
+	@Autowired private SlotLogicService slotLogicService;
+	@Autowired private QslCaptureService qslCaptureService;
+	@Autowired private ZoneruleService zoneruleService;
+	@Autowired private QslService qslService;
 	
 	private Status statusQslVigente;
 	
