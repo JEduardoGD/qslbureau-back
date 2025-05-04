@@ -1,7 +1,11 @@
 package egd.fmre.qslbureau.capture.controller;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import egd.fmre.qslbureau.capture.dto.CallsignDatecontactDto;
 import egd.fmre.qslbureau.capture.dto.QslSumatoryDto;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
@@ -24,11 +29,14 @@ import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
+import egd.fmre.qslbureau.capture.service.ContactBitacoreService;
 import egd.fmre.qslbureau.capture.service.LocalService;
 import egd.fmre.qslbureau.capture.service.QslService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
+import egd.fmre.qslbureau.capture.util.RgbUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -39,6 +47,8 @@ public class SlotController {
     @Autowired SlotLogicService slotLogicService;
     @Autowired LocalService     localService;
     @Autowired QslService       qslService;
+    @Autowired ContactBitacoreService contactBitacoreService;
+    
 
     @GetMapping("/list/bylocalid/{localid}")
     public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable int localid) {
@@ -86,6 +96,25 @@ public class SlotController {
             List<Qsl> qsls = qslService.getBySlotAndStatus(s, Arrays.asList(QslstatusEnum.QSL_VIGENTE));
             return QsldtoTransformer.map(s, qsls.size());
         }).collect(Collectors.toList());
+
+        List<String> slotsCallsign = slotDtoList.stream().map(SlotDto::getCallsignto).collect(Collectors.toList());
+        List<CallsignDatecontactDto> callsignDatecontactDtoList = contactBitacoreService.getContactOnCallsignList(slotsCallsign);
+        Date today = DateTimeUtil.getDateTime();
+        
+		slotDtoList = slotDtoList.stream().map(s -> {
+			CallsignDatecontactDto cd = callsignDatecontactDtoList.stream().filter(
+					c -> (c.getCallsign().equals(s.getCallsignto()) && c.getSlotId().intValue() == s.getSlotId()))
+					.findFirst().orElse(null);
+			if (cd != null) {
+				s.setLastEmailSentAt(cd.getDatetime());
+				LocalDateTime lastEmailSentLdt = cd.getDatetime().toInstant().atZone(ZoneId.systemDefault())
+						.toLocalDateTime();
+				LocalDateTime todayLdt = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+				long daysBetween = Duration.between(lastEmailSentLdt, todayLdt).toDays();
+				s.setBgColor(RgbUtil.getRgbFor(daysBetween));
+			}
+			return s;
+		}).collect(Collectors.toList());
 
         StandardResponse standardResponse;
         try {

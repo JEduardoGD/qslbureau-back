@@ -20,4 +20,6 @@ public class SlotDto implements Serializable {
     private int statusId;
     private int qslsInSlot;
     private String confirmCode;
+    private Date lastEmailSentAt;
+    private String bgColor;
 }

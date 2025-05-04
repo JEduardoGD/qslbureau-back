@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,6 +32,7 @@ import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.CompareNacionalityUtil;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
+import egd.fmre.qslbureau.capture.util.RandomUtils;
 import egd.fmre.qslbureau.capture.util.SlotsUtil;
 import egd.fmre.qslbureau.capture.util.TextUtil;
 import jakarta.annotation.PostConstruct;
@@ -128,7 +128,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
         slot.setClosedAt(DateTimeUtil.getDateTime());
 
         if (createConfirmCode) {
-            slot.setConfirmCode(RandomStringUtils.randomAlphabetic(6).toUpperCase());
+            slot.setConfirmCode(RandomUtils.randomAlphabetic(6).toUpperCase());
             slot.setStatus(slotstatusClosedForSend);
         }
         return slotRepository.save(slot);
