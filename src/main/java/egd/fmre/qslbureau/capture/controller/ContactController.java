@@ -111,8 +111,8 @@ public class ContactController {
 			if(emailService.sendMail(emailDataDto)) {
 				Contact contact = new Contact();
 				contact.setId(contactData.getIdContact());
-				ContactBitacore res = contactBitacoreService.saveContact(contact, representative);
-				standardResponse = new StandardResponse(res);
+				contactBitacoreService.saveContact(contact, slot, representative);
+				standardResponse = new StandardResponse(emailDataDto);
 				return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
 			}else {
 				log.error("Ocurrio un error al enviar correo");

@@ -36,9 +36,13 @@ public class ContactBitacore implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="IDREPRESENTATIVE")
-	private Representative Representative;
+	private Representative representative;
 
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="IDCONTACTACT")
 	private Contact contact;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="IDSLOT")
+	private Slot slot;
 }
