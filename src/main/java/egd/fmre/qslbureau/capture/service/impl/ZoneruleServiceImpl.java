@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import egd.fmre.qslbureau.capture.entity.Zone;
 import egd.fmre.qslbureau.capture.entity.Zonerule;
 import egd.fmre.qslbureau.capture.repo.ZoneruleRepository;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
@@ -42,5 +43,10 @@ public class ZoneruleServiceImpl implements ZoneruleService {
 				.filter(zr -> (zr.getStart().before(now) && zr.getEnd() == null)
 						|| (zr.getEnd() != null && zr.getStart().before(now) && now.before(zr.getEnd())))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Zonerule> getAllActivesByZone(Zone zone) {
+		return zoneruleRepository.findAllActivesByZone(zone);
 	}
 }

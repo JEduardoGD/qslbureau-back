@@ -25,4 +25,8 @@ public interface RepresentativeRepository extends JpaRepository<Representative, 
 	        + "inner join Zone z on z.id = rz.zone.id and (z.start < CURRENT_TIMESTAMP and z.end is null OR z.start < CURRENT_TIMESTAMP and CURRENT_TIMESTAMP < z.end) "
 	        + "where z = :zone and (r.start < CURRENT_TIMESTAMP and r.end is null OR r.start < CURRENT_TIMESTAMP and CURRENT_TIMESTAMP < r.end)")
 	List<Representative> getRepresentativesByZone(@Param("zone") Zone zone);
+	
+	@Query("SELECT r FROM Representative r "
+	        + "where r.id = :id and (r.start < CURRENT_TIMESTAMP and r.end is null OR r.start < CURRENT_TIMESTAMP and CURRENT_TIMESTAMP < r.end)")
+	Representative getActiveRepresentativesById(@Param("id") int id);
 } 
