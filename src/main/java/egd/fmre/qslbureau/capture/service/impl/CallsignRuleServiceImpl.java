@@ -30,12 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class CallsignRuleServiceImpl implements CallsignRuleService {
-	@Autowired
-	CallsignruleRepository callsignruleRepository;
-	@Autowired
-	QslService qslService;
-	@Autowired
-	SlotLogicService slotLogicService;
+	@Autowired CallsignruleRepository callsignruleRepository;
+	@Autowired QslService             qslService;
+	@Autowired SlotLogicService       slotLogicService;
 
 	// filter that happends in time
 	public static BiPredicate<CallsignRule, Date> isOntime = (c, d) -> {
@@ -120,5 +117,10 @@ public class CallsignRuleServiceImpl implements CallsignRuleService {
 	public List<QslRuleDto> getQslsRules(int idlocal) {
 		Collection<QslRuleDto> objects = callsignruleRepository.getQslsRules(idlocal);
 		return objects.stream().collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<CallsignRule> findActiveByCallsignRedirect(String callsignRedirect) {
+		return callsignruleRepository.findActiveByCallsignRedirect(callsignRedirect);
 	}
 }

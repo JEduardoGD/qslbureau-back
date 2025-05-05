@@ -5,6 +5,7 @@ import java.util.List;
 import egd.fmre.qslbureau.capture.dto.QslCallsignRule;
 import egd.fmre.qslbureau.capture.dto.QslRuleDto;
 import egd.fmre.qslbureau.capture.dto.QslSlotTraslade;
+import egd.fmre.qslbureau.capture.entity.CallsignRule;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Status;
 
@@ -17,4 +18,6 @@ public interface CallsignRuleService {
 	List<QslCallsignRule> getApplicableRules(List<Status> createdAndOpenSlotStatuses, Local local);
 
 	List<QslRuleDto> getQslsRules(int idlocal);
+
+	List<CallsignRule> findActiveByCallsignRedirect(String callsignRedirect);
 }

@@ -53,4 +53,6 @@ public interface SlotLogicService {
     void runOpenOpenableSlots(Local local);
 
 	SlotDto migrateSlot(MigrationSlotDto migrationSlotDto) throws QslcaptureException;
+
+	Slot getOpenedOrCreatedSlotByCallsign(String calssingTo);
 }
