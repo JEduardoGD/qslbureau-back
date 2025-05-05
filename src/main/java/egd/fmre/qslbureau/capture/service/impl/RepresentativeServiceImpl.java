@@ -29,4 +29,9 @@ public class RepresentativeServiceImpl implements RepresentativeService {
 	public List<Representative> getRepresentativesByZone(Zone zone) {
 		return representativeRepository.getRepresentativesByZone(zone);
 	}
+	
+	@Override
+	public Representative getActiveRepresentativesById(int id) {
+		return representativeRepository.getActiveRepresentativesById(id);
+	}
 }

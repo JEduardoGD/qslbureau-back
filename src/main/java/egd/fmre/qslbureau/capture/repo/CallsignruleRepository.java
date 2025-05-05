@@ -23,7 +23,7 @@ public interface CallsignruleRepository extends JpaRepository<CallsignRule, Inte
 			"INNER JOIN C_LOCAL loccal on loccal.IDLOCAL = slot.IDLOCAL " +
 			"INNER JOIN C_CALLSIGNRULE csr on ( " +
 			"    (csr.CALLSIGNTO = qsl.TOCALLSIGN AND qsl.VIA IS NULL) OR (csr.CALLSIGNTO = qsl.VIA AND qsl.TOCALLSIGN IS NOT NULL) AND " +
-			"    ((csr.START < CURDATE() AND csr.END IS NULL) OR (csr.START < CURDATE() AND CURDATE() < csr.END))  " +
+			"    ((csr.START < NOW() AND csr.END IS NULL) OR (csr.START < NOW() AND NOW() < csr.END))  " +
 			") " +
 			"WHERE loccal.IDLOCAL = :idlocal " +
 			"AND slot.IDSTATUS IN (2001, 2002) " +
@@ -44,4 +44,10 @@ public interface CallsignruleRepository extends JpaRepository<CallsignRule, Inte
 
 	@Query(value = Q, nativeQuery = true)
 	public Collection<QslRuleDto> getQslsRules(@Param("idlocal") int idlocal);
+	
+	@Query(""
+			+ "SELECT cr FROM CallsignRule cr "
+			+ "WHERE cr.callsignRedirect = :callsignRedirect "
+			+ "AND ((cr.start < NOW() AND cr.end IS NULL) OR (cr.start < NOW() AND NOW() < cr.end))")
+	public List<CallsignRule> findActiveByCallsignRedirect(@Param("callsignRedirect") String callsignRedirect);
 }

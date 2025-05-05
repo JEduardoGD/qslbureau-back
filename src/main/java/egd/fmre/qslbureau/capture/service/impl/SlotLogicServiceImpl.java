@@ -393,5 +393,11 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 		
 		return QsldtoTransformer.map(slot);
 	}
+	
+	@Override
+	public Slot getOpenedOrCreatedSlotByCallsign(String calssingTo) {
+		List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
+		return slotRepository.getSlotByCallsignAndStatuses(calssingTo, slotStatuses);
+	}
 }
 

@@ -11,4 +11,6 @@ public interface RepresentativeService {
 	List<Representative> getRepresentativesForCallsign(String callsign);
 	
 	List<Representative>getRepresentativesByZone(Zone zone);
+
+	Representative getActiveRepresentativesById(int id);
 }
