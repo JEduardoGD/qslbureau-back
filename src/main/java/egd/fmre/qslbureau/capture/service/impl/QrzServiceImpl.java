@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import egd.fmre.qslbureau.capture.ContactDataDto;
 import egd.fmre.qslbureau.capture.dto.qrz.QRZDatabaseDto;
+import egd.fmre.qslbureau.capture.dto.qrz.QrzCallsignDto;
 import egd.fmre.qslbureau.capture.dto.qrz.QrzSessionDto;
 import egd.fmre.qslbureau.capture.entity.Qrzreg;
 import egd.fmre.qslbureau.capture.entity.Qrzsession;
@@ -106,9 +108,11 @@ public class QrzServiceImpl implements QrzService {
 		}
 
 		if (qrzregList != null && !qrzregList.isEmpty()) {
-			Qrzreg res = qrzregList.stream().sorted(Comparator.comparingInt(Qrzreg::getId).reversed()).findFirst()
+			Qrzreg qrzreg = qrzregList.stream()
+					.sorted(Comparator.comparingInt(Qrzreg::getId).reversed())
+					.findFirst()
 					.get();
-			return res.getCountry();
+			return qrzreg.getCountry();
 		}
 		return null;
 	}
@@ -136,4 +140,38 @@ public class QrzServiceImpl implements QrzService {
         finalList.addAll(qsls.stream().map(Qsl::getVia).collect(Collectors.toList()));
         return qrzregRepository.findByCallsignsInPeriod(finalList, calendar.getTime());
     }
+    
+	@Override
+	public ContactDataDto getEmailFromQrz(String callsign) throws QrzException {
+		Qrzsession qrzSession = this.getSession();
+		QRZDatabaseDto qrzDtabaseDto = QrzUtil
+				.callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzSession.getKey(), callsign));
+
+		String error = qrzDtabaseDto.getSession().getError();
+
+		if (StaticValuesHelper.QRZ_ERROR_INVALID_SESSION_KEY.equals(error)
+				|| StaticValuesHelper.QRZ_ERROR_SESSION_TIMEOUT.equals(error)) {
+			manageQrzError(qrzSession, error);
+			qrzSession = this.getSession();
+			qrzDtabaseDto = QrzUtil.callToQrz(String.format(QrzUtil.QRZ_ASK_FOR_CALL, qrzSession.getKey(), callsign));
+		}
+
+		QrzCallsignDto qrzCallsignDto = qrzDtabaseDto.getCallsign();
+		ContactDataDto contactDataDto = null;
+		if (qrzCallsignDto != null) {
+			contactDataDto = new ContactDataDto();
+			contactDataDto.setIdContact(null);
+			contactDataDto.setName(qrzCallsignDto.getFname());
+			contactDataDto.setSurename(qrzCallsignDto.getName());
+			contactDataDto.setCallsign(qrzCallsignDto.getCall());
+			contactDataDto.setAddress(qrzCallsignDto.getAddr1()+"\n"+qrzCallsignDto.getAddr2());
+			contactDataDto.setEmail(qrzCallsignDto.getEmail());
+			contactDataDto.setWhatsapp(null);
+			contactDataDto.setWantemail(null);
+			contactDataDto.setStart(DateTimeUtil.getDateTime());
+			contactDataDto.setEnd(null);
+			contactDataDto.setListOf(null);
+		}
+		return contactDataDto;
+	}
 }
