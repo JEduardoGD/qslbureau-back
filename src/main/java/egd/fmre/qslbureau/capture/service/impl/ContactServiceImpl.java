@@ -5,13 +5,20 @@ import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.ContactDataDto;
 import egd.fmre.qslbureau.capture.entity.Contact;
+import egd.fmre.qslbureau.capture.enums.ContactEmailEnum;
+import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.repo.ContactRepository;
 import egd.fmre.qslbureau.capture.service.ContactService;
+import egd.fmre.qslbureau.capture.service.QrzService;
+import egd.fmre.qslbureau.capture.util.DateTimeUtil;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class ContactServiceImpl implements ContactService {
-	@Autowired
-	private ContactRepository contactRepository;
+	
+	@Autowired private ContactRepository contactRepository;
+	@Autowired private QrzService        qrzService;
 
 	@Override
 	public ContactDataDto findActiveForCallsign(String callsign) {
@@ -40,6 +47,68 @@ public class ContactServiceImpl implements ContactService {
 			contactDataDto.setStart(contact.getStart());
 			contactDataDto.setEnd(contact.getEnd());
 		}
+		return contactDataDto;
+	}
+	
+	@Override
+	public ContactEmailEnum callForUpdateEamilForCallsign(String callsign) {
+		Contact contact = contactRepository.findActiveForCallsign(callsign);
+
+		String email = null;
+		if (contact != null) {
+			email = contact.getEmail();
+		}
+
+		ContactDataDto contactDataDto = null;
+		try {
+			contactDataDto = qrzService.getEmailFromQrz(callsign);
+		} catch (QrzException e) {
+			log.error(e.getMessage());
+		}
+
+		if (contactDataDto == null) {
+			return ContactEmailEnum.CANT_OBTAIN_EMAIL_FROM_QRZ;
+		}
+
+		if (email!=null && email.equalsIgnoreCase(contactDataDto.getEmail())) {
+			return ContactEmailEnum.EMAIL_DOES_NOT_NEED_UPDATE;
+		}
+		
+		return ContactEmailEnum.EMAIL_CAN_BE_UPDATE;
+	}
+	
+	@Override
+	public ContactDataDto updateEamilForCallsign(String callsign) {
+		Contact contact = contactRepository.findActiveForCallsign(callsign);
+
+		ContactDataDto contactDataDto = null;
+		try {
+			contactDataDto = qrzService.getEmailFromQrz(callsign);
+		} catch (QrzException e) {
+			log.error(e.getMessage());
+		}
+
+		if (contactDataDto == null) {
+			return null;
+		}
+		
+		Contact newContact = new Contact();
+		newContact.setId(contact != null ? contact.getId() : null);
+		newContact.setName(contactDataDto.getName());
+		newContact.setSurename(contactDataDto.getSurename());
+		newContact.setCallsign(contactDataDto.getCallsign());
+		newContact.setAddress(contactDataDto.getAddress());
+		newContact.setEmail(contactDataDto.getEmail());
+		newContact.setWhatsapp(contact != null ? contact.getWhatsapp() : null);
+		newContact.setWantemail(contact != null ? contact.getWantemail() : true);
+		newContact.setStart(contact != null && contact.getStart() != null ? contact.getStart() : DateTimeUtil.getDateTime());
+		newContact.setEnd(null);
+		contact = contactRepository.save(newContact);
+		
+		contactDataDto.setIdContact(contact.getId());
+		contactDataDto.setEmail(contact.getEmail());
+		contactDataDto.setWantemail(contact.getWantemail());
+		contactDataDto.setStart(contact.getStart());
 		return contactDataDto;
 	}
 }

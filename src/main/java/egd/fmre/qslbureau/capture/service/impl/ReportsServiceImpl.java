@@ -356,7 +356,7 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 				if (slot != null) {
 					List<Qsl> qsls = qslService.getActiveQslsForSlot(slot);
 					num = qsls != null && !qsls.isEmpty() ? qsls.size() : 0;
-				}
+				} 
 				
 				List<CallsignRule> callsignRuleList = callsignRuleService.findActiveByCallsignRedirect(callsign);
 				RedirectListObjecCallsignRule rloo = new RedirectListObjecCallsignRule();
