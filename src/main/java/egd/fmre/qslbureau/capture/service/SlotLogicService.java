@@ -3,6 +3,7 @@ package egd.fmre.qslbureau.capture.service;
 import java.util.List;
 
 import egd.fmre.qslbureau.capture.controller.MigrationSlotDto;
+import egd.fmre.qslbureau.capture.dto.MergeableDataDto;
 import egd.fmre.qslbureau.capture.dto.SlotCountqslDTO;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.entity.Local;
@@ -55,4 +56,8 @@ public interface SlotLogicService {
 	SlotDto migrateSlot(MigrationSlotDto migrationSlotDto) throws QslcaptureException;
 
 	Slot getOpenedOrCreatedSlotByCallsign(String calssingTo);
+
+	List<MergeableDataDto> getApplicableTraslates(int localid);
+
+	boolean mergeChanges(MergeableDataDto mergeableDataDto);
 }
