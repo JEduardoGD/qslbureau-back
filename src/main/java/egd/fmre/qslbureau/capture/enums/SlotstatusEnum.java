@@ -3,7 +3,7 @@ package egd.fmre.qslbureau.capture.enums;
 import egd.fmre.qslbureau.capture.exception.StatusNotFoundException;
 
 public enum SlotstatusEnum {
-    CREATED(2001), OPEN(2002), CLOSED(2003), CLOSED_FOR_SEND(2004), SENT(2005), CONFIRMED(2006), MOVED_TO_INTERNATIONAL(2007), UNCONFIRMABLE(2008);
+    CREATED(2001), OPEN(2002), CLOSED(2003), CLOSED_FOR_SEND(2004), SENT(2005), CONFIRMED(2006), MOVED_TO_INTERNATIONAL(2007), UNCONFIRMABLE(2008), JOINED(2009);
 
     int idstatus;
 
