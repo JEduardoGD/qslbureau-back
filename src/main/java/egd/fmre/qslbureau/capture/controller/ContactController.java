@@ -21,6 +21,7 @@ import egd.fmre.qslbureau.capture.entity.Contact;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Slot;
+import egd.fmre.qslbureau.capture.enums.ContactEmailEnum;
 import egd.fmre.qslbureau.capture.exception.SendMailException;
 import egd.fmre.qslbureau.capture.service.ContactBitacoreService;
 import egd.fmre.qslbureau.capture.service.ContactService;
@@ -132,5 +133,19 @@ public class ContactController {
 			standardResponse = new StandardResponse(true, e.getMessage());
 			return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
 		}
+	}
+	
+	@GetMapping("/callforupdateemail/callsign/{callsign}")
+	public ResponseEntity<StandardResponse> callForUpdateEmail(@PathVariable String callsign) {
+		ContactEmailEnum contactEmailEnumResponse = contactService.callForUpdateEamilForCallsign(callsign);
+		StandardResponse standardResponse = new StandardResponse(contactEmailEnumResponse.getValue());
+		return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/updateemail/callsign/{callsign}")
+	public ResponseEntity<StandardResponse> updateEmail(@PathVariable String callsign) {
+		ContactDataDto contactDataDto = contactService.updateEamilForCallsign(callsign);
+		StandardResponse standardResponse = new StandardResponse(contactDataDto);
+		return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
 	}
 }

@@ -2,6 +2,7 @@ package egd.fmre.qslbureau.capture.service;
 
 import java.util.List;
 
+import egd.fmre.qslbureau.capture.ContactDataDto;
 import egd.fmre.qslbureau.capture.entity.Qrzreg;
 import egd.fmre.qslbureau.capture.entity.Qrzsession;
 import egd.fmre.qslbureau.capture.entity.Qsl;
@@ -17,4 +18,5 @@ public interface QrzService {
 
 	String getCountryOfCallsign(String callsign) throws QrzException;
 
+	public ContactDataDto getEmailFromQrz(String callsign) throws QrzException;
 }
