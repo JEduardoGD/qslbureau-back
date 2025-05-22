@@ -46,6 +46,7 @@ public class ContactController {
 	@GetMapping("/findactiveforcallsign/{callsign}")
 	public ResponseEntity<StandardResponse> findActiveForCallsign(@PathVariable String callsign) {
 		ContactDataDto contactDataDto = contactService.findActiveForCallsign(callsign);
+		/*
 		List<Representative> representativeList = representativeService.getRepresentativesForCallsign(callsign);
 		String listOf = null;
 		if (representativeList != null && !representativeList.isEmpty()) {
@@ -55,6 +56,7 @@ public class ContactController {
 		if (contactDataDto != null) {
 			contactDataDto.setListOf(listOf);
 		}
+		*/
 		StandardResponse standardResponse = new StandardResponse(contactDataDto);
 		return ResponseEntity.ok(standardResponse);
 	}

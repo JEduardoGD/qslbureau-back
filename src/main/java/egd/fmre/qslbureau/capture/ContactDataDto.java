@@ -22,5 +22,5 @@ public class ContactDataDto implements Serializable {
 	private Boolean wantemail;
 	private Date start;
 	private Date end;
-	private String listOf;
+	//private String listOf;
 }

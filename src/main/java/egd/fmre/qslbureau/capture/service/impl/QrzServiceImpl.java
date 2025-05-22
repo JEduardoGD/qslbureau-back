@@ -170,7 +170,7 @@ public class QrzServiceImpl implements QrzService {
 			contactDataDto.setWantemail(null);
 			contactDataDto.setStart(DateTimeUtil.getDateTime());
 			contactDataDto.setEnd(null);
-			contactDataDto.setListOf(null);
+			//contactDataDto.setListOf(null);
 		}
 		return contactDataDto;
 	}

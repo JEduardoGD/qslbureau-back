@@ -22,4 +22,5 @@ public class SlotDto implements Serializable {
     private String confirmCode;
     private Date lastEmailSentAt;
     private String bgColor;
+    private String listOf;
 }

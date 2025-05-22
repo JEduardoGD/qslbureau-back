@@ -11,6 +11,7 @@ import egd.fmre.qslbureau.capture.repo.ContactRepository;
 import egd.fmre.qslbureau.capture.service.ContactService;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -78,6 +79,7 @@ public class ContactServiceImpl implements ContactService {
 	}
 	
 	@Override
+	@Transactional
 	public ContactDataDto updateEamilForCallsign(String callsign) {
 		Contact contact = contactRepository.findActiveForCallsign(callsign);
 
@@ -91,9 +93,14 @@ public class ContactServiceImpl implements ContactService {
 		if (contactDataDto == null) {
 			return null;
 		}
+
+		if (contact != null) {
+			contact.setEnd(DateTimeUtil.getDateTime());
+			contactRepository.save(contact);
+		}
 		
 		Contact newContact = new Contact();
-		newContact.setId(contact != null ? contact.getId() : null);
+		newContact.setId(null);
 		newContact.setName(contactDataDto.getName());
 		newContact.setSurename(contactDataDto.getSurename());
 		newContact.setCallsign(contactDataDto.getCallsign());
@@ -101,7 +108,7 @@ public class ContactServiceImpl implements ContactService {
 		newContact.setEmail(contactDataDto.getEmail());
 		newContact.setWhatsapp(contact != null ? contact.getWhatsapp() : null);
 		newContact.setWantemail(contact != null ? contact.getWantemail() : true);
-		newContact.setStart(contact != null && contact.getStart() != null ? contact.getStart() : DateTimeUtil.getDateTime());
+		newContact.setStart(DateTimeUtil.getDateTime());
 		newContact.setEnd(null);
 		contact = contactRepository.save(newContact);
 		
