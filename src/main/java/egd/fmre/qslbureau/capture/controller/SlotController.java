@@ -26,12 +26,14 @@ import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
+import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.ContactBitacoreService;
 import egd.fmre.qslbureau.capture.service.LocalService;
 import egd.fmre.qslbureau.capture.service.QslService;
+import egd.fmre.qslbureau.capture.service.RepresentativeService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
@@ -45,9 +47,10 @@ import lombok.extern.slf4j.Slf4j;
 public class SlotController {
 
     @Autowired SlotLogicService slotLogicService;
-    @Autowired LocalService     localService;
-    @Autowired QslService       qslService;
+    @Autowired LocalService           localService;
+    @Autowired QslService             qslService;
     @Autowired ContactBitacoreService contactBitacoreService;
+    @Autowired RepresentativeService  representativeService;
     
 
     @GetMapping("/list/bylocalid/{localid}")
@@ -239,6 +242,16 @@ public class SlotController {
         }
         
         SlotDto slotDto = QsldtoTransformer.map(slot, qslService.getActiveQslsForSlot(slot).size());
+        
+        List<Representative> representativeList = representativeService.getRepresentativesForCallsign(slot.getCallsignto());
+ 		String listOf = null;
+ 		if (representativeList != null && !representativeList.isEmpty()) {
+ 			listOf = String.join(", ", representativeList.stream().map(r -> r.getName() + " " + r.getLastName())
+ 					.collect(Collectors.toList()));
+ 		}
+ 		if (slotDto != null) {
+ 			slotDto.setListOf(listOf);
+ 		}
         
         StandardResponse standardResponse;
         try {
