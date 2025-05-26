@@ -16,6 +16,7 @@ import egd.fmre.qslbureau.capture.dto.MergeableDataDto;
 import egd.fmre.qslbureau.capture.dto.SlotCountqslDTO;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.entity.CallsignRule;
+import egd.fmre.qslbureau.capture.entity.ContactBitacore;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Slot;
@@ -30,6 +31,7 @@ import egd.fmre.qslbureau.capture.repo.CallsignruleRepository;
 import egd.fmre.qslbureau.capture.repo.LocalRepository;
 import egd.fmre.qslbureau.capture.repo.QslRepository;
 import egd.fmre.qslbureau.capture.repo.SlotRepository;
+import egd.fmre.qslbureau.capture.service.ContactBitacoreService;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.CompareNacionalityUtil;
@@ -46,16 +48,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService {
 
-	@Autowired
-	CallsignruleRepository callsignruleRepository;
-	@Autowired
-	SlotRepository slotRepository;
-	@Autowired
-	LocalRepository localRepository;
-	@Autowired
-	QrzService qrzService;
-	@Autowired
-	QslRepository qslRepository;
+	@Autowired CallsignruleRepository callsignruleRepository;
+	@Autowired SlotRepository slotRepository;
+	@Autowired LocalRepository localRepository;
+	@Autowired QrzService qrzService;
+	@Autowired QslRepository qslRepository;
+	@Autowired ContactBitacoreService contactBitacoreService;
 
 	@Value("${MX_PREFIXES}")
 	private String mxPrefixes;
@@ -362,6 +360,8 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 		Local local = localRepository.findById(migrationSlotDto.getNewlocalid()).orElse(null);
 
 		Slot oldSlot = slotRepository.findById(migrationSlotDto.getSlotid()).orElse(null);
+		List<ContactBitacore> contactBitacoreList = contactBitacoreService.findEntityBySlot(oldSlot);
+		
 		List<Qsl> qsls = qslRepository.findBySlotAndStatuses(oldSlot,
 				Arrays.asList(qslStatusVigente, qslStatusEliminada));
 		Slot slot = null;
@@ -378,8 +378,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 					slot = getSlotByCountry(effectiveCallsign, local);
 				}
 			} catch (MaximumSlotNumberReachedException e) {
-				log.error(e.getMessage());
-				return null;
+				throw new QslcaptureException(e);
 			}
 
 			if (slot == null) {
@@ -389,6 +388,8 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 			if (slot == null) {
 				throw new QslcaptureException("No pudo generarse el slot");
 			}
+			
+			contactBitacoreService.migrateContactBitacore(contactBitacoreList, slot);
 
 			changeSlotstatusToOpen(slot);
 			qsl.setSlot(slot);
@@ -441,8 +442,12 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
  		int origenSlotId = mergeableDataDto.getSlotOrigen().getSlotId();
 		Slot origenSlot = slotRepository.findById(origenSlotId).orElse(null);
 		
+		List<ContactBitacore> contactBitacoreList = contactBitacoreService.findEntityBySlot(origenSlot);
+		
 		int destinoSlotId = mergeableDataDto.getSlotDestino().getSlotId();
 		Slot destinoSlot = slotRepository.findById(destinoSlotId).orElse(null);
+		
+		contactBitacoreService.migrateContactBitacore(contactBitacoreList, destinoSlot);
 		
 		Set<Qsl> qslsSlotOrigen = qslRepository.findBySlot(origenSlot);
 		List<Qsl> qslsInNewSlot = qslsSlotOrigen.stream().map(qsl -> {
@@ -457,26 +462,4 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 		return true;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

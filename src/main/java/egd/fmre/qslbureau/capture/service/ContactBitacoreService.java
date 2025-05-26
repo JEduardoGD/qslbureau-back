@@ -13,4 +13,10 @@ public interface ContactBitacoreService {
 	ContactBitacore saveContact(Contact contact, Slot slot, Representative representative);
 
 	List<CallsignDatecontactDto> getContactOnCallsignList(List<String> callsigns);
+
+	List<CallsignDatecontactDto> findBySlot(Slot slot);
+
+	List<ContactBitacore> findEntityBySlot(Slot slot);
+
+	List<ContactBitacore> migrateContactBitacore(List<ContactBitacore> contactBitacoreList, Slot newSlot);
 }

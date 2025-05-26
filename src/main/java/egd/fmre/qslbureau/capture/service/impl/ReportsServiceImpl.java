@@ -502,41 +502,4 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 			}
 		}
     }
-	
-	
-	
-	/*
-	@Override
-	public List<CapturedCallsign> getOrphansCallsigns() {
-		// 1. obtener lista de callsigns para sin via vigentes que se encuentren en slots abiertos o creados
-		List<Slot> openedOrCreatedSlots = slotLogicService.getOpenedOrCreatedSlots();
-		Set<String> hashSetCallsigns = new HashSet<>();
-		for (Slot openedOrCreatedSlot : openedOrCreatedSlots) {
-			List<Qsl> qsls = qslService.getBySlotAndStatus(openedOrCreatedSlot,
-					Arrays.asList(QslstatusEnum.QSL_VIGENTE));
-			//tomar el callsign, para los que tienen via tomar el via y para los que tienen to y no via tomar el to
-			List<String> allCallsigns = qsls.stream().map(qsl -> qsl.getVia() !=null ? qsl.getVia() : qsl.getTo() ).collect(Collectors.toList());
-			//se agregan
-			hashSetCallsigns.addAll(allCallsigns);
-		}
-		
-		List<Zonerule> activeZoneRules = zoneruleService.getAllActives();
-		// List<RepresentativeInfo> representativeInfoList = new ArrayList<String>();
-		for (Zonerule activeZoneRule : activeZoneRules) {
-			// representativeInfoList.stream().map(r->r.getRepresentativeId().equals(activeZoneRule.get))
-			Zone zone = activeZoneRule.getZone();
-			List<Representative> representatives = representativeService.getRepresentativesByZone(zone);
-			// System.out.println(representatives);
-			RepresentativeInfo representativeInfo = new RepresentativeInfo();
-			for(String )
-			representativeInfo.setRepresentativeId(activeZoneRule.g);
-			
-		}
-		List<String> activeZoneRulesCallsigns = activeZoneRules.stream().map(zr -> zr.getCallsign())
-				.collect(Collectors.toList());
-		hashSetCallsigns.removeAll(activeZoneRulesCallsigns);
-
-		return null;
-	}
-	*/
 }
