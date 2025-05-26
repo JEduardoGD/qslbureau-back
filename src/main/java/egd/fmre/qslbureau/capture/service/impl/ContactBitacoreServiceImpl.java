@@ -1,6 +1,8 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +34,27 @@ public class ContactBitacoreServiceImpl implements ContactBitacoreService {
 	@Override
 	public List<CallsignDatecontactDto> getContactOnCallsignList(List<String> callsigns) {
 		return contactBitacoreRepository.getContactOnCallsignList(callsigns);
+	}
+	
+	@Override
+	public List<CallsignDatecontactDto> findBySlot(Slot slot) {
+		List<ContactBitacore> contactBitacoreList = contactBitacoreRepository.findBySlot(slot);
+		return contactBitacoreList.stream().map(contactBitacore -> {
+			return new CallsignDatecontactDto(slot.getCallsignto(), slot.getId(), slot.getSlotNumber(), contactBitacore.getDatetime());
+		}).sorted(Comparator.comparing(CallsignDatecontactDto::getDatetime).reversed()).collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<ContactBitacore> findEntityBySlot(Slot slot) {
+		return contactBitacoreRepository.findBySlot(slot);
+	}
+	
+	@Override
+	public List<ContactBitacore> migrateContactBitacore(List<ContactBitacore> contactBitacoreList, Slot newSlot) {
+		List<ContactBitacore> contactBitacoreListNew = contactBitacoreList.stream().map(c -> {
+			c.setSlot(newSlot);
+			return c;
+		}).collect(Collectors.toList());
+		return contactBitacoreRepository.saveAll(contactBitacoreListNew);
 	}
 }

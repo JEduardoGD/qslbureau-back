@@ -9,11 +9,13 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CallsignDatecontactDto implements Serializable {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4395474164697317859L;
 	private String callsign;
 	private Integer slotId;
+	private Integer slotNumber;
 	private Date datetime;
 }
