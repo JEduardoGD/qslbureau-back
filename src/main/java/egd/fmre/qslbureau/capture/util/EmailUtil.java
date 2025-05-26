@@ -1,7 +1,6 @@
 package egd.fmre.qslbureau.capture.util;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -51,10 +50,12 @@ public abstract class EmailUtil {
 			// msg.setText(body, ENCODING);
 			msg.setContent(emailDetailsObject.getBody(), CONTENT_ENCODING);
 
-			msg.setSentDate(new Date());
+			msg.setSentDate(DateTimeUtil.getDateTime());
 
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDetailsObject.getEmailTo(), false));
 			msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse("eduardo_gd@hotmail.com", false));
+			//msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("eduardo_gd@hotmail.com", false));
+			
 			log.info("Message is ready");
 			Transport.send(msg);
 

@@ -26,7 +26,6 @@ import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
-import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
@@ -38,6 +37,7 @@ import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
+import egd.fmre.qslbureau.capture.util.RepresentativeUtil;
 import egd.fmre.qslbureau.capture.util.RgbUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,7 +51,6 @@ public class SlotController {
     @Autowired QslService             qslService;
     @Autowired ContactBitacoreService contactBitacoreService;
     @Autowired RepresentativeService  representativeService;
-    
 
     @GetMapping("/list/bylocalid/{localid}")
     public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable int localid) {
@@ -116,6 +115,7 @@ public class SlotController {
 				long daysBetween = Duration.between(lastEmailSentLdt, todayLdt).toDays();
 				s.setBgColor(RgbUtil.getRgbFor(daysBetween));
 			}
+	        RepresentativeUtil.setListOf(representativeService, s);
 			return s;
 		}).collect(Collectors.toList());
 
@@ -243,15 +243,7 @@ public class SlotController {
         
         SlotDto slotDto = QsldtoTransformer.map(slot, qslService.getActiveQslsForSlot(slot).size());
         
-        List<Representative> representativeList = representativeService.getRepresentativesForCallsign(slot.getCallsignto());
- 		String listOf = null;
- 		if (representativeList != null && !representativeList.isEmpty()) {
- 			listOf = String.join(", ", representativeList.stream().map(r -> r.getName() + " " + r.getLastName())
- 					.collect(Collectors.toList()));
- 		}
- 		if (slotDto != null) {
- 			slotDto.setListOf(listOf);
- 		}
+        RepresentativeUtil.setListOf(representativeService, slotDto);
         
         StandardResponse standardResponse;
         try {
@@ -265,7 +257,6 @@ public class SlotController {
 
     @PostMapping("/migrate")
     public ResponseEntity<StandardResponse> migrateSlot(@RequestBody MigrationSlotDto migrationSlotDto) {
-    	log.info(migrationSlotDto.toString());
     	SlotDto slotDto;
     	StandardResponse standardResponse;
 		try {
@@ -302,3 +293,4 @@ public class SlotController {
 		return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
 	}
 }
+
