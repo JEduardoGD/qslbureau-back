@@ -1,9 +1,5 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -15,14 +11,16 @@ import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.EmailDataDto;
 import egd.fmre.qslbureau.capture.dto.EmailDetailsObject;
+import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.exception.SendMailException;
 import egd.fmre.qslbureau.capture.service.EmailService;
 import egd.fmre.qslbureau.capture.util.EmailUtil;
+import egd.fmre.qslbureau.capture.util.EmailHelper;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl extends EmailHelper implements EmailService {
 
 	@Value("${MAIL.USER}")
 	private String mailUser;
@@ -82,32 +80,14 @@ public class EmailServiceImpl implements EmailService {
 		};
 
 		Session session = Session.getInstance(props, auth);
-		System.out.println("Session created");
+		log.info("Session created");
 		EmailDetailsObject emailDetailsObject = new EmailDetailsObject(session, emailFrom, emailFromName, emailTo, emailSubject, contentEmail);
 		EmailUtil.sendEmail(emailDetailsObject);
 		return true;
 	}
-
-	private String loadEmailFile() throws SendMailException {
-		Class<EmailServiceImpl> clazz = EmailServiceImpl.class;
-	    InputStream inputStream = clazz.getResourceAsStream("/email.html");
-	    try {
-			return readFromInputStream(inputStream);
-		} catch (IOException e) {
-			throw new SendMailException(e);
-		}
-	}
 	
-	private String readFromInputStream(InputStream inputStream)
-			  throws IOException {
-	    StringBuilder resultStringBuilder = new StringBuilder();
-	    try (BufferedReader br
-	      = new BufferedReader(new InputStreamReader(inputStream))) {
-	        String line;
-	        while ((line = br.readLine()) != null) {
-	            resultStringBuilder.append(line).append("\n");
-	        }
-	    }
-	  return resultStringBuilder.toString();
+	@Override
+	public void getListOfEmailSendedForSlot(Slot slot) {
+		
 	}
 }

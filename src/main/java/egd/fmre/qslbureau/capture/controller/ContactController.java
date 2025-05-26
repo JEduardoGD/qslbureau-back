@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import egd.fmre.qslbureau.capture.ContactDataDto;
+import egd.fmre.qslbureau.capture.dto.ContactDataDto;
 import egd.fmre.qslbureau.capture.dto.EmailDataDto;
 import egd.fmre.qslbureau.capture.dto.QslSumatoryDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
@@ -46,17 +46,6 @@ public class ContactController {
 	@GetMapping("/findactiveforcallsign/{callsign}")
 	public ResponseEntity<StandardResponse> findActiveForCallsign(@PathVariable String callsign) {
 		ContactDataDto contactDataDto = contactService.findActiveForCallsign(callsign);
-		/*
-		List<Representative> representativeList = representativeService.getRepresentativesForCallsign(callsign);
-		String listOf = null;
-		if (representativeList != null && !representativeList.isEmpty()) {
-			listOf = String.join(", ", representativeList.stream().map(r -> r.getName() + " " + r.getLastName())
-					.collect(Collectors.toList()));
-		}
-		if (contactDataDto != null) {
-			contactDataDto.setListOf(listOf);
-		}
-		*/
 		StandardResponse standardResponse = new StandardResponse(contactDataDto);
 		return ResponseEntity.ok(standardResponse);
 	}

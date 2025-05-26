@@ -1,4 +1,4 @@
-package egd.fmre.qslbureau.capture;
+package egd.fmre.qslbureau.capture.dto;
 
 import java.io.Serializable;
 import java.util.Date;

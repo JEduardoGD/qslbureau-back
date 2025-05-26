@@ -17,7 +17,6 @@ import egd.fmre.qslbureau.capture.dto.ShippingMethodDto;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
 import egd.fmre.qslbureau.capture.dto.SummaryQslDto;
 import egd.fmre.qslbureau.capture.dto.ZoneruleDto;
-import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.exception.JsonParserException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
