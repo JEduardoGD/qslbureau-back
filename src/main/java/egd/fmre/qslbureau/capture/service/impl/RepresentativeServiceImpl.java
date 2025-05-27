@@ -34,4 +34,9 @@ public class RepresentativeServiceImpl implements RepresentativeService {
 	public Representative getActiveRepresentativesById(int id) {
 		return representativeRepository.getActiveRepresentativesById(id);
 	}
+
+	@Override
+	public List<Representative> findAllActive() {
+		return representativeRepository.findAllActive();
+	}
 }
