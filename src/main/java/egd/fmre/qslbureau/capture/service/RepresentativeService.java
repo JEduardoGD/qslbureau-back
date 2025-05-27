@@ -6,11 +6,13 @@ import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Zone;
 
 public interface RepresentativeService {
-    Representative findById(Integer id);
+	Representative findById(Integer id);
 
 	List<Representative> getRepresentativesForCallsign(String callsign);
-	
-	List<Representative>getRepresentativesByZone(Zone zone);
+
+	List<Representative> getRepresentativesByZone(Zone zone);
 
 	Representative getActiveRepresentativesById(int id);
+
+	List<Representative> findAllActive();
 }

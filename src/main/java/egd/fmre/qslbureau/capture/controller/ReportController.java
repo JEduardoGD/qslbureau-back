@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import egd.fmre.qslbureau.capture.dto.CapturedCallsign;
+import egd.fmre.qslbureau.capture.dto.OrphanCallsignReportObjectDTO;
 import egd.fmre.qslbureau.capture.dto.QslsReport;
 import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.service.ReportsService;
@@ -76,11 +77,16 @@ public class ReportController {
 		        .body(workbook);
 	}
 
-	/*
 	@GetMapping(value = "/orphans-calls-report", produces = "application/vnd.ms-excel")
-	public @ResponseBody ResponseEntity<byte[]> generateOrphanCallsReport() throws IOException {
-		 reportsService.getOrphansCallsigns();
-		return null;
+	public @ResponseBody ResponseEntity<byte[]> getOrphansCallsignsReport() throws IOException {
+		List<OrphanCallsignReportObjectDTO> prphanCallsignReportObjectDTOList = reportsService
+				.getOrphansCallsignsReport();
+		byte[] reportInBytes = reportsService.generateOrphansReport(prphanCallsignReportObjectDTOList);
+		
+		return ResponseEntity.ok()
+		        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+"filename.xlsx")
+		        .contentLength(reportInBytes.length)
+		        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+		        .body(reportInBytes);
 	}
-	*/
-}
+}//eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnZWR1YXJkbyIsImV4cCI6MTc0ODM2ODc0MSwiaWF0IjoxNzQ4MzUwNzQxfQ.Yi3x0AeZaDie0-BCURqIpIJCLkbPZe6hcKYPpWW2N0KICEEn-WBAYGmo0sGth_8eoADw7fHgba1Lz6Ddf5o5IQ
