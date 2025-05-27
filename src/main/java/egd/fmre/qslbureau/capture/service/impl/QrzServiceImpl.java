@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import egd.fmre.qslbureau.capture.ContactDataDto;
+import egd.fmre.qslbureau.capture.dto.ContactDataDto;
 import egd.fmre.qslbureau.capture.dto.qrz.QRZDatabaseDto;
 import egd.fmre.qslbureau.capture.dto.qrz.QrzCallsignDto;
 import egd.fmre.qslbureau.capture.dto.qrz.QrzSessionDto;

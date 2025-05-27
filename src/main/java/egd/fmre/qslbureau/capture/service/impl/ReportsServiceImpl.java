@@ -508,7 +508,6 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 		}
     }
 	
-	
 	@Override
 	public void getOrphansCallsignsReport() {
 		List<Zonerule> zonerules = zoneruleService.getAllActives();
