@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
@@ -509,15 +510,16 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
     }
 	
 	@Override
-	public void getOrphansCallsignsReport() {
+	public List<OrphanCallsignReportObjectDTO> getOrphansCallsignsReport() {
 		List<Zonerule> zonerules = zoneruleService.getAllActives();
 
 		List<Slot> slots = slotLogicService.getOpenedOrCreatedSlots();
-		Set<QslToViaDTO> orphansQslToViaDTOSet = null;
+		Set<QslToViaDTO> orphansQslToViaDTOSet = new HashSet<>();
 		for (Slot slot : slots) {
 			List<Qsl> allQslsInSlot = qslService.getActiveQslsForSlot(slot);
-			orphansQslToViaDTOSet = allQslsInSlot.stream().map(c -> new QslToViaDTO(c.getTo(), c.getVia()))
+			Set<QslToViaDTO> t = allQslsInSlot.stream().map(c -> new QslToViaDTO(c.getTo(), c.getVia()))
 					.collect(Collectors.toSet());
+			orphansQslToViaDTOSet.addAll(t);
 		}
 
 		List<Representative> representatives = representativeService.findAllActive();
@@ -528,21 +530,131 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 				List<Zonerule> activeZonerulesForZone = zonerules.stream().filter(zr -> zr.getZone().equals(zone))
 						.collect(Collectors.toList());
 				for (Zonerule activeZoneruleForZone : activeZonerulesForZone) {
-					if (orphansQslToViaDTOSet != null) {
-						Set<QslToViaDTO> setsToRemove = orphansQslToViaDTOSet.stream()
-								.filter(q -> activeZoneruleForZone.getCallsign().equalsIgnoreCase(q.getTo())
-										|| activeZoneruleForZone.getCallsign().equalsIgnoreCase(q.getVia()))
-								.collect(Collectors.toSet());
-						orphansQslToViaDTOSet.removeAll(setsToRemove);
-					}
+					Set<QslToViaDTO> setsToRemove = orphansQslToViaDTOSet.stream()
+							.filter(q -> activeZoneruleForZone.getCallsign().equalsIgnoreCase(q.getTo())
+									|| activeZoneruleForZone.getCallsign().equalsIgnoreCase(q.getVia()))
+							.collect(Collectors.toSet());
+					orphansQslToViaDTOSet.removeAll(setsToRemove);
 					OrphanCallsignReportObjectDTO ocro = new OrphanCallsignReportObjectDTO();
-					ocro.setRepresentativeName(representative.getName() + " " + representative.getLastName() != null
-							? " " + representative.getLastName()
-							: "");
+					ocro.setRepresentativeName(representative.getName()
+							+ (representative.getLastName() != null ? " " + representative.getLastName() : ""));
 					ocro.setZoneName(zone.getName());
 					ocro.setQslTo(activeZoneruleForZone.getCallsign());
 					ocro.setQslVia(null);
 					orphanCallsignReportObjectDTOList.add(ocro);
+				}
+			}
+		}
+		List<OrphanCallsignReportObjectDTO> orphans = orphansQslToViaDTOSet.stream().map(orphanQslToViaDTO -> {
+			OrphanCallsignReportObjectDTO ocro = new OrphanCallsignReportObjectDTO();
+			ocro.setRepresentativeName(null);
+			ocro.setZoneName(null);
+			ocro.setQslTo(orphanQslToViaDTO.getTo());
+			ocro.setQslVia(orphanQslToViaDTO.getVia());
+			return ocro;
+		}).collect(Collectors.toList());
+		orphanCallsignReportObjectDTOList.addAll(orphans);
+		return orphanCallsignReportObjectDTOList;
+	}
+	
+	@Override
+	public byte[] generateOrphansReport(
+			List<OrphanCallsignReportObjectDTO> orphanCallsignReportObjectDTOList) {
+		Workbook workbook = new XSSFWorkbook();
+
+		CreationHelper creationHelper = workbook.getCreationHelper();
+		CellStyle cellStyle = workbook.createCellStyle();
+		cellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("dd/mm/yyyy hh:mm"));
+
+		Sheet sheet = workbook.createSheet("indicativos");
+
+		Row row;
+		Cell cell;
+		int c = 3;
+		
+		List<OrphanCallsignReportObjectDTO> notOrphansOcro = orphanCallsignReportObjectDTOList.stream()
+				.filter(ocro -> ocro.getRepresentativeName() != null).collect(Collectors.toList());
+		List<String> distinctNames = notOrphansOcro.stream()
+				.map(o -> o.getRepresentativeName())
+				.distinct()
+				.collect(Collectors.toList());
+		for (String name : distinctNames) {
+			boolean representativeNameAdded = false;
+			List<OrphanCallsignReportObjectDTO> elementsOfName = notOrphansOcro.stream()
+					.filter(o -> o.getRepresentativeName().equals(name)).collect(Collectors.toList());
+			List<String> zones = elementsOfName.stream().map(o -> o.getZoneName()).distinct()
+					.collect(Collectors.toList());
+			for (String zone : zones) {
+				boolean zoneNameAdded = false;
+				List<OrphanCallsignReportObjectDTO> elementsOfZone = elementsOfName.stream()
+						.filter(o -> o.getZoneName().equals(zone)).collect(Collectors.toList());
+
+				for (OrphanCallsignReportObjectDTO elementOfZone : elementsOfZone) {
+
+					row = sheet.createRow(c++);
+
+					if (!representativeNameAdded) {
+						cell = row.createCell(3);
+						cell.setCellValue(elementOfZone.getRepresentativeName());
+					}
+					representativeNameAdded = true;
+
+					if (!zoneNameAdded) {
+						cell = row.createCell(4);
+						cell.setCellValue(elementOfZone.getZoneName());
+					}
+					zoneNameAdded = true;
+
+					cell = row.createCell(5);
+					cell.setCellValue(elementOfZone.getQslTo());
+
+					cell = row.createCell(6);
+					cell.setCellValue(elementOfZone.getQslVia());
+				}
+			}
+		}
+		
+		List<OrphanCallsignReportObjectDTO> orphansOcro = orphanCallsignReportObjectDTOList.stream()
+				.filter(ocro -> ocro.getRepresentativeName() == null).collect(Collectors.toList());
+		boolean headerAdded = false;
+		for (OrphanCallsignReportObjectDTO elementOfZone : orphansOcro) {
+			row = sheet.createRow(c++);
+			
+			if (!headerAdded) {
+				cell = row.createCell(3);
+				cell.setCellValue("Sin agrupador");
+			}
+			headerAdded = true;
+
+			cell = row.createCell(5);
+			cell.setCellValue(elementOfZone.getQslTo());
+
+			cell = row.createCell(6);
+			cell.setCellValue(elementOfZone.getQslVia());
+		}
+
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			workbook.write(bos);
+			return bos.toByteArray();
+		} catch (IOException e) {
+			log.error(e.getMessage());
+			return null;
+		} finally {
+			if (bos != null) {
+				try {
+					bos.close();
+				} catch (IOException e) {
+					log.error("Error closing ByteArrayOutputStream");
+					log.error(e.getMessage());
+				}
+			}
+			if (workbook != null) {
+				try {
+					workbook.close();
+				} catch (IOException e) {
+					log.error("Error closing Workbook");
+					log.error(e.getMessage());
 				}
 			}
 		}
