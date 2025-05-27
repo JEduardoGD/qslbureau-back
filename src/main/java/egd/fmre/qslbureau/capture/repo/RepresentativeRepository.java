@@ -29,4 +29,8 @@ public interface RepresentativeRepository extends JpaRepository<Representative, 
 	@Query("SELECT r FROM Representative r "
 	        + "where r.id = :id and (r.start < CURRENT_TIMESTAMP and r.end is null OR r.start < CURRENT_TIMESTAMP and CURRENT_TIMESTAMP < r.end)")
 	Representative getActiveRepresentativesById(@Param("id") int id);
+
+	@Query("SELECT r FROM Representative r "
+			+ "WHERE (r.start < CURRENT_TIMESTAMP and r.end is null OR r.start < CURRENT_TIMESTAMP and CURRENT_TIMESTAMP < r.end)")
+	List<Representative> findAllActive();
 } 
