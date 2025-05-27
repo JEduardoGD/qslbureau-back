@@ -22,6 +22,5 @@ public interface ReportsService {
 	byte[] redirectListObjectRepresentativeToWorkbook(
 			RedirectListObjectRepresentative redirectListObjectRepresentative);
 
-	//List<CapturedCallsign> getOrphansCallsigns();
-
+	void getOrphansCallsignsReport();
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.CapturedCallsign;
+import egd.fmre.qslbureau.capture.dto.OrphanCallsignReportObjectDTO;
 import egd.fmre.qslbureau.capture.dto.QslDto;
+import egd.fmre.qslbureau.capture.dto.QslToViaDTO;
 import egd.fmre.qslbureau.capture.dto.QslsReport;
 import egd.fmre.qslbureau.capture.dto.QslsReportKey;
 import egd.fmre.qslbureau.capture.entity.CallsignRule;
@@ -41,6 +44,7 @@ import egd.fmre.qslbureau.capture.service.CallsignRuleService;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.QslService;
 import egd.fmre.qslbureau.capture.service.ReportsService;
+import egd.fmre.qslbureau.capture.service.RepresentativeService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
 import egd.fmre.qslbureau.capture.service.ZoneService;
 import egd.fmre.qslbureau.capture.service.ZoneruleService;
@@ -51,12 +55,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReportsServiceImpl extends ReportServiceActions implements ReportsService {
 
-	@Autowired private SlotLogicService    slotLogicService;
-	@Autowired private QslCaptureService   qslCaptureService;
-	@Autowired private ZoneruleService     zoneruleService;
-	@Autowired private QslService          qslService;
-	@Autowired private ZoneService         zoneService;
-	@Autowired private CallsignRuleService callsignRuleService;
+	@Autowired SlotLogicService      slotLogicService;
+	@Autowired QslCaptureService     qslCaptureService;
+	@Autowired ZoneruleService       zoneruleService;
+	@Autowired QslService            qslService;
+	@Autowired ZoneService           zoneService;
+	@Autowired CallsignRuleService   callsignRuleService;
+	@Autowired RepresentativeService representativeService;
 	
 	private Status statusQslVigente;
 	
@@ -504,39 +509,43 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
     }
 	
 	
-	
-	/*
 	@Override
-	public List<CapturedCallsign> getOrphansCallsigns() {
-		// 1. obtener lista de callsigns para sin via vigentes que se encuentren en slots abiertos o creados
-		List<Slot> openedOrCreatedSlots = slotLogicService.getOpenedOrCreatedSlots();
-		Set<String> hashSetCallsigns = new HashSet<>();
-		for (Slot openedOrCreatedSlot : openedOrCreatedSlots) {
-			List<Qsl> qsls = qslService.getBySlotAndStatus(openedOrCreatedSlot,
-					Arrays.asList(QslstatusEnum.QSL_VIGENTE));
-			//tomar el callsign, para los que tienen via tomar el via y para los que tienen to y no via tomar el to
-			List<String> allCallsigns = qsls.stream().map(qsl -> qsl.getVia() !=null ? qsl.getVia() : qsl.getTo() ).collect(Collectors.toList());
-			//se agregan
-			hashSetCallsigns.addAll(allCallsigns);
-		}
-		
-		List<Zonerule> activeZoneRules = zoneruleService.getAllActives();
-		// List<RepresentativeInfo> representativeInfoList = new ArrayList<String>();
-		for (Zonerule activeZoneRule : activeZoneRules) {
-			// representativeInfoList.stream().map(r->r.getRepresentativeId().equals(activeZoneRule.get))
-			Zone zone = activeZoneRule.getZone();
-			List<Representative> representatives = representativeService.getRepresentativesByZone(zone);
-			// System.out.println(representatives);
-			RepresentativeInfo representativeInfo = new RepresentativeInfo();
-			for(String )
-			representativeInfo.setRepresentativeId(activeZoneRule.g);
-			
-		}
-		List<String> activeZoneRulesCallsigns = activeZoneRules.stream().map(zr -> zr.getCallsign())
-				.collect(Collectors.toList());
-		hashSetCallsigns.removeAll(activeZoneRulesCallsigns);
+	public void getOrphansCallsignsReport() {
+		List<Zonerule> zonerules = zoneruleService.getAllActives();
 
-		return null;
+		List<Slot> slots = slotLogicService.getOpenedOrCreatedSlots();
+		Set<QslToViaDTO> orphansQslToViaDTOSet = null;
+		for (Slot slot : slots) {
+			List<Qsl> allQslsInSlot = qslService.getActiveQslsForSlot(slot);
+			orphansQslToViaDTOSet = allQslsInSlot.stream().map(c -> new QslToViaDTO(c.getTo(), c.getVia()))
+					.collect(Collectors.toSet());
+		}
+
+		List<Representative> representatives = representativeService.findAllActive();
+		List<OrphanCallsignReportObjectDTO> orphanCallsignReportObjectDTOList = new ArrayList<>();
+		for (Representative representative : representatives) {
+			List<Zone> zones = zoneService.getActiveZonesByRepresentative(representative);
+			for (Zone zone : zones) {
+				List<Zonerule> activeZonerulesForZone = zonerules.stream().filter(zr -> zr.getZone().equals(zone))
+						.collect(Collectors.toList());
+				for (Zonerule activeZoneruleForZone : activeZonerulesForZone) {
+					if (orphansQslToViaDTOSet != null) {
+						Set<QslToViaDTO> setsToRemove = orphansQslToViaDTOSet.stream()
+								.filter(q -> activeZoneruleForZone.getCallsign().equalsIgnoreCase(q.getTo())
+										|| activeZoneruleForZone.getCallsign().equalsIgnoreCase(q.getVia()))
+								.collect(Collectors.toSet());
+						orphansQslToViaDTOSet.removeAll(setsToRemove);
+					}
+					OrphanCallsignReportObjectDTO ocro = new OrphanCallsignReportObjectDTO();
+					ocro.setRepresentativeName(representative.getName() + " " + representative.getLastName() != null
+							? " " + representative.getLastName()
+							: "");
+					ocro.setZoneName(zone.getName());
+					ocro.setQslTo(activeZoneruleForZone.getCallsign());
+					ocro.setQslVia(null);
+					orphanCallsignReportObjectDTOList.add(ocro);
+				}
+			}
+		}
 	}
-	*/
 }
