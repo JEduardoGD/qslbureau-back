@@ -55,7 +55,7 @@ public interface SlotLogicService {
 
 	SlotDto migrateSlot(MigrationSlotDto migrationSlotDto) throws QslcaptureException;
 
-	Slot getOpenedOrCreatedSlotByCallsign(String calssingTo);
+	public List<Slot> getOpenedOrCreatedSlotByCallsign(String calssingTo);
 
 	List<MergeableDataDto> getApplicableTraslates(int localid);
 

@@ -67,5 +67,5 @@ public interface SlotRepository extends JpaRepository<Slot, Integer> {
     List<Integer> gettingOpenableSlotIds(@Param("IDLOCAL") int idlocal);
     
     @Query("SELECT s FROM Slot s WHERE s.callsignto = :callsignto AND s.status IN (:statuses)")
-    Slot getSlotByCallsignAndStatuses(@Param("callsignto") String callsignto, @Param("statuses") List<Status> statuses);
+    List<Slot> getSlotByCallsignAndStatuses(@Param("callsignto") String callsignto, @Param("statuses") List<Status> statuses);
 }

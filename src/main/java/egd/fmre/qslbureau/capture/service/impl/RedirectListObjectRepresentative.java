@@ -14,6 +14,7 @@ public class RedirectListObjectRepresentative implements Serializable {
 	 */
 	private static final long serialVersionUID = -4398636004605908090L;
 	private String name;
+	private Integer representativeId;
 	private List<RedirectListObjectZone> rlozList;
 
 	public RedirectListObjectRepresentative() {
