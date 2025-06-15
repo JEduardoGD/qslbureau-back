@@ -402,9 +402,20 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 	}
 
 	@Override
-	public Slot getOpenedOrCreatedSlotByCallsign(String calssingTo) {
+	public List<Slot> getOpenedOrCreatedSlotByCallsign(String calssingTo) {
 		List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
-		return slotRepository.getSlotByCallsignAndStatuses(calssingTo, slotStatuses);
+		List<Slot> slots = slotRepository.getSlotByCallsignAndStatuses(calssingTo, slotStatuses);
+		if (slots == null || slots.isEmpty()) {
+			return null;
+		}
+		if (slots.size() > 1) {
+			Set<Integer> localsIds = slots.stream().map(s -> s.getLocal().getId()).collect(Collectors.toSet());
+			if (slots.size() != localsIds.size()) {
+				log.error("Error al consultar los slots para el callsign {}", calssingTo);
+				return null;
+			}
+		}
+		return slots;
 	}
 
 	@Override
