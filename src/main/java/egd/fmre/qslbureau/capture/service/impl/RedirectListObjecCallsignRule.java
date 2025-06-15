@@ -11,7 +11,7 @@ public class RedirectListObjecCallsignRule implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 6797938981359235793L;
-	
+
 	private String callsignTo;
 	private String callsignRedirect;
 	private Integer localId;

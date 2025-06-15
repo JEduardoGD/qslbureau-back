@@ -345,6 +345,7 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 		nombre += representative.getLastName() != null && !representative.getLastName().equals("")
 				? " " + representative.getLastName()
 				: "";
+		rlor.setRepresentativeId(representative.getId());
 		rlor.setName(nombre);
 
         List<Zone> zoneList = zoneService.getActiveZonesByRepresentative(representative);
@@ -357,29 +358,40 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 			for (Zonerule zonerule : zoneruleList) {
 				String callsign = zonerule.getCallsign();
 				
-				Integer num = null;
-				Slot slot = slotLogicService.getOpenedOrCreatedSlotByCallsign(callsign);
-				if (slot != null) {
-					List<Qsl> qsls = qslService.getActiveQslsForSlot(slot);
-					num = qsls != null && !qsls.isEmpty() ? qsls.size() : 0;
-				} 
-				
-				List<CallsignRule> callsignRuleList = callsignRuleService.findActiveByCallsignRedirect(callsign);
 				RedirectListObjecCallsignRule rloo = new RedirectListObjecCallsignRule();
-				rloo.setCallsignTo(callsign);
-				rloo.setCallsignRedirect(null);
-				if (slot != null) {
-					rloo.setLocalId(slot.getLocal().getId());
-					rloo.setSlotNum(slot.getSlotNumber());
+
+				Integer num = null;
+				List<Slot> slots = slotLogicService.getOpenedOrCreatedSlotByCallsign(callsign);
+				if (slots == null) {
+					rloo.setCallsignTo(callsign);
+					rloo.setCallsignRedirect(null);
+					rloo.setLocalId(null);
+					rloo.setSlotNum(null);
+					rloz.getRlocList().add(rloo);
+					continue;
 				}
-				rloo.setTotal(num);
-				rloz.getRlocList().add(rloo);
-				if (callsignRuleList != null && !callsignRuleList.isEmpty()) {
-					for (CallsignRule callsignRule : callsignRuleList) {
-						rloo = new RedirectListObjecCallsignRule();
-						rloo.setCallsignTo(callsignRule.getCallsignTo());
-						rloo.setCallsignRedirect(callsignRule.getCallsignRedirect());
-						rloz.getRlocList().add(rloo);
+				for (Slot slot : slots) {
+					if (slot != null) {
+						List<Qsl> qsls = qslService.getActiveQslsForSlot(slot);
+						num = qsls != null && !qsls.isEmpty() ? qsls.size() : 0;
+					}
+
+					List<CallsignRule> callsignRuleList = callsignRuleService.findActiveByCallsignRedirect(callsign);
+					rloo.setCallsignTo(callsign);
+					rloo.setCallsignRedirect(null);
+					if (slot != null) {
+						rloo.setLocalId(slot.getLocal().getId());
+						rloo.setSlotNum(slot.getSlotNumber());
+					}
+					rloo.setTotal(num);
+					rloz.getRlocList().add(rloo);
+					if (callsignRuleList != null && !callsignRuleList.isEmpty()) {
+						for (CallsignRule callsignRule : callsignRuleList) {
+							rloo = new RedirectListObjecCallsignRule();
+							rloo.setCallsignTo(callsignRule.getCallsignTo());
+							rloo.setCallsignRedirect(callsignRule.getCallsignRedirect());
+							rloz.getRlocList().add(rloo);
+						}
 					}
 				}
 			}
@@ -571,7 +583,8 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 		Row row;
 		Cell cell;
 		int c = 3;
-		
+
+		/*
 		List<OrphanCallsignReportObjectDTO> notOrphansOcro = orphanCallsignReportObjectDTOList.stream()
 				.filter(ocro -> ocro.getRepresentativeName() != null).collect(Collectors.toList());
 		List<String> distinctNames = notOrphansOcro.stream()
@@ -613,6 +626,7 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 				}
 			}
 		}
+		*/
 		
 		List<OrphanCallsignReportObjectDTO> orphansOcro = orphanCallsignReportObjectDTOList.stream()
 				.filter(ocro -> ocro.getRepresentativeName() == null).collect(Collectors.toList());
