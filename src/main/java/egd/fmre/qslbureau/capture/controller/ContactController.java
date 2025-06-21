@@ -18,10 +18,12 @@ import egd.fmre.qslbureau.capture.dto.EmailDataDto;
 import egd.fmre.qslbureau.capture.dto.QslSumatoryDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Contact;
+import egd.fmre.qslbureau.capture.entity.ContactBitacore;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.enums.ContactEmailEnum;
+import egd.fmre.qslbureau.capture.exception.ContactServiceException;
 import egd.fmre.qslbureau.capture.exception.SendMailException;
 import egd.fmre.qslbureau.capture.service.ContactBitacoreService;
 import egd.fmre.qslbureau.capture.service.ContactService;
@@ -45,8 +47,15 @@ public class ContactController {
 
 	@GetMapping("/findactiveforcallsign/{callsign}")
 	public ResponseEntity<StandardResponse> findActiveForCallsign(@PathVariable String callsign) {
-		ContactDataDto contactDataDto = contactService.findActiveForCallsign(callsign);
-		StandardResponse standardResponse = new StandardResponse(contactDataDto);
+		ContactDataDto contactDataDto;
+		StandardResponse standardResponse;
+		try {
+			contactDataDto = contactService.findActiveForCallsign(callsign);
+			standardResponse = new StandardResponse(contactDataDto);
+		} catch (ContactServiceException e) {
+			log.error(e.getMessage());
+			standardResponse = new StandardResponse(true, String.format("can't obtaing contact data for callsign %s", callsign));
+		}
 		return ResponseEntity.ok(standardResponse);
 	}
 
@@ -106,6 +115,8 @@ public class ContactController {
 		emailDataDto.setApellido(contactData.getSurename());
 		emailDataDto.setIndicativo(contactData.getCallsign());
 		emailDataDto.setGrid(grid);
+		List<ContactBitacore> x = contactBitacoreService.findEntityBySlot(slot);
+		emailDataDto.setNumOfContact(x == null || x.isEmpty() ? 1 : (x.size() + 1));
 		
 		try {
 			if(emailService.sendMail(emailDataDto)) {
@@ -135,8 +146,15 @@ public class ContactController {
 	
 	@GetMapping("/updateemail/callsign/{callsign}")
 	public ResponseEntity<StandardResponse> updateEmail(@PathVariable String callsign) {
-		ContactDataDto contactDataDto = contactService.updateEamilForCallsign(callsign);
-		StandardResponse standardResponse = new StandardResponse(contactDataDto);
+		StandardResponse standardResponse;
+		ContactDataDto contactDataDto = null;
+		try {
+			contactDataDto = contactService.updateEamilForCallsign(callsign);
+			standardResponse = new StandardResponse(contactDataDto);
+		} catch (ContactServiceException e) {
+			log.error(e.getMessage());
+			standardResponse = new StandardResponse(true, String.format("can't obtaing contact data for callsign %s", callsign));
+		}
 		return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
 	}
 }

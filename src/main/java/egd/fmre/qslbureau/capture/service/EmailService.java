@@ -7,6 +7,4 @@ import egd.fmre.qslbureau.capture.exception.SendMailException;
 public interface EmailService {
 
 	public boolean sendMail(EmailDataDto emailData) throws SendMailException;
-
-	void getListOfEmailSendedForSlot(Slot slot);
 }
