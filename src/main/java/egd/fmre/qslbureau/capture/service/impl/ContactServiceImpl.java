@@ -93,7 +93,7 @@ public class ContactServiceImpl extends EmailHelper implements ContactService {
 		
 		Contact newContact = new Contact();
 		newContact.setId(null);
-		newContact.setName(contactDataDto.getName());
+		newContact.setName(contactDataDto.getName() != null ? contactDataDto.getName().substring(0, 40) : null);
 		newContact.setSurename(contactDataDto.getSurename());
 		newContact.setCallsign(contactDataDto.getCallsign());
 		newContact.setAddress(contactDataDto.getAddress());
