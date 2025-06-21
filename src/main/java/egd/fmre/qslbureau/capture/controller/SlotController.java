@@ -30,6 +30,7 @@ import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.service.ContactBitacoreService;
+import egd.fmre.qslbureau.capture.service.ContactService;
 import egd.fmre.qslbureau.capture.service.LocalService;
 import egd.fmre.qslbureau.capture.service.QslService;
 import egd.fmre.qslbureau.capture.service.RepresentativeService;
@@ -46,11 +47,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SlotController {
 
-    @Autowired SlotLogicService slotLogicService;
+    @Autowired SlotLogicService       slotLogicService;
     @Autowired LocalService           localService;
     @Autowired QslService             qslService;
     @Autowired ContactBitacoreService contactBitacoreService;
     @Autowired RepresentativeService  representativeService;
+    @Autowired ContactService         contactService;
 
     @GetMapping("/list/bylocalid/{localid}")
     public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable int localid) {
@@ -115,7 +117,7 @@ public class SlotController {
 				long daysBetween = Duration.between(lastEmailSentLdt, todayLdt).toDays();
 				s.setBgColor(RgbUtil.getRgbFor(daysBetween));
 			}
-	        RepresentativeUtil.setListOf(representativeService, s);
+	        RepresentativeUtil.setListOf(representativeService, contactService, s);
 			return s;
 		}).collect(Collectors.toList());
 
@@ -243,7 +245,7 @@ public class SlotController {
         
         SlotDto slotDto = QsldtoTransformer.map(slot, qslService.getActiveQslsForSlot(slot).size());
         
-        RepresentativeUtil.setListOf(representativeService, slotDto);
+        RepresentativeUtil.setListOf(representativeService, contactService, slotDto);
         
         StandardResponse standardResponse;
         try {

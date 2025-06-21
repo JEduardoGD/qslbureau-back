@@ -23,4 +23,6 @@ public class SlotDto implements Serializable {
     private Date lastEmailSentAt;
     private String bgColor;
     private String listOf;
+    private Integer idContact;
+    private String email;
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public enum ContactEmailEnum {
 
-	CANT_OBTAIN_EMAIL_FROM_QRZ(1), EMAIL_DOES_NOT_NEED_UPDATE(2), EMAIL_CAN_BE_UPDATE(3);
+	CANT_OBTAIN_EMAIL_FROM_QRZ(1), EMAIL_DOES_NOT_NEED_UPDATE(2), EMAIL_CAN_BE_UPDATE(3), ERROR_ON_DB(4);
 
 	@Getter
 	private int value;
