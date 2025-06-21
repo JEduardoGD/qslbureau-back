@@ -1,11 +1,14 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.ContactDataDto;
 import egd.fmre.qslbureau.capture.entity.Contact;
 import egd.fmre.qslbureau.capture.enums.ContactEmailEnum;
+import egd.fmre.qslbureau.capture.exception.ContactServiceException;
 import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.repo.ContactRepository;
 import egd.fmre.qslbureau.capture.service.ContactService;
@@ -23,9 +26,8 @@ public class ContactServiceImpl extends EmailHelper implements ContactService {
 	@Autowired private QrzService        qrzService;
 
 	@Override
-	public ContactDataDto findActiveForCallsign(String callsign) {
-		Contact contact = contactRepository.findActiveForCallsign(callsign);
-		return map(contact);
+	public ContactDataDto findActiveForCallsign(String callsign) throws ContactServiceException {
+			return map(makeACallForCallsign(callsign));
 	}
 	
 	@Override
@@ -35,8 +37,15 @@ public class ContactServiceImpl extends EmailHelper implements ContactService {
 	}
 	
 	@Override
-	public ContactEmailEnum callForUpdateEamilForCallsign(String callsign) {
-		Contact contact = contactRepository.findActiveForCallsign(callsign);
+	public ContactEmailEnum callForUpdateEamilForCallsign(String callsign)  {
+		Contact contact;
+		try {
+			contact = makeACallForCallsign(callsign);
+		} catch (ContactServiceException e) {
+			log.error(e.getMessage());
+			return ContactEmailEnum.ERROR_ON_DB;
+		}
+		
 
 		String email = null;
 		if (contact != null) {
@@ -63,8 +72,8 @@ public class ContactServiceImpl extends EmailHelper implements ContactService {
 	
 	@Override
 	@Transactional
-	public ContactDataDto updateEamilForCallsign(String callsign) {
-		Contact contact = contactRepository.findActiveForCallsign(callsign);
+	public ContactDataDto updateEamilForCallsign(String callsign) throws ContactServiceException {
+		Contact contact = makeACallForCallsign(callsign);
 
 		ContactDataDto contactDataDto = null;
 		try {
@@ -100,5 +109,22 @@ public class ContactServiceImpl extends EmailHelper implements ContactService {
 		contactDataDto.setWantemail(contact.getWantemail());
 		contactDataDto.setStart(contact.getStart());
 		return contactDataDto;
+	}
+	
+	private Contact makeACallForCallsign(String callsign) throws ContactServiceException {
+
+		List<Contact> contactList = contactRepository.findActiveForCallsign(callsign);
+		if (contactList == null) {
+			throw new ContactServiceException(String.format("Error getting contact for %s: null return", callsign));
+		}
+		if (contactList.isEmpty()) {
+			log.debug(String.format("Error getting contact for %s: null return", callsign));
+			return null;
+		}
+		if (contactList.size() > 1) {
+			throw new ContactServiceException(String.format("Error getting contact for %s: more than 1 result", callsign));
+		}
+		
+		return contactList.get(0);
 	}
 }

@@ -15,4 +15,5 @@ public class EmailDataDto implements Serializable {
 	private String apellido;
 	private String indicativo;
 	private String grid;
+	private int numOfContact;
 }
