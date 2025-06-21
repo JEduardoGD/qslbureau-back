@@ -11,11 +11,10 @@ import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.dto.EmailDataDto;
 import egd.fmre.qslbureau.capture.dto.EmailDetailsObject;
-import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.exception.SendMailException;
 import egd.fmre.qslbureau.capture.service.EmailService;
-import egd.fmre.qslbureau.capture.util.EmailUtil;
 import egd.fmre.qslbureau.capture.util.EmailHelper;
+import egd.fmre.qslbureau.capture.util.EmailUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -47,11 +46,27 @@ public class EmailServiceImpl extends EmailHelper implements EmailService {
 	private static final String STR_APELLIDO = "[[apellido]]";
 	private static final String STR_INDICATIVO = "[[indicativo]]";
 	private static final String STR_GRID = "[[grid]]";
+	
+	private static final String EMPTY_STRING = "";
 
 	@Override
 	public boolean sendMail(EmailDataDto emailData) throws SendMailException {
 		String emailFrom = EMAIL_FROM;
-		String emailSubject = EMAIL_SUBJECT + emailData.getIndicativo();
+		
+		String correoXdeY = EMPTY_STRING;
+		if (emailData.getNumOfContact() == 1) {
+			correoXdeY = EMPTY_STRING;
+		}
+		if (emailData.getNumOfContact() > 1) {
+			correoXdeY = String.format("(%d de 12)", emailData.getNumOfContact());
+		}
+		if (emailData.getNumOfContact() > 12) {
+			correoXdeY = String.format("(%d)", emailData.getNumOfContact());
+		}
+		
+		
+		
+		String emailSubject = EMAIL_SUBJECT + emailData.getIndicativo() + " " + correoXdeY;
 		String emailTo = emailData.getEmailAddress();
 		String emailFromName = EMAIL_FROM_NAME;
 
@@ -84,10 +99,5 @@ public class EmailServiceImpl extends EmailHelper implements EmailService {
 		EmailDetailsObject emailDetailsObject = new EmailDetailsObject(session, emailFrom, emailFromName, emailTo, emailSubject, contentEmail);
 		EmailUtil.sendEmail(emailDetailsObject);
 		return true;
-	}
-	
-	@Override
-	public void getListOfEmailSendedForSlot(Slot slot) {
-		
 	}
 }
