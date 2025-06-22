@@ -91,9 +91,14 @@ public class ContactServiceImpl extends EmailHelper implements ContactService {
 			contactRepository.save(contact);
 		}
 		
+		String name = contactDataDto.getName();
+		if (name != null) {
+			name = name.length() > 40 ? name.substring(0, 40) : name;
+		}
+		
 		Contact newContact = new Contact();
 		newContact.setId(null);
-		newContact.setName(contactDataDto.getName() != null ? contactDataDto.getName().substring(0, 40) : null);
+		newContact.setName(name);
 		newContact.setSurename(contactDataDto.getSurename());
 		newContact.setCallsign(contactDataDto.getCallsign());
 		newContact.setAddress(contactDataDto.getAddress());
