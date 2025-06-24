@@ -225,8 +225,6 @@ public class ReportsServiceImpl extends ReportServiceActions implements ReportsS
 		Workbook workbook = new XSSFWorkbook();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
-		//SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
-		
 
 		CreationHelper creationHelper = workbook.getCreationHelper();
 		CellStyle cellStyle = workbook.createCellStyle();

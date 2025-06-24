@@ -34,7 +34,7 @@ public class ReportController {
 	@Autowired RepresentativeService representativeService;
 	
 	private static final String POR_REPRESENTATIVE_REPORT_FILENAME = "by_representative";
-	private static final String QSLS_CAPTURADAS_REPORT_FILENAME = "callsign_huerfanos";
+	private static final String QSLS_CAPTURADAS_REPORT_FILENAME = "qsls_capturadas";
 	private static final String ORPHANS_CALLSIGNS_REPORT_FILENAME = "callsign_huerfanos";
 	private static final String REPORT_DATEFORMAT = "yyMMdd'_'HH";
 
@@ -50,18 +50,27 @@ public class ReportController {
 		        .body(resByteArray);
 	}
 
+	@GetMapping(value = "/reporte-qsls-flename")
+	public ResponseEntity<StandardResponse> getCapturedCalssignsReportFilename() throws IOException {
+		StandardResponse standardResponse = new StandardResponse(createCapturedCalssignsReportFilename());
+		return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.CREATED);
+	}
+
 	@GetMapping(value = "/reporte-qsls", produces = "application/vnd.ms-excel")
 	public @ResponseBody ResponseEntity<byte[]> getCapturedCalssignsReport() throws IOException {
-		 List<CapturedCallsign> capturedCallsigns = reportsService.getReportOfCapturedCallsigns();
-		 byte[] resByteArray = reportsService.writeReportOfCapturedCallsigns(capturedCallsigns);
-		 
+		List<CapturedCallsign> capturedCallsigns = reportsService.getReportOfCapturedCallsigns();
+		byte[] resByteArray = reportsService.writeReportOfCapturedCallsigns(capturedCallsigns);
+
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION,
-						"attachment; filename=" + QSLS_CAPTURADAS_REPORT_FILENAME + "_"
-								+ new SimpleDateFormat(REPORT_DATEFORMAT).format(DateTimeUtil.getDateTime()) + ".xlsx")
-		        .contentLength(resByteArray.length)
-		        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-		        .body(resByteArray);
+						"attachment; filename=" + createCapturedCalssignsReportFilename())
+				.contentLength(resByteArray.length).contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+				.body(resByteArray);
+	}
+	
+	private String createCapturedCalssignsReportFilename() {
+		return QSLS_CAPTURADAS_REPORT_FILENAME + "_"
+				+ new SimpleDateFormat(REPORT_DATEFORMAT).format(DateTimeUtil.getDateTime()) + ".xlsx";
 	}
 	
     @GetMapping("/reporte-redoreccopmes-filename/{representativeId}")
