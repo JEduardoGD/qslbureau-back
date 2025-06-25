@@ -37,6 +37,7 @@ import egd.fmre.qslbureau.capture.service.CapturerService;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.util.CallsignHelper;
 import egd.fmre.qslbureau.capture.util.CompareNacionalityUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
@@ -80,6 +81,8 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     
     @Override
     public QslDto captureQsl(QslDto qslDto) throws QslcaptureException {
+    	CallsignHelper.sanitize(qslDto);
+    	
         Slot slot;
         
         Capturer capturer = capturerService.findById(qslDto.getIdCapturer());
