@@ -40,6 +40,6 @@ public interface QslRepository extends JpaRepository<Qsl, Integer> {
 	List<Qsl> findQslsInSystem(@Param("callsignlist") List<String> callsignlist, @Param("qslStatus") Status qslStatus,
 			@Param("slotStatuses") List<Status> slotStatuses, @Param("local") Local local);
 
-	@Query(value = "SELECT C.CALLSIGN, C.OLDESTDATETIME FROM V_CAPTUREDCALLSIGNS C", nativeQuery = true)
+	@Query(value = "SELECT C.CALLSIGN, C.OLDESTDATETIME FROM v_capturedcallsigns C", nativeQuery = true)
 	List<CapturedCallsign> getCapturedCallsigns();
 }
