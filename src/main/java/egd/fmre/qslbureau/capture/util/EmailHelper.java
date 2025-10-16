@@ -12,9 +12,24 @@ import egd.fmre.qslbureau.capture.service.impl.EmailServiceImpl;
 
 public abstract class EmailHelper {
 
-	protected String loadEmailFile() throws SendMailException {
+	protected String loadEmailFile(ClassOfEmailEnum classOfEmailEnum) throws SendMailException {
+		String emailFile = null;
+		switch (classOfEmailEnum) {
+		case X_OF_Y:
+			emailFile = "/email_x_of_y.html";
+			break;
+		case FINAL_EMAIL:
+			emailFile = "/final_email.html";
+			break;
+		case POST_FINAL_EMAIL:
+			emailFile = "/post_final_email.html";
+			break;
+		default:
+			emailFile = "/email_x_of_y.html";
+			break;
+		}
 		Class<EmailServiceImpl> clazz = EmailServiceImpl.class;
-		InputStream inputStream = clazz.getResourceAsStream("/email.html");
+		InputStream inputStream = clazz.getResourceAsStream(emailFile);
 		try {
 			return readFromInputStream(inputStream);
 		} catch (IOException e) {
