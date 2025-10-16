@@ -13,6 +13,7 @@ import egd.fmre.qslbureau.capture.dto.EmailDataDto;
 import egd.fmre.qslbureau.capture.dto.EmailDetailsObject;
 import egd.fmre.qslbureau.capture.exception.SendMailException;
 import egd.fmre.qslbureau.capture.service.EmailService;
+import egd.fmre.qslbureau.capture.util.ClassOfEmailEnum;
 import egd.fmre.qslbureau.capture.util.EmailHelper;
 import egd.fmre.qslbureau.capture.util.EmailUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -54,23 +55,36 @@ public class EmailServiceImpl extends EmailHelper implements EmailService {
 		String emailFrom = EMAIL_FROM;
 		
 		String correoXdeY = EMPTY_STRING;
-		if (emailData.getNumOfContact() == 1) {
+		if (emailData.getNumOfContact() == 1 || emailData.getNumOfContact() > 12) {
 			correoXdeY = EMPTY_STRING;
 		}
 		if (emailData.getNumOfContact() > 1) {
 			correoXdeY = String.format("(%d de 12)", emailData.getNumOfContact());
 		}
-		if (emailData.getNumOfContact() > 12) {
+		if (emailData.getNumOfContact() == 12) {
 			correoXdeY = String.format("(%d)", emailData.getNumOfContact());
 		}
 		
+		ClassOfEmailEnum classOfEmailEnum = null;
+		if (emailData.getNumOfContact() == 1) {
+			classOfEmailEnum = ClassOfEmailEnum.X_OF_Y;
+		}
+		if (emailData.getNumOfContact() > 1) {
+			classOfEmailEnum = ClassOfEmailEnum.X_OF_Y;
+		}
+		if (emailData.getNumOfContact() == 12) {
+			classOfEmailEnum = ClassOfEmailEnum.FINAL_EMAIL;
+		}
+		if (emailData.getNumOfContact() == 1 || emailData.getNumOfContact() > 12) {
+			classOfEmailEnum = ClassOfEmailEnum.POST_FINAL_EMAIL;
+		}
 		
 		
 		String emailSubject = EMAIL_SUBJECT + emailData.getIndicativo() + " " + correoXdeY;
 		String emailTo = emailData.getEmailAddress();
 		String emailFromName = EMAIL_FROM_NAME;
 
-		String contentEmail = loadEmailFile();
+		String contentEmail = loadEmailFile(classOfEmailEnum);
 		
 		contentEmail = contentEmail.replace(STR_NOMBRE, emailData.getNombre());
 		contentEmail = contentEmail.replace(STR_APELLIDO, emailData.getApellido() != null ? emailData.getApellido() : "");
