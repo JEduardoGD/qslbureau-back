@@ -1,0 +1,22 @@
+@echo off
+cls
+
+set ALLOWED_CORS_ORIGINS=
+set FRONT_NAMESERVER=
+set JWT_SECRET=
+set MAIL_PASSWORD=
+set MAIL_USER=
+set MMYSQL_DB_URL=
+set MYSQL_DB_PASSWORD=
+set MYSQL_DB_URL=
+set MYSQL_DB_USERNAME=
+set QRZ_PASSWORD=
+set QRZ_USERNAME=
+set ROOT_LOG_LEVEL=
+
+set JAVA_HOME=
+set MAVEN_HOME=
+
+%JAVA_HOME%/bin/java -jar target/capture-0.0.1-SNAPSHOT.jar
+
+pause
