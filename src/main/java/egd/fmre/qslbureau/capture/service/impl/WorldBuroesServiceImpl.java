@@ -1,6 +1,7 @@
 package egd.fmre.qslbureau.capture.service.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -78,11 +79,12 @@ public class WorldBuroesServiceImpl implements WorldBuroesService {
     }
 
     private BuroNodoPrincipalDto readJsonFile() throws IOException {
-        String filePath = "src/main/resources/buroes.json";
-        log.debug("Reading file from: {}", filePath);
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream is = classloader.getResourceAsStream("buroes.json");
 
         // Read the file content into a string
-        String content = new String(Files.readAllBytes(Paths.get(filePath)));
+        String content = new String(is.readAllBytes());
+        //String content = new String(Files.rea
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(content, BuroNodoPrincipalDto.class);
     }
