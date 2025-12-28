@@ -2,11 +2,10 @@ package egd.fmre.qslbureau.capture.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import egd.fmre.qslbureau.capture.dto.jsonburo.BuroDto;
 import egd.fmre.qslbureau.capture.dto.jsonburo.BuroNodoPrincipalDto;
 import egd.fmre.qslbureau.capture.dto.jsonburo.PrefijoDto;
-import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.service.WorldBuroesService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,48 +29,20 @@ public class WorldBuroesServiceImpl implements WorldBuroesService {
             throw new WorldBuroesServiceImplException("Error reading buroes JSON file", e);
         }
 
-        // FOR FIRST 3 CHARACTERS
-        List<BuroDto> buroes = null;
-        int startLength = Math.min(StaticValuesHelper.N_3, callsing.length());
-        for(int i = startLength ; i > StaticValuesHelper.N_0 ; i--) {
-            buroes = findBuroesForCallsign(callsing, allBuroes, i);
-            if (!buroes.isEmpty()) {
-                return buroes;
-            }
-        }
-        return buroes;
+	return findBuroesForCallsign(callsing, allBuroes);
     }
 
-    private List<BuroDto> findBuroesForCallsign(String callsing, BuroNodoPrincipalDto allBuroes, int length) {
-        String prefix = callsing.substring(StaticValuesHelper.N_0, length).toUpperCase();
-        List<BuroDto> filteredBuroes = allBuroes.getBuroes().stream()
-                .filter(buro -> {
-                    for(PrefijoDto prefijo:buro.getPrefijos()) {
-            if (prefijo.getInicio().length() == length) {
-                return true;
-            }
-                    }
-                    return false;
-                })
-                .collect(Collectors.toList());
-        List<BuroDto> buroesEncontrados = new ArrayList<>();
-        for (BuroDto buro : filteredBuroes) {
-            List<String> prefixList = new ArrayList<>();
-            for (PrefijoDto prefijo : buro.getPrefijos()) {
-                String strInicio = prefijo.getInicio();
-                String strFin = prefijo.getFin();
-                String strActual = strInicio;
-                prefixList.add(strInicio);
-                while (!strActual.equals(strFin)) {
-                    char q = strActual.charAt(strActual.length() - StaticValuesHelper.N_1);
-                    int nextCharInt = q + StaticValuesHelper.C_1;
-                    char nextChar = (char) nextCharInt;
-                    strActual = strActual.substring(0, strActual.length() - StaticValuesHelper.C_1) + nextChar;
-                    prefixList.add(strActual);
-                }
-            }
-            if (prefixList.contains(prefix)) {
-                buroesEncontrados.add(buro);
+    private List<BuroDto> findBuroesForCallsign(String callsing, BuroNodoPrincipalDto allBuroes) {
+	List<BuroDto> buroesEncontrados = new ArrayList<>();
+        List<BuroDto> buroDtoList = allBuroes.getBuroes();
+        for (BuroDto buroDto : buroDtoList) {
+            for (PrefijoDto prefijo : buroDto.getPrefijos()) {
+        	String regex = String.format("^%s[A-Z0-9]*$",prefijo.getRegex());
+        	 Pattern pattern = Pattern.compile(regex);
+        	 Matcher matcher = pattern.matcher(callsing);
+		 if (matcher.matches() && !buroesEncontrados.contains(buroDto)) {
+		     buroesEncontrados.add(buroDto);
+        	 }
             }
         }
         return buroesEncontrados;

@@ -511,43 +511,43 @@ VT-VW: INDIA
        India QSL Bureau, c/o Linux Learning Centre Private Limited
        635, 6th Main Road, Next to Bank of India, Hanumanthnagar, Bengaluru 560 019
 
-W1,K1,N1,AA1,AB1,AC1,AD1,AE1,AF1,AG1,AH1,AI1,AJ1,AK1,AL1: UNITED STATES
+W[A-Z]*1,K[A-Z]*1,N[A-Z]*1,A[A-L]1: UNITED STATES
        YCCC
        PO Box 73, Marlborough, MA 01752–0073
 
-W2,K2,N2,AA2,AB2,AC2,AD2,AE2,AF2,AG2,AH2,AI2,AJ2,AK2,AL2,KP2: UNITED STATES
+W[A-Z]*2,K[A-Z]*2,N[A-Z]*2,A[A-L]2: UNITED STATES
        North Jersey DX Association
        P.O. Box 18, Morris Plains, NJ 07950
 
-W3,K3,N3,AA3,AB3,AC3,AD3,AE3,AF3,AG3,AH3,AI3,AJ3,AK3,AL3: UNITED STATES
+W[A-Z]*3,K[A-Z]*3,N[A-Z]*3,A[A-L]3: UNITED STATES
        W3 Incoming QSL Bureau
        PO Box 190, Glenelg, MD 21737–0190
 
-W4,K4,N4,AA4,AB4,AC4,AD4,AE4,AF4,AG4,AH4,AI4,AJ4,AK4,AL4,KG4X2: UNITED STATES
+W[A-Z]*4,K[A-Z]*4,N[A-Z]*4,A[A-L]4,KG4X2: UNITED STATES
        Sterling Park Amateur Radio Club
        Call Box 599, Sterling, VA 20167
 
-W5,K5,N5,AA5,AB5,AC5,AD5,AE5,AF5,AG5,AH5,AI5,AJ5,AK5,AL5: UNITED STATES
+W[A-Z]*5,K[A-Z]*5,N[A-Z]*5,A[A-L]5: UNITED STATES
        W5 Incoming Bureau
        P.O. Box 1496, Henderson, TX 75653
 
-W6,K6,N6,AA6,AB6,AC6,AD6,AE6,AF6,AG6,AH6,AI6,AJ6,AK6,AL6: UNITED STATES
+W[A-Z]*6,K[A-Z]*6,N[A-Z]*6,A[A-L]6: UNITED STATES
        6th District Incoming QSL Bureau
        P.O. Box 7488, Stockton, CA 95267–0488
 
-W7,K7,N7,AA7,AB7,AC7,AD7,AE7,AF7,AG7,AH7,AI7,AJ7,AK7,AL7: UNITED STATES
+W[A-Z]*7,K[A-Z]*7,N[A-Z]*7,A[A-L]7: UNITED STATES
        Willamette Valley DX Club
        PO Box 1288, Battle Ground, WA 98604–4687
 
-W8,K8,N8,AA8,AB8,AC8,AD8,AE8,AF8,AG8,AH8,AI8,AJ8,AK8,AL8: UNITED STATES
+W[A-Z]*8,K[A-Z]*8,N[A-Z]*8,A[A-L]8: UNITED STATES
        W8 QSL Bureau
        PO Box 307, West Chester, OH 45071–0307
 
-W9,K9,N9,AA9,AB9,AC9,AD9,AE9,AF9,AG9,AH9,AI9,AJ9,AK9,AL9: UNITED STATES
+W[A-Z]*9,K[A-Z]*9,N[A-Z]*9,A[A-L]9: UNITED STATES
        NIDXA
        PO Box 125, Naperville, IL 60566
 
-W0,K0,N0,AA0,AB0,AC0,AD0,AE0,AF0,AG0,AH0,AI0,AJ0,AK0,AL0: UNITED STATES
+W[A-Z]*0,K[A-Z]*0,N[A-Z]*0,A[A-L]0: UNITED STATES
        W0 QSL Bureau
        PO Box 907, Florissant, MO 63032
 
