@@ -8,8 +8,7 @@
             "pais": "MONACO",
             "prefijos": [
                 {
-                    "final": "3A",
-                    "inicial": "3A"
+                    "regex": "3A"
                 }
             ]
         },
@@ -21,8 +20,7 @@
             "pais": "MAURITIUS",
             "prefijos": [
                 {
-                    "final": "3B",
-                    "inicial": "3B"
+                    "regex": "3B"
                 }
             ]
         },
@@ -34,8 +32,7 @@
             "pais": "FIJI",
             "prefijos": [
                 {
-                    "final": "3D2",
-                    "inicial": "3D2"
+                    "regex": "3D2"
                 }
             ]
         },
@@ -47,8 +44,7 @@
             "pais": "ESWATINI",
             "prefijos": [
                 {
-                    "final": "3DA",
-                    "inicial": "3DA"
+                    "regex": "3DA"
                 }
             ]
         },
@@ -60,25 +56,22 @@
             "pais": "TUNISIA",
             "prefijos": [
                 {
-                    "final": "3V",
-                    "inicial": "3V"
+                    "regex": "3V"
                 },
                 {
-                    "final": "TS",
-                    "inicial": "TS"
+                    "regex": "TS"
                 }
             ]
         },
         {
             "asociado": "Rashad Iskandarli",
             "cerrado": false,
-            "direccion": "P.O. Box600321, 60333 Frankfurt am Main, Germany",
+            "direccion": "P.O. Box 600321, 60333 Frankfurt am Main, Germany",
             "nota": null,
             "pais": "AZERBAIJAN",
             "prefijos": [
                 {
-                    "final": "4J",
-                    "inicial": "4J"
+                    "regex": "4J"
                 }
             ]
         },
@@ -90,8 +83,7 @@
             "pais": "REPUBLIC OF GEORGIA",
             "prefijos": [
                 {
-                    "final": "4L",
-                    "inicial": "4L"
+                    "regex": "4L"
                 }
             ]
         },
@@ -103,8 +95,7 @@
             "pais": "SRI LANKA",
             "prefijos": [
                 {
-                    "final": "4S",
-                    "inicial": "4P"
+                    "regex": "4[P-S]"
                 }
             ]
         },
@@ -116,12 +107,7 @@
             "pais": "ISRAEL",
             "prefijos": [
                 {
-                    "final": "4X",
-                    "inicial": "4X"
-                },
-                {
-                    "final": "4Z",
-                    "inicial": "4Z"
+                    "regex": "4[X-Z]"
                 }
             ]
         },
@@ -133,8 +119,7 @@
             "pais": "CYPRUS",
             "prefijos": [
                 {
-                    "final": "5B",
-                    "inicial": "5B"
+                    "regex": "5B"
                 }
             ]
         },
@@ -146,8 +131,7 @@
             "pais": "TANZANIA",
             "prefijos": [
                 {
-                    "final": "5H",
-                    "inicial": "5H"
+                    "regex": "5H"
                 }
             ]
         },
@@ -159,8 +143,7 @@
             "pais": "NIGERIA",
             "prefijos": [
                 {
-                    "final": "5O",
-                    "inicial": "5N"
+                    "regex": "5[N-O]"
                 }
             ]
         },
@@ -172,8 +155,7 @@
             "pais": "WESTERN SAMOA",
             "prefijos": [
                 {
-                    "final": "5W",
-                    "inicial": "5W"
+                    "regex": "5W"
                 }
             ]
         },
@@ -185,8 +167,7 @@
             "pais": "UGANDA",
             "prefijos": [
                 {
-                    "final": "5X",
-                    "inicial": "5X"
+                    "regex": "5X"
                 }
             ]
         },
@@ -198,8 +179,7 @@
             "pais": "KENYA",
             "prefijos": [
                 {
-                    "final": "5Z",
-                    "inicial": "5Y"
+                    "regex": "5[Y-Z]"
                 }
             ]
         },
@@ -211,8 +191,7 @@
             "pais": "SENEGAL",
             "prefijos": [
                 {
-                    "final": "6W",
-                    "inicial": "6V"
+                    "regex": "6[V-W]"
                 }
             ]
         },
@@ -224,8 +203,7 @@
             "pais": "JAMAICA",
             "prefijos": [
                 {
-                    "final": "6Y",
-                    "inicial": "6Y"
+                    "regex": "6Y"
                 }
             ]
         },
@@ -237,8 +215,7 @@
             "pais": "LESOTHO",
             "prefijos": [
                 {
-                    "final": "7P",
-                    "inicial": "7P"
+                    "regex": "7P"
                 }
             ]
         },
@@ -250,8 +227,7 @@
             "pais": "ALGERIA",
             "prefijos": [
                 {
-                    "final": "7Y",
-                    "inicial": "7T"
+                    "regex": "7[T-Y]"
                 }
             ]
         },
@@ -263,8 +239,7 @@
             "pais": "BARBADOS",
             "prefijos": [
                 {
-                    "final": "8P",
-                    "inicial": "8P"
+                    "regex": "8P"
                 }
             ]
         },
@@ -276,8 +251,7 @@
             "pais": "GUYANA",
             "prefijos": [
                 {
-                    "final": "8R",
-                    "inicial": "8R"
+                    "regex": "8R"
                 }
             ]
         },
@@ -289,8 +263,7 @@
             "pais": "CROATIA",
             "prefijos": [
                 {
-                    "final": "9A",
-                    "inicial": "9A"
+                    "regex": "9A"
                 }
             ]
         },
@@ -302,8 +275,7 @@
             "pais": "GHANA",
             "prefijos": [
                 {
-                    "final": "9G",
-                    "inicial": "9G"
+                    "regex": "9G"
                 }
             ]
         },
@@ -315,8 +287,7 @@
             "pais": "MALTA",
             "prefijos": [
                 {
-                    "final": "9H",
-                    "inicial": "9H"
+                    "regex": "9H"
                 }
             ]
         },
@@ -328,8 +299,7 @@
             "pais": "ZAMBIA",
             "prefijos": [
                 {
-                    "final": "9J",
-                    "inicial": "9I"
+                    "regex": "9[I-J]"
                 }
             ]
         },
@@ -341,8 +311,7 @@
             "pais": "KUWAIT",
             "prefijos": [
                 {
-                    "final": "9K",
-                    "inicial": "9K"
+                    "regex": "9K"
                 }
             ]
         },
@@ -354,8 +323,7 @@
             "pais": "SIERRA LEONE",
             "prefijos": [
                 {
-                    "final": "9L",
-                    "inicial": "9L"
+                    "regex": "9L"
                 }
             ]
         },
@@ -367,12 +335,7 @@
             "pais": "MALAYSIA",
             "prefijos": [
                 {
-                    "final": "9M",
-                    "inicial": "9M"
-                },
-                {
-                    "final": "9W",
-                    "inicial": "9W"
+                    "regex": "9[M,W]"
                 }
             ]
         },
@@ -384,8 +347,7 @@
             "pais": "DEMOCRATIC REPUBLIC OF CONGO",
             "prefijos": [
                 {
-                    "final": "9T",
-                    "inicial": "9O"
+                    "regex": "9[O-T]"
                 }
             ]
         },
@@ -397,8 +359,7 @@
             "pais": "SINGAPORE",
             "prefijos": [
                 {
-                    "final": "9V",
-                    "inicial": "9V"
+                    "regex": "9V"
                 }
             ]
         },
@@ -410,25 +371,22 @@
             "pais": "TRINIDAD & TOBAGO",
             "prefijos": [
                 {
-                    "final": "9Z",
-                    "inicial": "9Y"
+                    "regex": "9[Y-Z]"
                 }
             ]
         },
         {
             "asociado": "Botswana Amateur Radio Society",
             "cerrado": false,
-            "direccion": null,
-            "nota": "service temporarily suspended",
+            "direccion": "service temporarily suspended",
+            "nota": null,
             "pais": "BOTSWANA",
             "prefijos": [
                 {
-                    "final": "A2",
-                    "inicial": "A2"
+                    "regex": "A2"
                 },
                 {
-                    "final": "8O",
-                    "inicial": "8O"
+                    "regex": "8O"
                 }
             ]
         },
@@ -440,8 +398,7 @@
             "pais": "TONGA",
             "prefijos": [
                 {
-                    "final": "A3",
-                    "inicial": "A3"
+                    "regex": "A3"
                 }
             ]
         },
@@ -453,8 +410,7 @@
             "pais": "OMAN",
             "prefijos": [
                 {
-                    "final": "A4",
-                    "inicial": "A4"
+                    "regex": "A4"
                 }
             ]
         },
@@ -466,8 +422,7 @@
             "pais": "QATAR",
             "prefijos": [
                 {
-                    "final": "A7",
-                    "inicial": "A7"
+                    "regex": "A7"
                 }
             ]
         },
@@ -479,8 +434,7 @@
             "pais": "BAHRAIN",
             "prefijos": [
                 {
-                    "final": "A9",
-                    "inicial": "A9"
+                    "regex": "A9"
                 }
             ]
         },
@@ -492,8 +446,7 @@
             "pais": "PAKISTAN",
             "prefijos": [
                 {
-                    "final": "AS",
-                    "inicial": "AP"
+                    "regex": "A[P-S]"
                 }
             ]
         },
@@ -505,20 +458,16 @@
             "pais": "CHINA",
             "prefijos": [
                 {
-                    "final": "BL",
-                    "inicial": "BA"
+                    "regex": "B[A-L]"
                 },
                 {
-                    "final": "BT",
-                    "inicial": "BR"
+                    "regex": "B[R-T]"
                 },
                 {
-                    "final": "BY",
-                    "inicial": "BY"
+                    "regex": "BY"
                 },
                 {
-                    "final": "BZ",
-                    "inicial": "BZ"
+                    "regex": "BZ"
                 }
             ]
         },
@@ -530,12 +479,10 @@
             "pais": "TAIWAN",
             "prefijos": [
                 {
-                    "final": "BQ",
-                    "inicial": "BM"
+                    "regex": "B[M-Q]"
                 },
                 {
-                    "final": "BX",
-                    "inicial": "BU"
+                    "regex": "B[U-X]"
                 }
             ]
         },
@@ -547,8 +494,7 @@
             "pais": "NAURU",
             "prefijos": [
                 {
-                    "final": "C2",
-                    "inicial": "C2"
+                    "regex": "C2"
                 }
             ]
         },
@@ -560,8 +506,7 @@
             "pais": "ANDORRA",
             "prefijos": [
                 {
-                    "final": "C3",
-                    "inicial": "C3"
+                    "regex": "C3"
                 }
             ]
         },
@@ -573,8 +518,7 @@
             "pais": "GAMBIA",
             "prefijos": [
                 {
-                    "final": "C5",
-                    "inicial": "C5"
+                    "regex": "C5"
                 }
             ]
         },
@@ -586,8 +530,7 @@
             "pais": "BAHAMAS",
             "prefijos": [
                 {
-                    "final": "C6",
-                    "inicial": "C6"
+                    "regex": "C6"
                 }
             ]
         },
@@ -599,8 +542,7 @@
             "pais": "MOZAMBIQUE",
             "prefijos": [
                 {
-                    "final": "C9",
-                    "inicial": "C8"
+                    "regex": "C[8-9]"
                 }
             ]
         },
@@ -612,12 +554,10 @@
             "pais": "CHILE",
             "prefijos": [
                 {
-                    "final": "CE",
-                    "inicial": "CA"
+                    "regex": "C[A-E]"
                 },
                 {
-                    "final": "XR",
-                    "inicial": "XQ"
+                    "regex": "X[Q-R]"
                 }
             ]
         },
@@ -629,16 +569,13 @@
             "pais": "CUBA",
             "prefijos": [
                 {
-                    "final": "CM",
-                    "inicial": "CM"
+                    "regex": "CM"
                 },
                 {
-                    "final": "CO",
-                    "inicial": "CO"
+                    "regex": "CO"
                 },
                 {
-                    "final": "T4",
-                    "inicial": "T4"
+                    "regex": "T4"
                 }
             ]
         },
@@ -650,8 +587,7 @@
             "pais": "MOROCCO",
             "prefijos": [
                 {
-                    "final": "CN",
-                    "inicial": "CN"
+                    "regex": "CN"
                 }
             ]
         },
@@ -663,8 +599,7 @@
             "pais": "BOLIVIA",
             "prefijos": [
                 {
-                    "final": "CP",
-                    "inicial": "CP"
+                    "regex": "CP"
                 }
             ]
         },
@@ -676,8 +611,7 @@
             "pais": "PORTUGAL",
             "prefijos": [
                 {
-                    "final": "CU",
-                    "inicial": "CQ"
+                    "regex": "C[Q-U]"
                 }
             ]
         },
@@ -689,8 +623,7 @@
             "pais": "URUGUAY",
             "prefijos": [
                 {
-                    "final": "CX",
-                    "inicial": "CV"
+                    "regex": "C[V-X]"
                 }
             ]
         },
@@ -702,21 +635,19 @@
             "pais": "CAPE VERDE",
             "prefijos": [
                 {
-                    "final": "D4",
-                    "inicial": "D4"
+                    "regex": "D4"
                 }
             ]
         },
         {
             "asociado": "DARC QSL Bureau",
             "cerrado": false,
-            "direccion": "Lindenallee 4, D-34225 Baunatal",
+            "direccion": "Lindenallee 4, D‑34225 Baunatal",
             "nota": null,
             "pais": "GERMANY",
             "prefijos": [
                 {
-                    "final": "DR",
-                    "inicial": "DA"
+                    "regex": "D[A-R]"
                 }
             ]
         },
@@ -728,12 +659,10 @@
             "pais": "PHILIPPINES",
             "prefijos": [
                 {
-                    "final": "DZ",
-                    "inicial": "DU"
+                    "regex": "D[U-Z]"
                 },
                 {
-                    "final": "4I",
-                    "inicial": "4D"
+                    "regex": "4[D-I]"
                 }
             ]
         },
@@ -745,25 +674,22 @@
             "pais": "BOSNIA & HERZEGOVINA",
             "prefijos": [
                 {
-                    "final": "E7",
-                    "inicial": "E7"
+                    "regex": "E7"
                 }
             ]
         },
         {
             "asociado": "Unión de Radioaficionados Españoles",
             "cerrado": false,
-            "direccion": "Box 55055, E-28053 Madrid",
+            "direccion": "Box 55055, E‑28053 Madrid",
             "nota": null,
             "pais": "SPAIN",
             "prefijos": [
                 {
-                    "final": "EH",
-                    "inicial": "EA"
+                    "regex": "E[A-H]"
                 },
                 {
-                    "final": "AO",
-                    "inicial": "AM"
+                    "regex": "A[M-O]"
                 }
             ]
         },
@@ -775,8 +701,7 @@
             "pais": "IRELAND",
             "prefijos": [
                 {
-                    "final": "EJ",
-                    "inicial": "EI"
+                    "regex": "E[I-J]"
                 }
             ]
         },
@@ -785,11 +710,10 @@
             "cerrado": false,
             "direccion": "Box 22, Yerevan, 375002",
             "nota": null,
-            "pais": "Armenia",
+            "pais": "ARMENIA",
             "prefijos": [
                 {
-                    "final": "EK",
-                    "inicial": "EK"
+                    "regex": "EK"
                 }
             ]
         },
@@ -801,12 +725,10 @@
             "pais": "LIBERIA",
             "prefijos": [
                 {
-                    "final": "EL",
-                    "inicial": "EL"
+                    "regex": "EL"
                 },
                 {
-                    "final": "5M",
-                    "inicial": "5L"
+                    "regex": "5[L-M]"
                 }
             ]
         },
@@ -818,8 +740,7 @@
             "pais": "MOLDOVA",
             "prefijos": [
                 {
-                    "final": "ER",
-                    "inicial": "ER"
+                    "regex": "ER"
                 }
             ]
         },
@@ -831,8 +752,7 @@
             "pais": "ESTONIA",
             "prefijos": [
                 {
-                    "final": "ES",
-                    "inicial": "ES"
+                    "regex": "ES"
                 }
             ]
         },
@@ -844,8 +764,7 @@
             "pais": "BELARUS",
             "prefijos": [
                 {
-                    "final": "EW",
-                    "inicial": "EU"
+                    "regex": "E[U-W]"
                 }
             ]
         },
@@ -857,8 +776,7 @@
             "pais": "TAJIKISTAN",
             "prefijos": [
                 {
-                    "final": "EY",
-                    "inicial": "EY"
+                    "regex": "EY"
                 }
             ]
         },
@@ -870,8 +788,7 @@
             "pais": "TURKMENISTAN",
             "prefijos": [
                 {
-                    "final": "EZ",
-                    "inicial": "EZ"
+                    "regex": "EZ"
                 }
             ]
         },
@@ -883,24 +800,19 @@
             "pais": "FRANCE",
             "prefijos": [
                 {
-                    "final": "F",
-                    "inicial": "F"
+                    "regex": "F"
                 },
                 {
-                    "final": "HY",
-                    "inicial": "HW"
+                    "regex": "H[W-Y]"
                 },
                 {
-                    "final": "TK",
-                    "inicial": "TK"
+                    "regex": "TK"
                 },
                 {
-                    "final": "TM",
-                    "inicial": "TM"
+                    "regex": "TM"
                 },
                 {
-                    "final": "TQ",
-                    "inicial": "TO"
+                    "regex": "T[O-Q]"
                 }
             ]
         },
@@ -912,8 +824,7 @@
             "pais": "NEW CALEDONIA",
             "prefijos": [
                 {
-                    "final": "FK",
-                    "inicial": "FK"
+                    "regex": "FK"
                 }
             ]
         },
@@ -925,29 +836,25 @@
             "pais": "FRENCH POLYNESIA",
             "prefijos": [
                 {
-                    "final": "FO",
-                    "inicial": "FO"
+                    "regex": "FO"
                 }
             ]
         },
         {
             "asociado": "RSGB QSL Bureau",
             "cerrado": false,
-            "direccion": "c/o 18, Hillbeck. HALIFAX England HX3 5LU",
+            "direccion": "c/o 18, Hillbeck, HALIFAX England HX3 5LU",
             "nota": null,
             "pais": "UNITED KINGDOM",
             "prefijos": [
                 {
-                    "final": "G",
-                    "inicial": "G"
+                    "regex": "G"
                 },
                 {
-                    "final": "M",
-                    "inicial": "M"
+                    "regex": "M"
                 },
                 {
-                    "final": "2Z",
-                    "inicial": "2A"
+                    "regex": "2[A-Z]"
                 }
             ]
         },
@@ -959,25 +866,22 @@
             "pais": "SOLOMON ISLANDS",
             "prefijos": [
                 {
-                    "final": "H4",
-                    "inicial": "H4"
+                    "regex": "H4"
                 }
             ]
         },
         {
             "asociado": "MRASZ QSL Bureau",
             "cerrado": false,
-            "direccion": "Mr. Attila Holop HA2NA, Esztergom, Gizella királyné utca 28., H-2500, Hungary",
+            "direccion": "Mr. Attila Holop HA2NA, Esztergom, Gizella királyné utca 28., H‑2500, Hungary",
             "nota": null,
             "pais": "HUNGARY",
             "prefijos": [
                 {
-                    "final": "HA",
-                    "inicial": "HA"
+                    "regex": "HA"
                 },
                 {
-                    "final": "HG",
-                    "inicial": "HG"
+                    "regex": "HG"
                 }
             ]
         },
@@ -989,8 +893,7 @@
             "pais": "SWITZERLAND",
             "prefijos": [
                 {
-                    "final": "HB",
-                    "inicial": "HB"
+                    "regex": "HB"
                 }
             ]
         },
@@ -1002,8 +905,7 @@
             "pais": "LIECHTENSTEIN",
             "prefijos": [
                 {
-                    "final": "HB0",
-                    "inicial": "HB0"
+                    "regex": "HB0"
                 }
             ]
         },
@@ -1015,8 +917,7 @@
             "pais": "ECUADOR",
             "prefijos": [
                 {
-                    "final": "HD",
-                    "inicial": "HC"
+                    "regex": "H[C-D]"
                 }
             ]
         },
@@ -1028,12 +929,10 @@
             "pais": "HAITI",
             "prefijos": [
                 {
-                    "final": "HH",
-                    "inicial": "HH"
+                    "regex": "HH"
                 },
                 {
-                    "final": "4V",
-                    "inicial": "4V"
+                    "regex": "4V"
                 }
             ]
         },
@@ -1045,8 +944,7 @@
             "pais": "DOMINICANA",
             "prefijos": [
                 {
-                    "final": "HI",
-                    "inicial": "HI"
+                    "regex": "HI"
                 }
             ]
         },
@@ -1058,12 +956,10 @@
             "pais": "COLOMBIA",
             "prefijos": [
                 {
-                    "final": "HK",
-                    "inicial": "HJ"
+                    "regex": "H[J-K]"
                 },
                 {
-                    "final": "5K",
-                    "inicial": "5J"
+                    "regex": "5[J-K]"
                 }
             ]
         },
@@ -1075,12 +971,10 @@
             "pais": "REPUBLIC OF KOREA (South Korea)",
             "prefijos": [
                 {
-                    "final": "HL",
-                    "inicial": "HL"
+                    "regex": "HL"
                 },
                 {
-                    "final": "DT",
-                    "inicial": "DS"
+                    "regex": "D[S-T]"
                 }
             ]
         },
@@ -1092,16 +986,13 @@
             "pais": "PANAMA",
             "prefijos": [
                 {
-                    "final": "HP",
-                    "inicial": "HO"
+                    "regex": "HO-HP"
                 },
                 {
-                    "final": "H3",
-                    "inicial": "H3"
+                    "regex": "H3"
                 },
                 {
-                    "final": "3F",
-                    "inicial": "3E"
+                    "regex": "3[E-F]"
                 }
             ]
         },
@@ -1113,8 +1004,10 @@
             "pais": "HONDURAS",
             "prefijos": [
                 {
-                    "final": "HR",
-                    "inicial": "HQ"
+                    "regex": "HQ"
+                },
+                {
+                    "regex": "HR"
                 }
             ]
         },
@@ -1126,12 +1019,10 @@
             "pais": "THAILAND",
             "prefijos": [
                 {
-                    "final": "HS",
-                    "inicial": "HS"
+                    "regex": "HS"
                 },
                 {
-                    "final": "E2",
-                    "inicial": "E2"
+                    "regex": "E2"
                 }
             ]
         },
@@ -1143,8 +1034,7 @@
             "pais": "VATICAN CITY STATE",
             "prefijos": [
                 {
-                    "final": "HV",
-                    "inicial": "HV"
+                    "regex": "HV"
                 }
             ]
         },
@@ -1156,8 +1046,7 @@
             "pais": "ITALY",
             "prefijos": [
                 {
-                    "final": "I",
-                    "inicial": "I"
+                    "regex": "I"
                 }
             ]
         },
@@ -1169,8 +1058,7 @@
             "pais": "DJIBOUTI",
             "prefijos": [
                 {
-                    "final": "J2",
-                    "inicial": "J2"
+                    "regex": "J2"
                 }
             ]
         },
@@ -1182,8 +1070,7 @@
             "pais": "GRENADA",
             "prefijos": [
                 {
-                    "final": "J3",
-                    "inicial": "J3"
+                    "regex": "J3"
                 }
             ]
         },
@@ -1195,8 +1082,7 @@
             "pais": "DOMINICA",
             "prefijos": [
                 {
-                    "final": "J7",
-                    "inicial": "J7"
+                    "regex": "J7"
                 }
             ]
         },
@@ -1208,16 +1094,13 @@
             "pais": "JAPAN",
             "prefijos": [
                 {
-                    "final": "JS",
-                    "inicial": "JA"
+                    "regex": "J[A-S]"
                 },
                 {
-                    "final": "7N",
-                    "inicial": "7J"
+                    "regex": "7[J-N]"
                 },
                 {
-                    "final": "8N",
-                    "inicial": "8J"
+                    "regex": "8[J-N]"
                 }
             ]
         },
@@ -1229,8 +1112,7 @@
             "pais": "MONGOLIA",
             "prefijos": [
                 {
-                    "final": "JV",
-                    "inicial": "JT"
+                    "regex": "J[T-V]"
                 }
             ]
         },
@@ -1242,29 +1124,28 @@
             "pais": "JORDAN",
             "prefijos": [
                 {
-                    "final": "JY",
-                    "inicial": "JY"
+                    "regex": "JY"
                 }
             ]
         },
         {
             "asociado": "Norsk Radio Relae Liga, QSL Bureau",
             "cerrado": false,
-            "direccion": "P.O. Box 20, Haugenstua, N-0915 Oslo, Norway",
-            "nota": "We are experiencing issues with customs clearance of QSL shipments from abroad. Before sending packages, please visit https://nrrl.no/important-notice-about-sending-qsls-to-nrrl/ for updated instructions. The tracking number must be sent to qslmanager@nrrl.no as soon as possible after dispatch",
+            "direccion": "P.O. Box 20, Haugenstua, N‑0915 Oslo, Norway",
+            "nota": "We are experiencing issues with customs clearance of QSL shipments from abroad. Tracking number must be sent to qslmanager@nrrl.no",
             "pais": "NORWAY",
             "prefijos": [
                 {
-                    "final": "LN",
-                    "inicial": "LA"
+                    "regex": "L[A-N]"
                 },
                 {
-                    "final": "JX",
-                    "inicial": "JW"
+                    "regex": "JW"
                 },
                 {
-                    "final": "3Y",
-                    "inicial": "3Y"
+                    "regex": "JX"
+                },
+                {
+                    "regex": "3Y"
                 }
             ]
         },
@@ -1272,46 +1153,41 @@
             "asociado": "Radio Club Argentino",
             "cerrado": false,
             "direccion": "Casilla de Correo 97, C1000WAA Ciudad de Buenos Aires",
-            "nota": "Due to current issues with the post office, packages must be 2 Kg weight maximum and tracking number. Important notice: Before sending any package, visit https://www.lu4aa.org/wp/lu_incoming_bureau/ for updated instructions. Tracking number must be sent to administracion@lu4aa.org and bureau@lu4aa.org immediately after dispatch.",
+            "nota": "Due to current issues with the post office, packages must be 2 Kg weight maximum and tracking number sent to administracion@lu4aa.org",
             "pais": "ARGENTINA",
             "prefijos": [
                 {
-                    "final": "LW",
-                    "inicial": "LO"
+                    "regex": "L[O-W]"
                 },
                 {
-                    "final": "AZ",
-                    "inicial": "AY"
+                    "regex": "A[Y-Z]"
                 },
                 {
-                    "final": "L9",
-                    "inicial": "L2"
+                    "regex": "L[2-9]"
                 }
             ]
         },
         {
             "asociado": "Radioamateurs du Luxembourg (RL)",
             "cerrado": false,
-            "direccion": "QSL Bureau, Box 1352, L-1013, Luxembourg",
+            "direccion": "QSL Bureau, Box 1352, L‑1013, Luxembourg",
             "nota": null,
             "pais": "LUXEMBOURG",
             "prefijos": [
                 {
-                    "final": "LX",
-                    "inicial": "LX"
+                    "regex": "LX"
                 }
             ]
         },
         {
             "asociado": "Lietuvos Radijo Megeju Draugija",
             "cerrado": false,
-            "direccion": "Box 1000, LT-01014 Vilnius-1",
-            "nota": "Phone # +370 6575 7373",
+            "direccion": "Box 1000, LT-01014 Vilnius‑1",
+            "nota": null,
             "pais": "LITHUANIA",
             "prefijos": [
                 {
-                    "final": "LY",
-                    "inicial": "LY"
+                    "regex": "LY"
                 }
             ]
         },
@@ -1323,8 +1199,7 @@
             "pais": "BULGARIA",
             "prefijos": [
                 {
-                    "final": "LZ",
-                    "inicial": "LZ"
+                    "regex": "LZ"
                 }
             ]
         },
@@ -1336,12 +1211,10 @@
             "pais": "PERU",
             "prefijos": [
                 {
-                    "final": "OC",
-                    "inicial": "OA"
+                    "regex": "O[A-C]"
                 },
                 {
-                    "final": "4T",
-                    "inicial": "4T"
+                    "regex": "4T"
                 }
             ]
         },
@@ -1353,8 +1226,7 @@
             "pais": "LEBANON",
             "prefijos": [
                 {
-                    "final": "OD",
-                    "inicial": "OD"
+                    "regex": "OD"
                 }
             ]
         },
@@ -1366,8 +1238,7 @@
             "pais": "AUSTRIA",
             "prefijos": [
                 {
-                    "final": "OE",
-                    "inicial": "OE"
+                    "regex": "OE"
                 }
             ]
         },
@@ -1379,8 +1250,7 @@
             "pais": "FINLAND",
             "prefijos": [
                 {
-                    "final": "OJ",
-                    "inicial": "OF"
+                    "regex": "O[F-J]"
                 }
             ]
         },
@@ -1392,8 +1262,7 @@
             "pais": "CZECH REPUBLIC",
             "prefijos": [
                 {
-                    "final": "OL",
-                    "inicial": "OK"
+                    "regex": "O[K-L]"
                 }
             ]
         },
@@ -1405,8 +1274,7 @@
             "pais": "SLOVAKIA",
             "prefijos": [
                 {
-                    "final": "OM",
-                    "inicial": "OM"
+                    "regex": "OM"
                 }
             ]
         },
@@ -1418,8 +1286,7 @@
             "pais": "BELGIUM",
             "prefijos": [
                 {
-                    "final": "OT",
-                    "inicial": "ON"
+                    "regex": "O[N-T]"
                 }
             ]
         },
@@ -1431,8 +1298,7 @@
             "pais": "DENMARK",
             "prefijos": [
                 {
-                    "final": "OZ",
-                    "inicial": "OU"
+                    "regex": "O[U-Z]"
                 }
             ]
         },
@@ -1444,8 +1310,7 @@
             "pais": "FAROE ISLANDS",
             "prefijos": [
                 {
-                    "final": "OY",
-                    "inicial": "OY"
+                    "regex": "OY"
                 }
             ]
         },
@@ -1457,8 +1322,7 @@
             "pais": "ARUBA",
             "prefijos": [
                 {
-                    "final": "P4",
-                    "inicial": "P4"
+                    "regex": "P4"
                 }
             ]
         },
@@ -1470,8 +1334,7 @@
             "pais": "NETHERLANDS",
             "prefijos": [
                 {
-                    "final": "PI",
-                    "inicial": "PA"
+                    "regex": "P[A-I]"
                 }
             ]
         },
@@ -1479,12 +1342,11 @@
             "asociado": "VERONA",
             "cerrado": false,
             "direccion": "Box 3383, Curacao",
-            "nota": null,
+            "nota": "DUTCH CARIBBEAN",
             "pais": "CURACAO",
             "prefijos": [
                 {
-                    "final": "PJ",
-                    "inicial": "PJ"
+                    "regex": "PJ"
                 }
             ]
         },
@@ -1496,12 +1358,10 @@
             "pais": "BRAZIL",
             "prefijos": [
                 {
-                    "final": "PY",
-                    "inicial": "PP"
+                    "regex": "P[P-Y]"
                 },
                 {
-                    "final": "ZZ",
-                    "inicial": "ZV"
+                    "regex": "Z[V-Z]"
                 }
             ]
         },
@@ -1513,8 +1373,7 @@
             "pais": "SURINAME",
             "prefijos": [
                 {
-                    "final": "PZ",
-                    "inicial": "PZ"
+                    "regex": "PZ"
                 }
             ]
         },
@@ -1526,12 +1385,10 @@
             "pais": "RUSSIA",
             "prefijos": [
                 {
-                    "final": "R",
-                    "inicial": "R"
+                    "regex": "R"
                 },
                 {
-                    "final": "UI",
-                    "inicial": "UA"
+                    "regex": "U[A-I]"
                 }
             ]
         },
@@ -1543,8 +1400,7 @@
             "pais": "BANGLADESH",
             "prefijos": [
                 {
-                    "final": "S3",
-                    "inicial": "S2"
+                    "regex": "S[2-3]"
                 }
             ]
         },
@@ -1556,8 +1412,7 @@
             "pais": "SLOVENIA",
             "prefijos": [
                 {
-                    "final": "S5",
-                    "inicial": "S5"
+                    "regex": "S5"
                 }
             ]
         },
@@ -1569,16 +1424,13 @@
             "pais": "SWEDEN",
             "prefijos": [
                 {
-                    "final": "SM",
-                    "inicial": "SA"
+                    "regex": "S[A-M]"
                 },
                 {
-                    "final": "7S",
-                    "inicial": "7S"
+                    "regex": "7S"
                 },
                 {
-                    "final": "8S",
-                    "inicial": "8S"
+                    "regex": "8S"
                 }
             ]
         },
@@ -1590,16 +1442,13 @@
             "pais": "POLAND",
             "prefijos": [
                 {
-                    "final": "SR",
-                    "inicial": "SN"
+                    "regex": "S[N-R]"
                 },
                 {
-                    "final": "HF",
-                    "inicial": "HF"
+                    "regex": "HF"
                 },
                 {
-                    "final": "3Z",
-                    "inicial": "3Z"
+                    "regex": "3Z"
                 }
             ]
         },
@@ -1611,8 +1460,7 @@
             "pais": "SUDAN",
             "prefijos": [
                 {
-                    "final": "ST",
-                    "inicial": "ST"
+                    "regex": "ST"
                 }
             ]
         },
@@ -1624,8 +1472,7 @@
             "pais": "EGYPT",
             "prefijos": [
                 {
-                    "final": "SU",
-                    "inicial": "SU"
+                    "regex": "SU"
                 }
             ]
         },
@@ -1637,12 +1484,10 @@
             "pais": "GREECE",
             "prefijos": [
                 {
-                    "final": "SZ",
-                    "inicial": "SV"
+                    "regex": "S[V-Z]"
                 },
                 {
-                    "final": "J4",
-                    "inicial": "J4"
+                    "regex": "J4"
                 }
             ]
         },
@@ -1654,8 +1499,7 @@
             "pais": "SAN MARINO",
             "prefijos": [
                 {
-                    "final": "T7",
-                    "inicial": "T7"
+                    "regex": "T7"
                 }
             ]
         },
@@ -1667,12 +1511,10 @@
             "pais": "TURKEY",
             "prefijos": [
                 {
-                    "final": "TC",
-                    "inicial": "TA"
+                    "regex": "T[A-C]"
                 },
                 {
-                    "final": "YM",
-                    "inicial": "YM"
+                    "regex": "YM"
                 }
             ]
         },
@@ -1684,8 +1526,7 @@
             "pais": "ICELAND",
             "prefijos": [
                 {
-                    "final": "TF",
-                    "inicial": "TF"
+                    "regex": "TF"
                 }
             ]
         },
@@ -1697,8 +1538,10 @@
             "pais": "GUATEMALA",
             "prefijos": [
                 {
-                    "final": "TD",
-                    "inicial": "TG"
+                    "regex": "TG"
+                },
+                {
+                    "regex": "TD"
                 }
             ]
         },
@@ -1710,8 +1553,10 @@
             "pais": "COSTA RICA",
             "prefijos": [
                 {
-                    "final": "TE",
-                    "inicial": "TI"
+                    "regex": "TI"
+                },
+                {
+                    "regex": "TE"
                 }
             ]
         },
@@ -1723,8 +1568,7 @@
             "pais": "GABON",
             "prefijos": [
                 {
-                    "final": "TR",
-                    "inicial": "TR"
+                    "regex": "TR"
                 }
             ]
         },
@@ -1736,8 +1580,7 @@
             "pais": "CÔTE D’IVOIRE",
             "prefijos": [
                 {
-                    "final": "TU",
-                    "inicial": "TU"
+                    "regex": "TU"
                 }
             ]
         },
@@ -1749,21 +1592,19 @@
             "pais": "MALI",
             "prefijos": [
                 {
-                    "final": "TZ",
-                    "inicial": "TZ"
+                    "regex": "TZ"
                 }
             ]
         },
         {
             "asociado": "Uzbekistan QSL Bureau",
             "cerrado": false,
-            "direccion": "P.O.Box “0″, Tashkent, 100000, Uzbekistan",
+            "direccion": "P.O.Box “0”, Tashkent, 100000, Uzbekistan",
             "nota": null,
             "pais": "UZBEKISTAN",
             "prefijos": [
                 {
-                    "final": "UM",
-                    "inicial": "UJ"
+                    "regex": "U[J-M]"
                 }
             ]
         },
@@ -1775,8 +1616,7 @@
             "pais": "KAZAKHSTAN",
             "prefijos": [
                 {
-                    "final": "UQ",
-                    "inicial": "UN"
+                    "regex": "U[N-Q]"
                 }
             ]
         },
@@ -1788,12 +1628,10 @@
             "pais": "UKRAINE",
             "prefijos": [
                 {
-                    "final": "UZ",
-                    "inicial": "UR"
+                    "regex": "U[R-Z]"
                 },
                 {
-                    "final": "EO",
-                    "inicial": "EM"
+                    "regex": "E[M-O]"
                 }
             ]
         },
@@ -1805,8 +1643,7 @@
             "pais": "ANTIGUA & BARBUDA",
             "prefijos": [
                 {
-                    "final": "V2",
-                    "inicial": "V2"
+                    "regex": "V2"
                 }
             ]
         },
@@ -1818,8 +1655,7 @@
             "pais": "BELIZE",
             "prefijos": [
                 {
-                    "final": "V3",
-                    "inicial": "V3"
+                    "regex": "V3"
                 }
             ]
         },
@@ -1831,8 +1667,7 @@
             "pais": "SAINT KITTS AND NEVIS",
             "prefijos": [
                 {
-                    "final": "V4",
-                    "inicial": "V4"
+                    "regex": "V4"
                 }
             ]
         },
@@ -1844,8 +1679,7 @@
             "pais": "NAMIBIA",
             "prefijos": [
                 {
-                    "final": "V5",
-                    "inicial": "V5"
+                    "regex": "V5"
                 }
             ]
         },
@@ -1857,8 +1691,7 @@
             "pais": "MARSHALL ISLANDS",
             "prefijos": [
                 {
-                    "final": "V7",
-                    "inicial": "V7"
+                    "regex": "V7"
                 }
             ]
         },
@@ -1870,8 +1703,7 @@
             "pais": "BRUNEI",
             "prefijos": [
                 {
-                    "final": "V8",
-                    "inicial": "V8"
+                    "regex": "V8"
                 }
             ]
         },
@@ -1883,28 +1715,22 @@
             "pais": "CANADA",
             "prefijos": [
                 {
-                    "final": "VG",
-                    "inicial": "VA"
+                    "regex": "V[A-G]"
                 },
                 {
-                    "final": "VO",
-                    "inicial": "VO"
+                    "regex": "VO"
                 },
                 {
-                    "final": "VY",
-                    "inicial": "VX"
+                    "regex": "V[X-Y]"
                 },
                 {
-                    "final": "CK",
-                    "inicial": "CF"
+                    "regex": "C[F-K]"
                 },
                 {
-                    "final": "CZ",
-                    "inicial": "CY"
+                    "regex": "C[Y-Z]"
                 },
                 {
-                    "final": "XO",
-                    "inicial": "XJ"
+                    "regex": "X[J-O]"
                 }
             ]
         },
@@ -1916,16 +1742,13 @@
             "pais": "AUSTRALIA",
             "prefijos": [
                 {
-                    "final": "VN",
-                    "inicial": "VH"
+                    "regex": "V[H-N]"
                 },
                 {
-                    "final": "AX",
-                    "inicial": "AX"
+                    "regex": "AX"
                 },
                 {
-                    "final": "VK9",
-                    "inicial": "VK0"
+                    "regex": "VK[0-9]"
                 }
             ]
         },
@@ -1937,8 +1760,7 @@
             "pais": "ANGUILLA",
             "prefijos": [
                 {
-                    "final": "VP2E",
-                    "inicial": "VP2E"
+                    "regex": "VP2E"
                 }
             ]
         },
@@ -1950,8 +1772,7 @@
             "pais": "MONTSERRAT",
             "prefijos": [
                 {
-                    "final": "VP2M",
-                    "inicial": "VP2M"
+                    "regex": "VP2M"
                 }
             ]
         },
@@ -1963,8 +1784,7 @@
             "pais": "BRITISH VIRGIN ISLANDS",
             "prefijos": [
                 {
-                    "final": "VP2V",
-                    "inicial": "VP2V"
+                    "regex": "VP2V"
                 }
             ]
         },
@@ -1976,8 +1796,7 @@
             "pais": "TURKS & CAICOS ISLANDS",
             "prefijos": [
                 {
-                    "final": "VP5",
-                    "inicial": "VP5"
+                    "regex": "VP5"
                 }
             ]
         },
@@ -1989,8 +1808,7 @@
             "pais": "BERMUDA",
             "prefijos": [
                 {
-                    "final": "VP9",
-                    "inicial": "VP9"
+                    "regex": "VP9"
                 }
             ]
         },
@@ -2002,8 +1820,7 @@
             "pais": "HONG KONG",
             "prefijos": [
                 {
-                    "final": "VR2",
-                    "inicial": "VR2"
+                    "regex": "VR2"
                 }
             ]
         },
@@ -2015,8 +1832,7 @@
             "pais": "INDIA",
             "prefijos": [
                 {
-                    "final": "VW",
-                    "inicial": "VT"
+                    "regex": "V[T-W]"
                 }
             ]
         },
@@ -2028,64 +1844,16 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W1",
-                    "inicial": "W1"
+                    "regex": "W[A-Z]*1"
                 },
                 {
-                    "final": "K1",
-                    "inicial": "K1"
+                    "regex": "K[A-Z]*1"
                 },
                 {
-                    "final": "N1",
-                    "inicial": "N1"
+                    "regex": "N[A-Z]*1"
                 },
                 {
-                    "final": "AA1",
-                    "inicial": "AA1"
-                },
-                {
-                    "final": "AB1",
-                    "inicial": "AB1"
-                },
-                {
-                    "final": "AC1",
-                    "inicial": "AC1"
-                },
-                {
-                    "final": "AD1",
-                    "inicial": "AD1"
-                },
-                {
-                    "final": "AE1",
-                    "inicial": "AE1"
-                },
-                {
-                    "final": "AF1",
-                    "inicial": "AF1"
-                },
-                {
-                    "final": "AG1",
-                    "inicial": "AG1"
-                },
-                {
-                    "final": "AH1",
-                    "inicial": "AH1"
-                },
-                {
-                    "final": "AI1",
-                    "inicial": "AI1"
-                },
-                {
-                    "final": "AJ1",
-                    "inicial": "AJ1"
-                },
-                {
-                    "final": "AK1",
-                    "inicial": "AK1"
-                },
-                {
-                    "final": "AL1",
-                    "inicial": "AL1"
+                    "regex": "A[A-L]1"
                 }
             ]
         },
@@ -2097,68 +1865,16 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W2",
-                    "inicial": "W2"
+                    "regex": "W[A-Z]*2"
                 },
                 {
-                    "final": "K2",
-                    "inicial": "K2"
+                    "regex": "K[A-Z]*2"
                 },
                 {
-                    "final": "N2",
-                    "inicial": "N2"
+                    "regex": "N[A-Z]*2"
                 },
                 {
-                    "final": "AA2",
-                    "inicial": "AA2"
-                },
-                {
-                    "final": "AB2",
-                    "inicial": "AB2"
-                },
-                {
-                    "final": "AC2",
-                    "inicial": "AC2"
-                },
-                {
-                    "final": "AD2",
-                    "inicial": "AD2"
-                },
-                {
-                    "final": "AE2",
-                    "inicial": "AE2"
-                },
-                {
-                    "final": "AF2",
-                    "inicial": "AF2"
-                },
-                {
-                    "final": "AG2",
-                    "inicial": "AG2"
-                },
-                {
-                    "final": "AH2",
-                    "inicial": "AH2"
-                },
-                {
-                    "final": "AI2",
-                    "inicial": "AI2"
-                },
-                {
-                    "final": "AJ2",
-                    "inicial": "AJ2"
-                },
-                {
-                    "final": "AK2",
-                    "inicial": "AK2"
-                },
-                {
-                    "final": "AL2",
-                    "inicial": "AL2"
-                },
-                {
-                    "final": "KP2",
-                    "inicial": "KP2"
+                    "regex": "A[A-L]2"
                 }
             ]
         },
@@ -2170,64 +1886,16 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W3",
-                    "inicial": "W3"
+                    "regex": "W[A-Z]*3"
                 },
                 {
-                    "final": "K3",
-                    "inicial": "K3"
+                    "regex": "K[A-Z]*3"
                 },
                 {
-                    "final": "N3",
-                    "inicial": "N3"
+                    "regex": "N[A-Z]*3"
                 },
                 {
-                    "final": "AA3",
-                    "inicial": "AA3"
-                },
-                {
-                    "final": "AB3",
-                    "inicial": "AB3"
-                },
-                {
-                    "final": "AC3",
-                    "inicial": "AC3"
-                },
-                {
-                    "final": "AD3",
-                    "inicial": "AD3"
-                },
-                {
-                    "final": "AE3",
-                    "inicial": "AE3"
-                },
-                {
-                    "final": "AF3",
-                    "inicial": "AF3"
-                },
-                {
-                    "final": "AG3",
-                    "inicial": "AG3"
-                },
-                {
-                    "final": "AH3",
-                    "inicial": "AH3"
-                },
-                {
-                    "final": "AI3",
-                    "inicial": "AI3"
-                },
-                {
-                    "final": "AJ3",
-                    "inicial": "AJ3"
-                },
-                {
-                    "final": "AK3",
-                    "inicial": "AK3"
-                },
-                {
-                    "final": "AL3",
-                    "inicial": "AL3"
+                    "regex": "A[A-L]3"
                 }
             ]
         },
@@ -2239,68 +1907,19 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W4",
-                    "inicial": "W4"
+                    "regex": "W[A-Z]*4"
                 },
                 {
-                    "final": "K4",
-                    "inicial": "K4"
+                    "regex": "K[A-Z]*4"
                 },
                 {
-                    "final": "N4",
-                    "inicial": "N4"
+                    "regex": "N[A-Z]*4"
                 },
                 {
-                    "final": "AA4",
-                    "inicial": "AA4"
+                    "regex": "A[A-L]4"
                 },
                 {
-                    "final": "AB4",
-                    "inicial": "AB4"
-                },
-                {
-                    "final": "AC4",
-                    "inicial": "AC4"
-                },
-                {
-                    "final": "AD4",
-                    "inicial": "AD4"
-                },
-                {
-                    "final": "AE4",
-                    "inicial": "AE4"
-                },
-                {
-                    "final": "AF4",
-                    "inicial": "AF4"
-                },
-                {
-                    "final": "AG4",
-                    "inicial": "AG4"
-                },
-                {
-                    "final": "AH4",
-                    "inicial": "AH4"
-                },
-                {
-                    "final": "AI4",
-                    "inicial": "AI4"
-                },
-                {
-                    "final": "AJ4",
-                    "inicial": "AJ4"
-                },
-                {
-                    "final": "AK4",
-                    "inicial": "AK4"
-                },
-                {
-                    "final": "AL4",
-                    "inicial": "AL4"
-                },
-                {
-                    "final": "KG4X2",
-                    "inicial": "KG4X2"
+                    "regex": "KG4X2"
                 }
             ]
         },
@@ -2312,64 +1931,16 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W5",
-                    "inicial": "W5"
+                    "regex": "W[A-Z]*5"
                 },
                 {
-                    "final": "K5",
-                    "inicial": "K5"
+                    "regex": "K[A-Z]*5"
                 },
                 {
-                    "final": "N5",
-                    "inicial": "N5"
+                    "regex": "N[A-Z]*5"
                 },
                 {
-                    "final": "AA5",
-                    "inicial": "AA5"
-                },
-                {
-                    "final": "AB5",
-                    "inicial": "AB5"
-                },
-                {
-                    "final": "AC5",
-                    "inicial": "AC5"
-                },
-                {
-                    "final": "AD5",
-                    "inicial": "AD5"
-                },
-                {
-                    "final": "AE5",
-                    "inicial": "AE5"
-                },
-                {
-                    "final": "AF5",
-                    "inicial": "AF5"
-                },
-                {
-                    "final": "AG5",
-                    "inicial": "AG5"
-                },
-                {
-                    "final": "AH5",
-                    "inicial": "AH5"
-                },
-                {
-                    "final": "AI5",
-                    "inicial": "AI5"
-                },
-                {
-                    "final": "AJ5",
-                    "inicial": "AJ5"
-                },
-                {
-                    "final": "AK5",
-                    "inicial": "AK5"
-                },
-                {
-                    "final": "AL5",
-                    "inicial": "AL5"
+                    "regex": "A[A-L]5"
                 }
             ]
         },
@@ -2381,64 +1952,16 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W6",
-                    "inicial": "W6"
+                    "regex": "W[A-Z]*6"
                 },
                 {
-                    "final": "K6",
-                    "inicial": "K6"
+                    "regex": "K[A-Z]*6"
                 },
                 {
-                    "final": "N6",
-                    "inicial": "N6"
+                    "regex": "N[A-Z]*6"
                 },
                 {
-                    "final": "AA6",
-                    "inicial": "AA6"
-                },
-                {
-                    "final": "AB6",
-                    "inicial": "AB6"
-                },
-                {
-                    "final": "AC6",
-                    "inicial": "AC6"
-                },
-                {
-                    "final": "AD6",
-                    "inicial": "AD6"
-                },
-                {
-                    "final": "AE6",
-                    "inicial": "AE6"
-                },
-                {
-                    "final": "AF6",
-                    "inicial": "AF6"
-                },
-                {
-                    "final": "AG6",
-                    "inicial": "AG6"
-                },
-                {
-                    "final": "AH6",
-                    "inicial": "AH6"
-                },
-                {
-                    "final": "AI6",
-                    "inicial": "AI6"
-                },
-                {
-                    "final": "AJ6",
-                    "inicial": "AJ6"
-                },
-                {
-                    "final": "AK6",
-                    "inicial": "AK6"
-                },
-                {
-                    "final": "AL6",
-                    "inicial": "AL6"
+                    "regex": "A[A-L]6"
                 }
             ]
         },
@@ -2450,64 +1973,16 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W7",
-                    "inicial": "W7"
+                    "regex": "W[A-Z]*7"
                 },
                 {
-                    "final": "K7",
-                    "inicial": "K7"
+                    "regex": "K[A-Z]*7"
                 },
                 {
-                    "final": "N7",
-                    "inicial": "N7"
+                    "regex": "N[A-Z]*7"
                 },
                 {
-                    "final": "AA7",
-                    "inicial": "AA7"
-                },
-                {
-                    "final": "AB7",
-                    "inicial": "AB7"
-                },
-                {
-                    "final": "AC7",
-                    "inicial": "AC7"
-                },
-                {
-                    "final": "AD7",
-                    "inicial": "AD7"
-                },
-                {
-                    "final": "AE7",
-                    "inicial": "AE7"
-                },
-                {
-                    "final": "AF7",
-                    "inicial": "AF7"
-                },
-                {
-                    "final": "AG7",
-                    "inicial": "AG7"
-                },
-                {
-                    "final": "AH7",
-                    "inicial": "AH7"
-                },
-                {
-                    "final": "AI7",
-                    "inicial": "AI7"
-                },
-                {
-                    "final": "AJ7",
-                    "inicial": "AJ7"
-                },
-                {
-                    "final": "AK7",
-                    "inicial": "AK7"
-                },
-                {
-                    "final": "AL7",
-                    "inicial": "AL7"
+                    "regex": "A[A-L]7"
                 }
             ]
         },
@@ -2519,64 +1994,16 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W8",
-                    "inicial": "W8"
+                    "regex": "W[A-Z]*8"
                 },
                 {
-                    "final": "K8",
-                    "inicial": "K8"
+                    "regex": "K[A-Z]*8"
                 },
                 {
-                    "final": "N8",
-                    "inicial": "N8"
+                    "regex": "N[A-Z]*8"
                 },
                 {
-                    "final": "AA8",
-                    "inicial": "AA8"
-                },
-                {
-                    "final": "AB8",
-                    "inicial": "AB8"
-                },
-                {
-                    "final": "AC8",
-                    "inicial": "AC8"
-                },
-                {
-                    "final": "AD8",
-                    "inicial": "AD8"
-                },
-                {
-                    "final": "AE8",
-                    "inicial": "AE8"
-                },
-                {
-                    "final": "AF8",
-                    "inicial": "AF8"
-                },
-                {
-                    "final": "AG8",
-                    "inicial": "AG8"
-                },
-                {
-                    "final": "AH8",
-                    "inicial": "AH8"
-                },
-                {
-                    "final": "AI8",
-                    "inicial": "AI8"
-                },
-                {
-                    "final": "AJ8",
-                    "inicial": "AJ8"
-                },
-                {
-                    "final": "AK8",
-                    "inicial": "AK8"
-                },
-                {
-                    "final": "AL8",
-                    "inicial": "AL8"
+                    "regex": "A[A-L]8"
                 }
             ]
         },
@@ -2588,64 +2015,16 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W9",
-                    "inicial": "W9"
+                    "regex": "W[A-Z]*9"
                 },
                 {
-                    "final": "K9",
-                    "inicial": "K9"
+                    "regex": "K[A-Z]*9"
                 },
                 {
-                    "final": "N9",
-                    "inicial": "N9"
+                    "regex": "N[A-Z]*9"
                 },
                 {
-                    "final": "AA9",
-                    "inicial": "AA9"
-                },
-                {
-                    "final": "AB9",
-                    "inicial": "AB9"
-                },
-                {
-                    "final": "AC9",
-                    "inicial": "AC9"
-                },
-                {
-                    "final": "AD9",
-                    "inicial": "AD9"
-                },
-                {
-                    "final": "AE9",
-                    "inicial": "AE9"
-                },
-                {
-                    "final": "AF9",
-                    "inicial": "AF9"
-                },
-                {
-                    "final": "AG9",
-                    "inicial": "AG9"
-                },
-                {
-                    "final": "AH9",
-                    "inicial": "AH9"
-                },
-                {
-                    "final": "AI9",
-                    "inicial": "AI9"
-                },
-                {
-                    "final": "AJ9",
-                    "inicial": "AJ9"
-                },
-                {
-                    "final": "AK9",
-                    "inicial": "AK9"
-                },
-                {
-                    "final": "AL9",
-                    "inicial": "AL9"
+                    "regex": "A[A-L]9"
                 }
             ]
         },
@@ -2657,64 +2036,16 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "W0",
-                    "inicial": "W0"
+                    "regex": "W[A-Z]*0"
                 },
                 {
-                    "final": "K0",
-                    "inicial": "K0"
+                    "regex": "K[A-Z]*0"
                 },
                 {
-                    "final": "N0",
-                    "inicial": "N0"
+                    "regex": "N[A-Z]*0"
                 },
                 {
-                    "final": "AA0",
-                    "inicial": "AA0"
-                },
-                {
-                    "final": "AB0",
-                    "inicial": "AB0"
-                },
-                {
-                    "final": "AC0",
-                    "inicial": "AC0"
-                },
-                {
-                    "final": "AD0",
-                    "inicial": "AD0"
-                },
-                {
-                    "final": "AE0",
-                    "inicial": "AE0"
-                },
-                {
-                    "final": "AF0",
-                    "inicial": "AF0"
-                },
-                {
-                    "final": "AG0",
-                    "inicial": "AG0"
-                },
-                {
-                    "final": "AH0",
-                    "inicial": "AH0"
-                },
-                {
-                    "final": "AI0",
-                    "inicial": "AI0"
-                },
-                {
-                    "final": "AJ0",
-                    "inicial": "AJ0"
-                },
-                {
-                    "final": "AK0",
-                    "inicial": "AK0"
-                },
-                {
-                    "final": "AL0",
-                    "inicial": "AL0"
+                    "regex": "A[A-L]0"
                 }
             ]
         },
@@ -2726,8 +2057,7 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "KH2",
-                    "inicial": "KH2"
+                    "regex": "KH2"
                 }
             ]
         },
@@ -2739,8 +2069,7 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "KH3",
-                    "inicial": "KH3"
+                    "regex": "KH3"
                 }
             ]
         },
@@ -2752,8 +2081,7 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "KH7",
-                    "inicial": "KH6"
+                    "regex": "KH[6-7]"
                 }
             ]
         },
@@ -2765,8 +2093,7 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "KL",
-                    "inicial": "KL"
+                    "regex": "KL"
                 }
             ]
         },
@@ -2778,8 +2105,7 @@
             "pais": "UNITED STATES",
             "prefijos": [
                 {
-                    "final": "KP4",
-                    "inicial": "KP3"
+                    "regex": "KP[3-4]"
                 }
             ]
         },
@@ -2791,16 +2117,13 @@
             "pais": "MEXICO",
             "prefijos": [
                 {
-                    "final": "XI",
-                    "inicial": "XA"
+                    "regex": "X[A-I]"
                 },
                 {
-                    "final": "4C",
-                    "inicial": "4A"
+                    "regex": "4[A-C]"
                 },
                 {
-                    "final": "6J",
-                    "inicial": "6D"
+                    "regex": "6[D-J]"
                 }
             ]
         },
@@ -2812,8 +2135,7 @@
             "pais": "BURKINA FASO",
             "prefijos": [
                 {
-                    "final": "XT",
-                    "inicial": "XT"
+                    "regex": "XT"
                 }
             ]
         },
@@ -2825,8 +2147,7 @@
             "pais": "MACAU",
             "prefijos": [
                 {
-                    "final": "XX9",
-                    "inicial": "XX9"
+                    "regex": "XX9"
                 }
             ]
         },
@@ -2838,8 +2159,7 @@
             "pais": "MYANMAR",
             "prefijos": [
                 {
-                    "final": "XZ",
-                    "inicial": "XY"
+                    "regex": "X[Y-Z]"
                 }
             ]
         },
@@ -2851,12 +2171,10 @@
             "pais": "INDONESIA",
             "prefijos": [
                 {
-                    "final": "YE",
-                    "inicial": "YB"
+                    "regex": "Y[B-E]"
                 },
                 {
-                    "final": "8I",
-                    "inicial": "8A"
+                    "regex": "8[A-I]"
                 }
             ]
         },
@@ -2868,12 +2186,10 @@
             "pais": "IRAQ",
             "prefijos": [
                 {
-                    "final": "YI",
-                    "inicial": "YI"
+                    "regex": "YI"
                 },
                 {
-                    "final": "HN",
-                    "inicial": "HN"
+                    "regex": "HN"
                 }
             ]
         },
@@ -2885,8 +2201,7 @@
             "pais": "VANUATU",
             "prefijos": [
                 {
-                    "final": "YJ",
-                    "inicial": "YJ"
+                    "regex": "YJ"
                 }
             ]
         },
@@ -2898,12 +2213,10 @@
             "pais": "SYRIA",
             "prefijos": [
                 {
-                    "final": "YK",
-                    "inicial": "YK"
+                    "regex": "YK"
                 },
                 {
-                    "final": "6C",
-                    "inicial": "6C"
+                    "regex": "6C"
                 }
             ]
         },
@@ -2915,8 +2228,7 @@
             "pais": "LATVIA",
             "prefijos": [
                 {
-                    "final": "YL",
-                    "inicial": "YL"
+                    "regex": "YL"
                 }
             ]
         },
@@ -2928,12 +2240,10 @@
             "pais": "NICARAGUA",
             "prefijos": [
                 {
-                    "final": "YN",
-                    "inicial": "YN"
+                    "regex": "YN"
                 },
                 {
-                    "final": "HT",
-                    "inicial": "HT"
+                    "regex": "HT"
                 }
             ]
         },
@@ -2945,8 +2255,7 @@
             "pais": "ROMANIA",
             "prefijos": [
                 {
-                    "final": "YR",
-                    "inicial": "YO"
+                    "regex": "Y[O-R]"
                 }
             ]
         },
@@ -2958,8 +2267,7 @@
             "pais": "EL SALVADOR",
             "prefijos": [
                 {
-                    "final": "YS",
-                    "inicial": "YS"
+                    "regex": "YS"
                 }
             ]
         },
@@ -2971,8 +2279,7 @@
             "pais": "SERBIA",
             "prefijos": [
                 {
-                    "final": "YU",
-                    "inicial": "YT"
+                    "regex": "Y[T-U]"
                 }
             ]
         },
@@ -2984,12 +2291,10 @@
             "pais": "VENEZUELA",
             "prefijos": [
                 {
-                    "final": "YY",
-                    "inicial": "YV"
+                    "regex": "Y[V-Y]"
                 },
                 {
-                    "final": "4M",
-                    "inicial": "4M"
+                    "regex": "4M"
                 }
             ]
         },
@@ -3001,8 +2306,7 @@
             "pais": "ZIMBABWE",
             "prefijos": [
                 {
-                    "final": "Z2",
-                    "inicial": "Z2"
+                    "regex": "Z2"
                 }
             ]
         },
@@ -3014,8 +2318,7 @@
             "pais": "NORTH MACEDONIA",
             "prefijos": [
                 {
-                    "final": "Z3",
-                    "inicial": "Z3"
+                    "regex": "Z3"
                 }
             ]
         },
@@ -3027,8 +2330,7 @@
             "pais": "ALBANIA",
             "prefijos": [
                 {
-                    "final": "ZA",
-                    "inicial": "ZA"
+                    "regex": "ZA"
                 }
             ]
         },
@@ -3040,8 +2342,7 @@
             "pais": "GIBRALTAR",
             "prefijos": [
                 {
-                    "final": "ZB",
-                    "inicial": "ZB"
+                    "regex": "ZB"
                 }
             ]
         },
@@ -3053,8 +2354,7 @@
             "pais": "CAYMAN ISLANDS",
             "prefijos": [
                 {
-                    "final": "ZF",
-                    "inicial": "ZF"
+                    "regex": "ZF"
                 }
             ]
         },
@@ -3066,8 +2366,7 @@
             "pais": "NEW ZEALAND",
             "prefijos": [
                 {
-                    "final": "ZM",
-                    "inicial": "ZL"
+                    "regex": "Z[L-M]"
                 }
             ]
         },
@@ -3079,8 +2378,7 @@
             "pais": "PARAGUAY",
             "prefijos": [
                 {
-                    "final": "ZP",
-                    "inicial": "ZP"
+                    "regex": "ZP"
                 }
             ]
         },
@@ -3092,8 +2390,7 @@
             "pais": "SOUTH AFRICA",
             "prefijos": [
                 {
-                    "final": "ZU",
-                    "inicial": "ZR"
+                    "regex": "Z[R-U]"
                 }
             ]
         },
@@ -3105,8 +2402,7 @@
             "pais": "SWITZERLAND",
             "prefijos": [
                 {
-                    "final": "4U1ITU",
-                    "inicial": "4U1ITU"
+                    "regex": "4U1ITU"
                 }
             ]
         },
@@ -3118,12 +2414,10 @@
             "pais": "IRAN",
             "prefijos": [
                 {
-                    "final": "EQ",
-                    "inicial": "EP"
+                    "regex": "E[P-Q]"
                 },
                 {
-                    "final": "9D",
-                    "inicial": "9B"
+                    "regex": "9[B-D]"
                 }
             ]
         },
@@ -3135,8 +2429,7 @@
             "pais": "KYRGYZSTAN",
             "prefijos": [
                 {
-                    "final": "EX",
-                    "inicial": "EX"
+                    "regex": "EX"
                 }
             ]
         },
@@ -3148,8 +2441,7 @@
             "pais": "REPUBLIC OF KOREA (South Korea)",
             "prefijos": [
                 {
-                    "final": "HL9",
-                    "inicial": "HL9"
+                    "regex": "HL9"
                 }
             ]
         },
@@ -3161,8 +2453,7 @@
             "pais": "FALKLAND ISLANDS",
             "prefijos": [
                 {
-                    "final": "VP8",
-                    "inicial": "VP8"
+                    "regex": "VP8"
                 }
             ]
         }
