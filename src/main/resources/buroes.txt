@@ -1,0 +1,674 @@
+3A:    MONACO
+       Association des Radio-Amateurs de Monaco
+       Box 2, MC-98001 Monaco Cedex
+
+3B:    Mauritius (CLOSED)
+
+3D2:   FIJI
+       Fiji Association of Radio Amateurs
+       P.O. Box 10842, Laucala Beach Estate, Via Suva, Fiji
+
+3DA:   ESWATINI (CLOSED)
+
+3V,TS: TUNISIA
+       Scouts Tunisiens — Amateur Radio Club Station — Tunis
+       PO Box 339, Tunis El-Mahrajene 1082, Tunisia
+
+4J:    AZERBAIJAN
+       Rashad Iskandarli
+       P.O. Box600321, 60333 Frankfurt am Main, Germany
+
+4L:    REPUBLIC OF GEORGIA
+       National Association Radioamateurs of Georgia [NARG]     
+       Irakli Kordzakhia, Box 12, (SADGURI), 0102 Tbilisi
+
+4P-4S: SRI LANKA
+       Radio Society of Sri Lanka
+       Box 907, Colombo
+
+4X,4Z: ISRAEL
+       IARC QSL Bureau, Box 17600, Tel Aviv 61176
+
+5B:    CYPRUS
+       Cyprus Amateur Radio Society
+       P.O. Box 25017 1306, Nicosia Cyprus
+
+5H:    TANZANIA
+       Tanzania Amateur Radio Club
+       Box 21497, Dar-es-Salaam
+
+5N-5O: NIGERIA
+       Nigeria Amateur Radio Society
+       Po Box 2873, Ilorin, Kwara State
+
+5W:    WESTERN SAMOA
+       Western Samoa Amateur Radio Club
+       Box 2015, Apia
+
+5X:    UGANDA
+       Uganda Amateur Radio Society
+       Box 22761, Kampala
+
+5Y-5Z: KENYA
+       Amateur Radio Society of Kenya
+       Box 45681, Nairobi 00100
+
+6V-6W: SENEGAL
+       Association des Radio-Amateurs du Senegal
+       Box 971, Dakar
+
+6Y:    JAMAICA
+       Jamaica Amateur Radio Association
+       76 Arnold Road, Kingston 5, P.O. Box 214, Kingston 20
+
+7P:    LESOTHO (CLOSED)
+
+7T-7Y: ALGERIA
+       Amateurs Radio Algeriens
+       Box 1, Alger Gare
+
+8P:    BARBADOS
+       Amateur Radio Society of Barbados
+       Box 814E, Bridgetown
+
+8R:    GUYANA
+       Guyana Amateur Radio Association
+       Box 101122, Georgetown
+
+9A:    CROATIA
+       Hrvatski Radioamaterski Savez
+       Dalmatinska 12, HR-10000 Zagreb
+
+9G:    GHANA
+       Ghana Amateur Radio Society
+       Box 3936, Accra
+
+9H:    MALTA
+       Malta Amateur Radio League
+       Mdina Road Attard ATD9036
+
+9I-9J: ZAMBIA
+       Radio Society of Zambia
+       Box 20332, Kitwe
+
+9K:    KUWAIT
+       Kuwait Amateur Radio Society
+       Box 5240, Safat 13053
+
+9L:    SIERRA LEONE (CLOSED)
+
+9M,9W: MALAYSIA
+       Malaysian Amateur Radio Transmitters’ Society
+       GPO Box 10777, 50724 Kuala Lumpur
+
+9O-9T: DEMOCRATIC REPUBLIC OF CONGO
+       Association des Radio Amateurs du Congo
+       PO Box 2049, Kinshasa 1
+
+9V: SINGAPORE (CLOSED)
+
+9Y-9Z: TRINIDAD & TOBAGO
+       Trinidad and Tobago Amateur Radio Society
+       Box 1167, Port of Spain
+
+A2,8O: BOTSWANA
+       Botswana Amateur Radio Society
+       service temporarily suspended
+
+A3:    TONGA (CLOSED)
+
+A4:    OMAN
+       Royal Omani Amateur Radio Society
+       Box 981, Muscat 113
+
+A7:    QATAR
+       Qatar Amateur Radio Society
+       Box 22122, Doha
+
+A9:    BAHRAIN (CLOSED)
+
+AP-AS: PAKISTAN
+       Pakistan Amateur Radio Society
+       Box 1450 Islamabad 44000
+
+BA-BL,BR-BT,BY,BZ: CHINA
+       Chinese Radio Amateurs Club
+       Box 100029–73, Beijing 100029, P.R. China
+
+BM-BQ,BU-BX: TAIWAN
+       Chinese Taipei Amateur Radio League
+       Box 73, Taipei 100
+
+C2:    NAURU (CLOSED)
+
+C3:    ANDORRA
+       Unio de Radioaficionats Andorrans
+       Box 1150, Andorra La Vella
+
+C5:    GAMBIA (CLOSED)
+
+C6:    BAHAMAS (CLOSED)
+
+C8-C9: MOZAMBIQUE
+       Liga dos Radio Emissores de Moçambique
+       Box 25, Maputo
+
+CA-CE,XQ-XR:  CHILE
+       Radio Club de Chile
+       Casilla 13630, Sucursal Plaza de Armas, Santiago
+
+CM,CO,T4:  CUBA
+       Federación de Radioaficionados de Cuba
+       P.O. Box 6060, Habana 10600
+
+CN:    MOROCCO (CLOSED)
+
+CP:    BOLIVIA
+       Radio Club Boliviano
+       Box 2111, La Paz
+
+ CQ-CU: PORTUGAL
+       Rep Rede dos Emissores Portugueses
+       Avenida Yasser Arafat nº 4 A, 2700–375 Amadora
+
+CV-CX: URUGUAY
+       Radio Club Uruguayo
+       Box 37, Montevideo 11000
+
+D4:    CAPE VERDE (CLOSED)     
+
+DA-DR: GERMANY
+       DARC QSL Bureau
+       Lindenallee 4, D‑34225 Baunatal
+
+DU-DZ, 4D-4I:  PHILIPPINES
+       PARA
+       PO BOX 1932 Quezon City Post Office, NIA Road, Diliman, 1100 Quezon City
+
+E7:    BOSNIA & HERZEGOVINA
+       E7 QSL BUREAU
+       P.O. BOX 61, BA — 71001 Sarajevo
+
+EA-EH,AM-AO:  SPAIN
+       Unión de Radioaficionados Españoles
+       Box 55055, E‑28053 Madrid
+
+EI-EJ: IRELAND
+       Irish Radio Transmitters Society
+       Box 462, Dublin 9
+
+EK:    Armenia
+       EK QSL Bureau
+       Box 22, Yerevan, 375002
+
+EL,5L-5M:  LIBERIA
+       Liberia Radio Amateur Association
+       Box 10–1477, 1000 Monrovia 10
+
+ER:   MOLDOVA
+        Petru Stupin
+       Columna 171 ap. 18, Chisinau, MD-2004 Moldova, EU
+
+ES:    ESTONIA
+       Estonian Amateur Radio Union
+       Sakala 14, 10141 Tallinn, Estonia
+       NOTE: If the package is sent by courier, please be sure to give the courier this phone number +37256243369 and note that the QSL office is only open on Wednesdays.
+
+EU-EW: BELARUS
+       Belarussian Federation of Radioamateurs and Radiosportsmen [BFRR]
+       PO Box 469, Minsk 220050, Belarus
+
+EY:    TAJIKISTAN
+       Tajik Amateur Radio League
+       c/o Nodir Tursoon-Zadeh, Box 303, Dushanbe 734001
+
+EZ:    TURKMENISTAN
+       Liga Radiolyubiteley Turkmenistana
+       Box 555, Ashgabat 744020
+
+F,HW-HY,TK,TM,TO-TQ:  FRANCE
+       REF-Union Service QSL
+       BP 77429, 37074 TOURS CEDEX 2
+
+FK:    NEW CALEDONIA
+       Association des Radio-Amateurs de Nouvelle-Caledonie
+       Box 3956, Noumea 98847
+
+FO:    FRENCH POLYNESIA
+       Club Oceanien de Radio et d’Astronomie
+       Box 5006, Pirae 98716, Tahiti
+
+G,M,2A-2Z:  UNITED KINGDOM
+       RSGB QSL Bureau
+       c/o 18, Hillbeck. HALIFAX England HX3 5LU
+
+H4:    SOLOMON ISLANDS (CLOSED)       
+
+HA,HG: HUNGARY
+       MRASZ QSL Bureau
+       Mr. Attila Holop HA2NA, Esztergom, Gizella királyné utca 28., H‑2500, Hungary
+
+HB:  SWITZERLAND   
+    USKA QSL Service
+    Pfeffingerstrasse 1, CH-4132 Reinach BL, Switzerland
+
+HB0:   LIECHTENSTEIN
+       Amateurfunk Verein Liechtenstein
+       Box 222, LI-9495 Triesen, Liechtenstein
+
+HC-HD: ECUADOR
+       Guayaquil Radio Club
+       Box 09–01-5757, Guayaquil
+
+HH,4V: HAITI (CLOSED)
+
+HI:    DOMINICANA
+       Radio Club Dominican
+       Box 1157, Santo Domingo
+
+HJ-HK,5J-5K:  COLOMBIA
+       Liga Colombiana de Radioaficionados
+       Box 584, Santafe de Bogota
+
+HL,DS-DT:  REPUBLIC OF KOREA (South Korea)
+       Korean Amateur Radio League
+       Box 162, CPO, Seoul 100–601
+
+HO-HP,H3,3E-3F: PANAMA
+       Liga Panamena de Radioaficionados [LPRA]
+       Apartado 0834–175, Panama
+
+HQ-HR: HONDURAS
+       Radio Club de Honduras
+       Box 273, San Pedro Sula
+
+HS,E2: THAILAND
+       RAST QSL Bureau
+       Box 2008, GPO, Bangkok 10501
+
+HV:    VATICAN CITY STATE (CLOSED)  
+
+I:     ITALY
+       Associazione Radioamatori Italiani
+       Via Scarlatti 30, 20124 Milano MI
+
+J2:    DJIBOUTI
+       Association des Radioamateurs de Djibouti
+       Box 1076
+
+J3:    GRENADA
+       Grenada Amateur Radio Club
+       Box 737, St. George’s
+
+J7:    DOMINICA
+       Dominica Amateur Radio Club
+       Box 613, Roseau
+
+JA-JS,7J-7N,8J-8N:  JAPAN
+       JARL QSL Bureau
+       1324–3 Kanba, Hikawa-cho, Izumo-shi, Shimane 699‑0588
+
+JT-JV: MONGOLIA
+       MRSF QSL Bureau
+       PO Box 573, Ulaanbaatar 16092
+
+JY:    JORDAN
+       Royal Jordanian Radio Amateur Society
+       Box 2353, Amman 11181
+
+LA-LN,JW-JX,3Y:  NORWAY
+       Norsk Radio Relae Liga, QSL Bureau, P.O. Box 20, Haugenstua, N‑0915 Oslo, Norway
+       Note: We are experiencing issues with customs clearance of QSL shipments from abroad. Before sending packages, please visit https://nrrl.no/important-notice-about-sending-qsls-to-nrrl/ for updated instructions. The tracking number must be sent to qslmanager@nrrl.no as soon as possible after dispatch
+
+LO-LW,AY-AZ,L2-L9:  ARGENTINA
+       Radio Club Argentino
+       Casilla de Correo 97, C1000WAA Ciudad de Buenos Aires
+       NOTE: Due to current issues with the post office, packages must be 2 Kg weight maximum and tracking number. Important notice: Before sending any package, visit https://www.lu4aa.org/wp/lu_incoming_bureau/ for updated instructions. Tracking number must be sent to administracion@lu4aa.org and bureau@lu4aa.org immediately after dispatch.
+
+LX: LUXEMBOURG
+       Radioamateurs du Luxembourg (RL)
+       QSL Bureau, Box 1352, L‑1013, Luxembourg
+
+LY:    LITHUANIA
+       Lietuvos Radijo Megeju Draugija
+       Box 1000, LT-01014 Vilnius‑1 Phone # +370 6575 7373
+
+LZ:    BULGARIA
+       Bulgarian Federation of Radio Amateurs
+       Box 830, 1000 Sofia
+
+OA-OC,4T:  PERU
+       Radio Club Peruano
+       Box 538, Lima 100
+
+OD:    LEBANON
+       Radio Amateurs of Lebanon (RAL)
+       P.O.Box 11–8888, Beirut
+
+OE:    AUSTRIA
+       OeVSV
+       Industriezentrum NÖ-süd, Strasse 14, Objekt 31, A‑2351 Wr. Neudorf, Austria
+
+OF-OJ: FINLAND
+       SRAL QSL Bureau
+       Box 73, FIN-11111 Riihimaki
+
+OK-OL: CZECH REPUBLIC
+       Cesky radioklub CRC
+       U Pergamenky 3, 17000 Praha, Czech Republic
+
+OM:    SLOVAKIA
+      Slovak Amateur Radio Association (SARA)
+      PO Box 14, 900 31, Stupava, Slovakia
+
+ON-OT: BELGIUM
+       UBA QSL BUREAU
+       Jose Duyct, Molenakker 56, B‑8740 Egem 
+
+OU-OZ: DENMARK
+       Experimenterende Danske Radioamatoerer
+       Klokkestoebervej 11, DK-5230 Odense M
+
+OY:    FAROE ISLANDS
+       Regin Nicolajsen
+       Gerðsivegur 10, FO240 Skopun
+
+P4:    ARUBA
+       Aruba Amateur Radio Club
+       c/o Emily Thiel, P43E, Box 614
+
+PA-PI: NETHERLANDS
+       Dutch QSL Bureau
+       Box 330, NL-6800 AH Arnhem
+
+PJ:    CURACAO
+       DUTCH CARIBBEAN
+       VERONA, Box 3383, Curacao
+
+PP-PY,ZV-ZZ:  BRAZIL
+        Liga de Amadores Brasileiros de Radio Emissão — LABRE
+        PO Box 004 70275–970 Brasilia DF BRAZIL
+
+PZ:    SURINAME (CLOSED)
+
+R,UA-UI: RUSSIA
+       Soyuz Radiolyubitelei Rossii
+       Box 88, Moscow 119311
+
+S2-S3: BANGLADESH
+       Bangladesh Amateur Radio League
+       Box 3512, GPO, Dhaka
+
+S5:    SLOVENIA
+       Zveza Radioamaterjev Slovenije (ZRS) QSL Bureau
+       Bezjakova ulica 151, Pekre, SI-2341 Limbus
+
+SA-SM,7S,8S: SWEDEN
+       Foreningen Sveriges Sandareamatorer
+       Box 45, SE-19121 Sollentuna
+
+SN-SR,HF,3Z: POLAND
+       PZK QSL Bureau
+       ul. Owsiana 6, 87–134 Czarnowo
+
+ST:    SUDAN (CLOSED)
+
+SU:    EGYPT (CLOSED)
+
+SV-SZ,J4: GREECE
+       Radio Amateur Association of Greece
+       P.O. Box 42001, GR-121 01 Peristeri, Athens
+
+T7:    SAN MARINO
+       Associazione Radioamatori della Repubblica di San Marino
+       Box 77, RSM-47890 San Marino
+
+TA-TC,YM: TURKEY
+       TRAC
+       P:K 73, TR-07055 Güllük-ANTALYA, TURKEY
+
+TF:    ICELAND
+       Islenzkir Radioamatorar
+       Box 1058, IS-121 Reykjavik
+
+TG,TD: GUATEMALA
+       Club de Radioaficionados de Guatemala
+       Apartado Postal 115, Ciudad de Guatemala 01901
+
+TI,TE: COSTA RICA
+       Radio Club de Costa Rica
+       Box 2412, San Jose 1000
+
+TR:    GABON
+       Association Gabonaise des Radio-Amateurs
+       Box 1826, Libreville
+
+TU:    CÔTE D’IVOIRE
+       ARAI
+       01 P.O. Box 2946, Abidjan 01
+
+TZ:    MALI
+       Club des Radioamateurs et Affilies du Mali [CRAM]
+       c/o Hamadoun Yattara, TZ6HY, B.P. 9A Kati, Mali, West Africa
+
+UJ-UM:  Uzbekistan QSL Bureau
+       P.O.Box“0″, Tashkent, 100000, Uzbekistan
+
+UN-UQ: KAZAKHSTAN
+       Republic of Kazakhstan
+       010000, Astana, Post Office Box 88 
+
+UR-UZ,EM-EO: UKRAINE
+       Ukrainian Amateur Radio League
+       Box 56, 01001 Kyiv 1
+
+V2:    ANTIGUA & BARBUDA
+       Antigua and Barbuda Radio Club V21ARC
+       c/o Jeff Martin,  Box 965, St. John’s 
+
+V3:    BELIZE (CLOSED)
+
+V4:    SAINT KITTS AND NEVIS (CLOSED)  
+
+V5:    NAMIBIA
+       Namibian Amateur Radio League
+       Box 1100, Windhoek 9000 
+
+V7:    MARSHALL ISLANDS (CLOSED)
+
+V8:    BRUNEI
+       Brunei Darussalam Amateur Radio Association
+       Box 73, Gadong, Bandar Seri Begawan 3100
+
+VA-VG,VO,VX-VY,CF-CK,CY-CZ,XJ-XO: CANADA
+       RAC National Incoming QSL Bureau
+       Manager, Ed Spingola, VA3TPV, P.O. Box 83, RPO Streetsville, Mississauga, ON L5M 2B7, CANADA
+
+
+VH-VN, AX,VK0-VK9:  AUSTRALIA
+       National Inwards QSL Bureau
+       P.O.Box 2040, Bayswater, Victoria 3153, Australia
+
+VP2E:  ANGUILLA (CLOSED)
+
+VP2M:  MONTSERRAT (CLOSED)
+
+VP2V:  BRITISH VIRGIN ISLANDS
+       BVIRL QSL Bureau
+       P.O. Box 409, Cruz Bay, St. John 0083
+
+VP5:   TURKS & CAICOS ISLANDS
+       Turks and Caicos Amateur Radio Society
+       c/o J. Millspaugh, VP5JM, Box 218, Providenciales
+
+VP9:   BERMUDA (CLOSED)
+
+VR2:   HONG KONG
+       Hong Kong Amateur Radio Transmitting Society
+       Box 541
+
+VT-VW: INDIA
+       India QSL Bureau, c/o Linux Learning Centre Private Limited
+       635, 6th Main Road, Next to Bank of India, Hanumanthnagar, Bengaluru 560 019
+
+W1,K1,N1,AA1,AB1,AC1,AD1,AE1,AF1,AG1,AH1,AI1,AJ1,AK1,AL1: UNITED STATES
+       YCCC
+       PO Box 73, Marlborough, MA 01752–0073
+
+W2,K2,N2,AA2,AB2,AC2,AD2,AE2,AF2,AG2,AH2,AI2,AJ2,AK2,AL2,KP2: UNITED STATES
+       North Jersey DX Association
+       P.O. Box 18, Morris Plains, NJ 07950
+
+W3,K3,N3,AA3,AB3,AC3,AD3,AE3,AF3,AG3,AH3,AI3,AJ3,AK3,AL3: UNITED STATES
+       W3 Incoming QSL Bureau
+       PO Box 190, Glenelg, MD 21737–0190
+
+W4,K4,N4,AA4,AB4,AC4,AD4,AE4,AF4,AG4,AH4,AI4,AJ4,AK4,AL4,KG4X2: UNITED STATES
+       Sterling Park Amateur Radio Club
+       Call Box 599, Sterling, VA 20167
+
+W5,K5,N5,AA5,AB5,AC5,AD5,AE5,AF5,AG5,AH5,AI5,AJ5,AK5,AL5: UNITED STATES
+       W5 Incoming Bureau
+       P.O. Box 1496, Henderson, TX 75653
+
+W6,K6,N6,AA6,AB6,AC6,AD6,AE6,AF6,AG6,AH6,AI6,AJ6,AK6,AL6: UNITED STATES
+       6th District Incoming QSL Bureau
+       P.O. Box 7488, Stockton, CA 95267–0488
+
+W7,K7,N7,AA7,AB7,AC7,AD7,AE7,AF7,AG7,AH7,AI7,AJ7,AK7,AL7: UNITED STATES
+       Willamette Valley DX Club
+       PO Box 1288, Battle Ground, WA 98604–4687
+
+W8,K8,N8,AA8,AB8,AC8,AD8,AE8,AF8,AG8,AH8,AI8,AJ8,AK8,AL8: UNITED STATES
+       W8 QSL Bureau
+       PO Box 307, West Chester, OH 45071–0307
+
+W9,K9,N9,AA9,AB9,AC9,AD9,AE9,AF9,AG9,AH9,AI9,AJ9,AK9,AL9: UNITED STATES
+       NIDXA
+       PO Box 125, Naperville, IL 60566
+
+W0,K0,N0,AA0,AB0,AC0,AD0,AE0,AF0,AG0,AH0,AI0,AJ0,AK0,AL0: UNITED STATES
+       W0 QSL Bureau
+       PO Box 907, Florissant, MO 63032
+
+KH2: UNITED STATES
+       Guam-Marianas Amateur Radio Club
+       PO Box 9727, Tamuning, Guam, 96931 Contact: Timothy Anderson, KH2XX
+KH3: UNITED STATES
+     HAWAI
+     Box 73, APO, AP 96558
+
+KH6‑KH7: UNITED STATES
+     KH6 Hawaii QSL Bureau
+     c/o Ned Conklin  KH7JJ, 2969 Kalalaua Ave.  #1004, Honolulu HI  96815 USA
+
+KL: UNITED STATES
+     Alaska
+     Box 520343, Big Lake, AK 99652 USA
+
+KP3‑KP4: UNITED STATES
+     Puerto Rico QSL Bureau
+     Box 9021061, San Juan, PR 00902–1061
+
+
+XA-XI,4A-4C,6D-6J: MEXICO
+     Federacion Mexicana de Radio Experimentadores
+     Box 907, 06000 Mexico D.F.         
+
+XT:    BURKINA FASO
+       Association des Radioamateurs du Burkina Faso
+       c/o Y. Kaba, XT2KY, ONATEL, Box 01, Ouagadougou 10000
+
+XX9:   MACAU
+       Associacao dos Radioamadores de Macau, P.O Box 6018
+
+XY-XZ: MYANMAR (CLOSED)  
+
+YB-YE,8A-8I: INDONESIA
+       ORARI National QSL Bureau
+       Box 1234, Jakarta 10012
+
+YI,HN: IRAQ
+       Iraqi Association for Radio Amateurs
+       Box 55072, Baghdad 12001
+
+YJ:    VANUATU
+       Vanuatu Amateur Radio Society
+       Box 665, Port Vila
+
+YK,6C: SYRIA
+       Technical Institute of Radio
+       Box 245, Damascus
+
+YL:    LATVIA
+        Latvijas Radio Amatieru Liga
+        Dzirnavu iela 7–3, Riga, LV-1010,
+     
+YN,HT: NICARAGUA
+       Club de Radio-Experimentadores de Nicaragua
+       Box 925, Managua
+
+YO-YR: ROMANIA
+       Federatia Romana de Radioamatorism
+       Box 22–50, RO-014780 Bucharest
+
+YS:    EL SALVADOR
+       Club de Radio Aficionados de El Salvador
+       Box 517, San Salvador
+
+YT-YU: SERBIA  
+     SRS
+     P.O. Box 534, 11102 Belgrade, Serbia
+
+YV-YY,4M: VENEZUELA
+       Radio Club Venezolano
+       Box 20285, Caracas 1020‑A
+
+Z2:    ZIMBABWE (CLOSED)
+
+Z3:    NORTH MACEDONIA
+       Radioamaterski Sojuz na Makedonija [RSM], Radioamateur Society of Macedonia      
+       P.O. Box 477, 1000 Skopje
+
+ZA:    ALBANIA (CLOSED)
+
+ZB:    GIBRALTAR
+       Gibraltar Amateur Radio Society
+       Box 292
+
+ZF:    CAYMAN ISLANDS
+       Cayman Amateur Radio Society
+       Box 1029 GT, KY1-1102, Grand Cayman
+
+ZL-ZM: NEW ZEALAND
+       NZART QSL Bureau
+       P.O. Box 857, Wanganui Mail Centre, Wanganui 4540
+
+ZP:    PARAGUAY
+       Radio Club Paraguayo
+       Box 512, Asunción 1209
+
+ZR-ZU: SOUTH AFRICA
+       South African Radio League
+       Box 1721, Strubensvallei 1735
+
+
+4U1ITU: International Amateur Radio Club
+        Box 6, CH-1211 Geneva 20
+        SWITZERLAND
+
+EP-EQ,9B-9D:  IRAN
+        c/o Directorate General of Telecommunications
+        Box 11365–931, Tehran 16314
+
+EX:    KYRGYZSTAN
+       Amateur Radio Union of Kyrgyzstan
+       Box 745, 720017 Bishkek
+
+HL9:   US personnel in the Republic of Korea
+       American Amateur Radio Club of Korea
+       Dependent Mail Section, Box 153, APO, AP 96206
+
+VP8:   FALKLAND ISLANDS            
+       Falkland Amateur Radio Association
+       Box 400, Stanley
