@@ -18,7 +18,7 @@
             "cerrado": true,
             "direccion": null,
             "nota": null,
-            "pais": "Mauritius",
+            "pais": "MAURITIUS",
             "prefijos": [
                 {
                     "final": "3B",
@@ -53,7 +53,7 @@
             ]
         },
         {
-            "asociado": "Scouts Tunisiens  Amateur Radio Club Station  Tunis",
+            "asociado": "Scouts Tunisiens — Amateur Radio Club Station — Tunis",
             "cerrado": false,
             "direccion": "PO Box 339, Tunis El-Mahrajene 1082, Tunisia",
             "nota": null,
@@ -139,15 +139,15 @@
             ]
         },
         {
-            "asociado": "Cyprus Amateur Radio Society",
+            "asociado": "Tanzania Amateur Radio Club",
             "cerrado": false,
-            "direccion": "P.O. Box 25017 1306, Nicosia Cyprus",
+            "direccion": "Box 21497, Dar-es-Salaam",
             "nota": null,
-            "pais": "CYPRUS",
+            "pais": "TANZANIA",
             "prefijos": [
                 {
-                    "final": "5B",
-                    "inicial": "5B"
+                    "final": "5H",
+                    "inicial": "5H"
                 }
             ]
         },
@@ -219,7 +219,7 @@
         {
             "asociado": "Jamaica Amateur Radio Association",
             "cerrado": false,
-            "direccion": "76 Arnold Road, Kingston 5 P.O. Box 214, Kingston 20",
+            "direccion": "76 Arnold Road, Kingston 5, P.O. Box 214, Kingston 20",
             "nota": null,
             "pais": "JAMAICA",
             "prefijos": [
@@ -360,7 +360,7 @@
             ]
         },
         {
-            "asociado": "Malaysian Amateur Radio Transmitters Society",
+            "asociado": "Malaysian Amateur Radio Transmitters’ Society",
             "cerrado": false,
             "direccion": "GPO Box 10777, 50724 Kuala Lumpur",
             "nota": null,
@@ -417,9 +417,9 @@
         },
         {
             "asociado": "Botswana Amateur Radio Society",
-            "cerrado": true,
+            "cerrado": false,
             "direccion": null,
-            "nota": null,
+            "nota": "service temporarily suspended",
             "pais": "BOTSWANA",
             "prefijos": [
                 {
@@ -500,7 +500,7 @@
         {
             "asociado": "Chinese Radio Amateurs Club",
             "cerrado": false,
-            "direccion": "Box 10002973, Beijing 100029, P.R. China",
+            "direccion": "Box 100029–73, Beijing 100029, P.R. China",
             "nota": null,
             "pais": "CHINA",
             "prefijos": [
@@ -671,7 +671,7 @@
         {
             "asociado": "Rep Rede dos Emissores Portugueses",
             "cerrado": false,
-            "direccion": "Avenida Yasser Arafat nº 4 A, 2700375 Amadora",
+            "direccion": "Avenida Yasser Arafat nº 4 A, 2700–375 Amadora",
             "nota": null,
             "pais": "PORTUGAL",
             "prefijos": [
@@ -723,7 +723,7 @@
         {
             "asociado": "PARA",
             "cerrado": false,
-            "direccion": "PO BOX 1932 Quezon City Post Office NIA Road, Diliman 1100 Quezon City",
+            "direccion": "PO BOX 1932 Quezon City Post Office, NIA Road, Diliman, 1100 Quezon City",
             "nota": null,
             "pais": "PHILIPPINES",
             "prefijos": [
@@ -740,7 +740,7 @@
         {
             "asociado": "E7 QSL BUREAU",
             "cerrado": false,
-            "direccion": "P.O. BOX 61, BA  71001 Sarajevo",
+            "direccion": "P.O. BOX 61, BA — 71001 Sarajevo",
             "nota": null,
             "pais": "BOSNIA & HERZEGOVINA",
             "prefijos": [
@@ -796,7 +796,7 @@
         {
             "asociado": "Liberia Radio Amateur Association",
             "cerrado": false,
-            "direccion": "Box 101477, 1000 Monrovia 10",
+            "direccion": "Box 10–1477, 1000 Monrovia 10",
             "nota": null,
             "pais": "LIBERIA",
             "prefijos": [
@@ -813,7 +813,7 @@
         {
             "asociado": "Petru Stupin",
             "cerrado": false,
-            "direccion": "Columna 171 ap. 18, Chisinau, MD-2004, Moldova, EU",
+            "direccion": "Columna 171 ap. 18, Chisinau, MD-2004 Moldova, EU",
             "nota": null,
             "pais": "MOLDOVA",
             "prefijos": [
@@ -827,7 +827,7 @@
             "asociado": "Estonian Amateur Radio Union",
             "cerrado": false,
             "direccion": "Sakala 14, 10141 Tallinn, Estonia",
-            "nota": null,
+            "nota": "If the package is sent by courier, please be sure to give the courier this phone number +37256243369 and note that the QSL office is only open on Wednesdays.",
             "pais": "ESTONIA",
             "prefijos": [
                 {
@@ -918,7 +918,7 @@
             ]
         },
         {
-            "asociado": "Club Oceanien de Radio et dAstronomie",
+            "asociado": "Club Oceanien de Radio et d’Astronomie",
             "cerrado": false,
             "direccion": "Box 5006, Pirae 98716, Tahiti",
             "nota": null,
@@ -965,9 +965,9 @@
             ]
         },
         {
-            "asociado": "MRASZ QSL Bureau, Mr. Attila Holop HA2NA",
+            "asociado": "MRASZ QSL Bureau",
             "cerrado": false,
-            "direccion": "Esztergom, Gizella királyné utca 28., H-2500, Hungary",
+            "direccion": "Mr. Attila Holop HA2NA, Esztergom, Gizella királyné utca 28., H-2500, Hungary",
             "nota": null,
             "pais": "HUNGARY",
             "prefijos": [
@@ -1010,7 +1010,7 @@
         {
             "asociado": "Guayaquil Radio Club",
             "cerrado": false,
-            "direccion": "Box 0901-5757, Guayaquil",
+            "direccion": "Box 09–01-5757, Guayaquil",
             "nota": null,
             "pais": "ECUADOR",
             "prefijos": [
@@ -1070,9 +1070,9 @@
         {
             "asociado": "Korean Amateur Radio League",
             "cerrado": false,
-            "direccion": "Box 162, CPO, Seoul 100601",
+            "direccion": "Box 162, CPO, Seoul 100–601",
             "nota": null,
-            "pais": "REPUBLIC OF KOREA",
+            "pais": "REPUBLIC OF KOREA (South Korea)",
             "prefijos": [
                 {
                     "final": "HL",
@@ -1087,7 +1087,7 @@
         {
             "asociado": "Liga Panamena de Radioaficionados [LPRA]",
             "cerrado": false,
-            "direccion": "Apartado 0834175, Panama",
+            "direccion": "Apartado 0834–175, Panama",
             "nota": null,
             "pais": "PANAMA",
             "prefijos": [
@@ -1151,7 +1151,7 @@
         {
             "asociado": "Associazione Radioamatori Italiani",
             "cerrado": false,
-            "direccion": "Via Scarlatti 30 20124 Milano MI",
+            "direccion": "Via Scarlatti 30, 20124 Milano MI",
             "nota": null,
             "pais": "ITALY",
             "prefijos": [
@@ -1177,7 +1177,7 @@
         {
             "asociado": "Grenada Amateur Radio Club",
             "cerrado": false,
-            "direccion": "Box 737, St. Georges",
+            "direccion": "Box 737, St. George’s",
             "nota": null,
             "pais": "GRENADA",
             "prefijos": [
@@ -1203,7 +1203,7 @@
         {
             "asociado": "JARL QSL Bureau",
             "cerrado": false,
-            "direccion": "13243 Kanba, Hikawa-cho, Izumo-shi, Shimane 699-0588",
+            "direccion": "1324–3 Kanba, Hikawa-cho, Izumo-shi, Shimane 699‑0588",
             "nota": null,
             "pais": "JAPAN",
             "prefijos": [
@@ -1248,9 +1248,9 @@
             ]
         },
         {
-            "asociado": "Norsk Radio Relae Liga",
+            "asociado": "Norsk Radio Relae Liga, QSL Bureau",
             "cerrado": false,
-            "direccion": "QSL Bureau, P.O. Box 20, Haugenstua, N-0915 Oslo, Norway",
+            "direccion": "P.O. Box 20, Haugenstua, N-0915 Oslo, Norway",
             "nota": "We are experiencing issues with customs clearance of QSL shipments from abroad. Before sending packages, please visit https://nrrl.no/important-notice-about-sending-qsls-to-nrrl/ for updated instructions. The tracking number must be sent to qslmanager@nrrl.no as soon as possible after dispatch",
             "pais": "NORWAY",
             "prefijos": [
@@ -1273,7 +1273,7 @@
             "cerrado": false,
             "direccion": "Casilla de Correo 97, C1000WAA Ciudad de Buenos Aires",
             "nota": "Due to current issues with the post office, packages must be 2 Kg weight maximum and tracking number. Important notice: Before sending any package, visit https://www.lu4aa.org/wp/lu_incoming_bureau/ for updated instructions. Tracking number must be sent to administracion@lu4aa.org and bureau@lu4aa.org immediately after dispatch.",
-            "pais": "ARGENTINA (parcels less than 2 kg)",
+            "pais": "ARGENTINA",
             "prefijos": [
                 {
                     "final": "LW",
@@ -1290,9 +1290,9 @@
             ]
         },
         {
-            "asociado": "Radioamateurs du Luxembourg (RL), QSL Bureau",
+            "asociado": "Radioamateurs du Luxembourg (RL)",
             "cerrado": false,
-            "direccion": "Box 1352, L-1013, Luxembourg",
+            "direccion": "QSL Bureau, Box 1352, L-1013, Luxembourg",
             "nota": null,
             "pais": "LUXEMBOURG",
             "prefijos": [
@@ -1348,7 +1348,7 @@
         {
             "asociado": "Radio Amateurs of Lebanon (RAL)",
             "cerrado": false,
-            "direccion": "P.O.Box 118888, Beirut",
+            "direccion": "P.O.Box 11–8888, Beirut",
             "nota": null,
             "pais": "LEBANON",
             "prefijos": [
@@ -1361,7 +1361,7 @@
         {
             "asociado": "OeVSV",
             "cerrado": false,
-            "direccion": "Industriezentrum NÖ-süd, Strasse 14, Objekt 31, A-2351 Wr. Neudorf, Austria",
+            "direccion": "Industriezentrum NÖ-süd, Strasse 14, Objekt 31, A‑2351 Wr. Neudorf, Austria",
             "nota": null,
             "pais": "AUSTRIA",
             "prefijos": [
@@ -1400,7 +1400,7 @@
         {
             "asociado": "Slovak Amateur Radio Association (SARA)",
             "cerrado": false,
-            "direccion": "PO Box 14, 900 31 Stupava, Slovakia",
+            "direccion": "PO Box 14, 900 31, Stupava, Slovakia",
             "nota": null,
             "pais": "SLOVAKIA",
             "prefijos": [
@@ -1413,7 +1413,7 @@
         {
             "asociado": "UBA QSL BUREAU",
             "cerrado": false,
-            "direccion": "Jose Duyct, Molenakker 56, B-8740 Egem",
+            "direccion": "Jose Duyct, Molenakker 56, B‑8740 Egem",
             "nota": null,
             "pais": "BELGIUM",
             "prefijos": [
@@ -1480,7 +1480,7 @@
             "cerrado": false,
             "direccion": "Box 3383, Curacao",
             "nota": null,
-            "pais": "CURACAO, DUTCH CARIBBEAN",
+            "pais": "CURACAO",
             "prefijos": [
                 {
                     "final": "PJ",
@@ -1491,7 +1491,7 @@
         {
             "asociado": "Liga de Amadores Brasileiros de Radio Emissão — LABRE",
             "cerrado": false,
-            "direccion": "PO Box 004, 70275–970 Brasilia DF, BRAZIL",
+            "direccion": "PO Box 004 70275–970 Brasilia DF BRAZIL",
             "nota": null,
             "pais": "BRAZIL",
             "prefijos": [
@@ -1502,6 +1502,1284 @@
                 {
                     "final": "ZZ",
                     "inicial": "ZV"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "SURINAME",
+            "prefijos": [
+                {
+                    "final": "PZ",
+                    "inicial": "PZ"
+                }
+            ]
+        },
+        {
+            "asociado": "Soyuz Radiolyubitelei Rossii",
+            "cerrado": false,
+            "direccion": "Box 88, Moscow 119311",
+            "nota": null,
+            "pais": "RUSSIA",
+            "prefijos": [
+                {
+                    "final": "R",
+                    "inicial": "R"
+                },
+                {
+                    "final": "UI",
+                    "inicial": "UA"
+                }
+            ]
+        },
+        {
+            "asociado": "Bangladesh Amateur Radio League",
+            "cerrado": false,
+            "direccion": "Box 3512, GPO, Dhaka",
+            "nota": null,
+            "pais": "BANGLADESH",
+            "prefijos": [
+                {
+                    "final": "S3",
+                    "inicial": "S2"
+                }
+            ]
+        },
+        {
+            "asociado": "Zveza Radioamaterjev Slovenije (ZRS) QSL Bureau",
+            "cerrado": false,
+            "direccion": "Bezjakova ulica 151, Pekre, SI-2341 Limbus",
+            "nota": null,
+            "pais": "SLOVENIA",
+            "prefijos": [
+                {
+                    "final": "S5",
+                    "inicial": "S5"
+                }
+            ]
+        },
+        {
+            "asociado": "Foreningen Sveriges Sandareamatorer",
+            "cerrado": false,
+            "direccion": "Box 45, SE-19121 Sollentuna",
+            "nota": null,
+            "pais": "SWEDEN",
+            "prefijos": [
+                {
+                    "final": "SM",
+                    "inicial": "SA"
+                },
+                {
+                    "final": "7S",
+                    "inicial": "7S"
+                },
+                {
+                    "final": "8S",
+                    "inicial": "8S"
+                }
+            ]
+        },
+        {
+            "asociado": "PZK QSL Bureau",
+            "cerrado": false,
+            "direccion": "ul. Owsiana 6, 87–134 Czarnowo",
+            "nota": null,
+            "pais": "POLAND",
+            "prefijos": [
+                {
+                    "final": "SR",
+                    "inicial": "SN"
+                },
+                {
+                    "final": "HF",
+                    "inicial": "HF"
+                },
+                {
+                    "final": "3Z",
+                    "inicial": "3Z"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "SUDAN",
+            "prefijos": [
+                {
+                    "final": "ST",
+                    "inicial": "ST"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "EGYPT",
+            "prefijos": [
+                {
+                    "final": "SU",
+                    "inicial": "SU"
+                }
+            ]
+        },
+        {
+            "asociado": "Radio Amateur Association of Greece",
+            "cerrado": false,
+            "direccion": "P.O. Box 42001, GR-121 01 Peristeri, Athens",
+            "nota": null,
+            "pais": "GREECE",
+            "prefijos": [
+                {
+                    "final": "SZ",
+                    "inicial": "SV"
+                },
+                {
+                    "final": "J4",
+                    "inicial": "J4"
+                }
+            ]
+        },
+        {
+            "asociado": "Associazione Radioamatori della Repubblica di San Marino",
+            "cerrado": false,
+            "direccion": "Box 77, RSM-47890 San Marino",
+            "nota": null,
+            "pais": "SAN MARINO",
+            "prefijos": [
+                {
+                    "final": "T7",
+                    "inicial": "T7"
+                }
+            ]
+        },
+        {
+            "asociado": "TRAC",
+            "cerrado": false,
+            "direccion": "P:K 73, TR-07055 Güllük-ANTALYA, TURKEY",
+            "nota": null,
+            "pais": "TURKEY",
+            "prefijos": [
+                {
+                    "final": "TC",
+                    "inicial": "TA"
+                },
+                {
+                    "final": "YM",
+                    "inicial": "YM"
+                }
+            ]
+        },
+        {
+            "asociado": "Islenzkir Radioamatorar",
+            "cerrado": false,
+            "direccion": "Box 1058, IS-121 Reykjavik",
+            "nota": null,
+            "pais": "ICELAND",
+            "prefijos": [
+                {
+                    "final": "TF",
+                    "inicial": "TF"
+                }
+            ]
+        },
+        {
+            "asociado": "Club de Radioaficionados de Guatemala",
+            "cerrado": false,
+            "direccion": "Apartado Postal 115, Ciudad de Guatemala 01901",
+            "nota": null,
+            "pais": "GUATEMALA",
+            "prefijos": [
+                {
+                    "final": "TD",
+                    "inicial": "TG"
+                }
+            ]
+        },
+        {
+            "asociado": "Radio Club de Costa Rica",
+            "cerrado": false,
+            "direccion": "Box 2412, San Jose 1000",
+            "nota": null,
+            "pais": "COSTA RICA",
+            "prefijos": [
+                {
+                    "final": "TE",
+                    "inicial": "TI"
+                }
+            ]
+        },
+        {
+            "asociado": "Association Gabonaise des Radio-Amateurs",
+            "cerrado": false,
+            "direccion": "Box 1826, Libreville",
+            "nota": null,
+            "pais": "GABON",
+            "prefijos": [
+                {
+                    "final": "TR",
+                    "inicial": "TR"
+                }
+            ]
+        },
+        {
+            "asociado": "ARAI",
+            "cerrado": false,
+            "direccion": "01 P.O. Box 2946, Abidjan 01",
+            "nota": null,
+            "pais": "CÔTE D’IVOIRE",
+            "prefijos": [
+                {
+                    "final": "TU",
+                    "inicial": "TU"
+                }
+            ]
+        },
+        {
+            "asociado": "Club des Radioamateurs et Affilies du Mali [CRAM]",
+            "cerrado": false,
+            "direccion": "c/o Hamadoun Yattara, TZ6HY, B.P. 9A Kati, Mali, West Africa",
+            "nota": null,
+            "pais": "MALI",
+            "prefijos": [
+                {
+                    "final": "TZ",
+                    "inicial": "TZ"
+                }
+            ]
+        },
+        {
+            "asociado": "Uzbekistan QSL Bureau",
+            "cerrado": false,
+            "direccion": "P.O.Box “0″, Tashkent, 100000, Uzbekistan",
+            "nota": null,
+            "pais": "UZBEKISTAN",
+            "prefijos": [
+                {
+                    "final": "UM",
+                    "inicial": "UJ"
+                }
+            ]
+        },
+        {
+            "asociado": "Republic of Kazakhstan",
+            "cerrado": false,
+            "direccion": "010000, Astana, Post Office Box 88",
+            "nota": null,
+            "pais": "KAZAKHSTAN",
+            "prefijos": [
+                {
+                    "final": "UQ",
+                    "inicial": "UN"
+                }
+            ]
+        },
+        {
+            "asociado": "Ukrainian Amateur Radio League",
+            "cerrado": false,
+            "direccion": "Box 56, 01001 Kyiv 1",
+            "nota": null,
+            "pais": "UKRAINE",
+            "prefijos": [
+                {
+                    "final": "UZ",
+                    "inicial": "UR"
+                },
+                {
+                    "final": "EO",
+                    "inicial": "EM"
+                }
+            ]
+        },
+        {
+            "asociado": "Antigua and Barbuda Radio Club V21ARC",
+            "cerrado": false,
+            "direccion": "c/o Jeff Martin, Box 965, St. John’s",
+            "nota": null,
+            "pais": "ANTIGUA & BARBUDA",
+            "prefijos": [
+                {
+                    "final": "V2",
+                    "inicial": "V2"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "BELIZE",
+            "prefijos": [
+                {
+                    "final": "V3",
+                    "inicial": "V3"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "SAINT KITTS AND NEVIS",
+            "prefijos": [
+                {
+                    "final": "V4",
+                    "inicial": "V4"
+                }
+            ]
+        },
+        {
+            "asociado": "Namibian Amateur Radio League",
+            "cerrado": false,
+            "direccion": "Box 1100, Windhoek 9000",
+            "nota": null,
+            "pais": "NAMIBIA",
+            "prefijos": [
+                {
+                    "final": "V5",
+                    "inicial": "V5"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "MARSHALL ISLANDS",
+            "prefijos": [
+                {
+                    "final": "V7",
+                    "inicial": "V7"
+                }
+            ]
+        },
+        {
+            "asociado": "Brunei Darussalam Amateur Radio Association",
+            "cerrado": false,
+            "direccion": "Box 73, Gadong, Bandar Seri Begawan 3100",
+            "nota": null,
+            "pais": "BRUNEI",
+            "prefijos": [
+                {
+                    "final": "V8",
+                    "inicial": "V8"
+                }
+            ]
+        },
+        {
+            "asociado": "RAC National Incoming QSL Bureau",
+            "cerrado": false,
+            "direccion": "Manager, Ed Spingola, VA3TPV, P.O. Box 83, RPO Streetsville, Mississauga, ON L5M 2B7, CANADA",
+            "nota": null,
+            "pais": "CANADA",
+            "prefijos": [
+                {
+                    "final": "VG",
+                    "inicial": "VA"
+                },
+                {
+                    "final": "VO",
+                    "inicial": "VO"
+                },
+                {
+                    "final": "VY",
+                    "inicial": "VX"
+                },
+                {
+                    "final": "CK",
+                    "inicial": "CF"
+                },
+                {
+                    "final": "CZ",
+                    "inicial": "CY"
+                },
+                {
+                    "final": "XO",
+                    "inicial": "XJ"
+                }
+            ]
+        },
+        {
+            "asociado": "National Inwards QSL Bureau",
+            "cerrado": false,
+            "direccion": "P.O.Box 2040, Bayswater, Victoria 3153, Australia",
+            "nota": null,
+            "pais": "AUSTRALIA",
+            "prefijos": [
+                {
+                    "final": "VN",
+                    "inicial": "VH"
+                },
+                {
+                    "final": "AX",
+                    "inicial": "AX"
+                },
+                {
+                    "final": "VK9",
+                    "inicial": "VK0"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "ANGUILLA",
+            "prefijos": [
+                {
+                    "final": "VP2E",
+                    "inicial": "VP2E"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "MONTSERRAT",
+            "prefijos": [
+                {
+                    "final": "VP2M",
+                    "inicial": "VP2M"
+                }
+            ]
+        },
+        {
+            "asociado": "BVIRL QSL Bureau",
+            "cerrado": false,
+            "direccion": "P.O. Box 409, Cruz Bay, St. John 0083",
+            "nota": null,
+            "pais": "BRITISH VIRGIN ISLANDS",
+            "prefijos": [
+                {
+                    "final": "VP2V",
+                    "inicial": "VP2V"
+                }
+            ]
+        },
+        {
+            "asociado": "Turks and Caicos Amateur Radio Society",
+            "cerrado": false,
+            "direccion": "c/o J. Millspaugh, VP5JM, Box 218, Providenciales",
+            "nota": null,
+            "pais": "TURKS & CAICOS ISLANDS",
+            "prefijos": [
+                {
+                    "final": "VP5",
+                    "inicial": "VP5"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "BERMUDA",
+            "prefijos": [
+                {
+                    "final": "VP9",
+                    "inicial": "VP9"
+                }
+            ]
+        },
+        {
+            "asociado": "Hong Kong Amateur Radio Transmitting Society",
+            "cerrado": false,
+            "direccion": "Box 541",
+            "nota": null,
+            "pais": "HONG KONG",
+            "prefijos": [
+                {
+                    "final": "VR2",
+                    "inicial": "VR2"
+                }
+            ]
+        },
+        {
+            "asociado": "India QSL Bureau, c/o Linux Learning Centre Private Limited",
+            "cerrado": false,
+            "direccion": "635, 6th Main Road, Next to Bank of India, Hanumanthnagar, Bengaluru 560 019",
+            "nota": null,
+            "pais": "INDIA",
+            "prefijos": [
+                {
+                    "final": "VW",
+                    "inicial": "VT"
+                }
+            ]
+        },
+        {
+            "asociado": "YCCC",
+            "cerrado": false,
+            "direccion": "PO Box 73, Marlborough, MA 01752–0073",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W1",
+                    "inicial": "W1"
+                },
+                {
+                    "final": "K1",
+                    "inicial": "K1"
+                },
+                {
+                    "final": "N1",
+                    "inicial": "N1"
+                },
+                {
+                    "final": "AA1",
+                    "inicial": "AA1"
+                },
+                {
+                    "final": "AB1",
+                    "inicial": "AB1"
+                },
+                {
+                    "final": "AC1",
+                    "inicial": "AC1"
+                },
+                {
+                    "final": "AD1",
+                    "inicial": "AD1"
+                },
+                {
+                    "final": "AE1",
+                    "inicial": "AE1"
+                },
+                {
+                    "final": "AF1",
+                    "inicial": "AF1"
+                },
+                {
+                    "final": "AG1",
+                    "inicial": "AG1"
+                },
+                {
+                    "final": "AH1",
+                    "inicial": "AH1"
+                },
+                {
+                    "final": "AI1",
+                    "inicial": "AI1"
+                },
+                {
+                    "final": "AJ1",
+                    "inicial": "AJ1"
+                },
+                {
+                    "final": "AK1",
+                    "inicial": "AK1"
+                },
+                {
+                    "final": "AL1",
+                    "inicial": "AL1"
+                }
+            ]
+        },
+        {
+            "asociado": "North Jersey DX Association",
+            "cerrado": false,
+            "direccion": "P.O. Box 18, Morris Plains, NJ 07950",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W2",
+                    "inicial": "W2"
+                },
+                {
+                    "final": "K2",
+                    "inicial": "K2"
+                },
+                {
+                    "final": "N2",
+                    "inicial": "N2"
+                },
+                {
+                    "final": "AA2",
+                    "inicial": "AA2"
+                },
+                {
+                    "final": "AB2",
+                    "inicial": "AB2"
+                },
+                {
+                    "final": "AC2",
+                    "inicial": "AC2"
+                },
+                {
+                    "final": "AD2",
+                    "inicial": "AD2"
+                },
+                {
+                    "final": "AE2",
+                    "inicial": "AE2"
+                },
+                {
+                    "final": "AF2",
+                    "inicial": "AF2"
+                },
+                {
+                    "final": "AG2",
+                    "inicial": "AG2"
+                },
+                {
+                    "final": "AH2",
+                    "inicial": "AH2"
+                },
+                {
+                    "final": "AI2",
+                    "inicial": "AI2"
+                },
+                {
+                    "final": "AJ2",
+                    "inicial": "AJ2"
+                },
+                {
+                    "final": "AK2",
+                    "inicial": "AK2"
+                },
+                {
+                    "final": "AL2",
+                    "inicial": "AL2"
+                },
+                {
+                    "final": "KP2",
+                    "inicial": "KP2"
+                }
+            ]
+        },
+        {
+            "asociado": "W3 Incoming QSL Bureau",
+            "cerrado": false,
+            "direccion": "PO Box 190, Glenelg, MD 21737–0190",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W3",
+                    "inicial": "W3"
+                },
+                {
+                    "final": "K3",
+                    "inicial": "K3"
+                },
+                {
+                    "final": "N3",
+                    "inicial": "N3"
+                },
+                {
+                    "final": "AA3",
+                    "inicial": "AA3"
+                },
+                {
+                    "final": "AB3",
+                    "inicial": "AB3"
+                },
+                {
+                    "final": "AC3",
+                    "inicial": "AC3"
+                },
+                {
+                    "final": "AD3",
+                    "inicial": "AD3"
+                },
+                {
+                    "final": "AE3",
+                    "inicial": "AE3"
+                },
+                {
+                    "final": "AF3",
+                    "inicial": "AF3"
+                },
+                {
+                    "final": "AG3",
+                    "inicial": "AG3"
+                },
+                {
+                    "final": "AH3",
+                    "inicial": "AH3"
+                },
+                {
+                    "final": "AI3",
+                    "inicial": "AI3"
+                },
+                {
+                    "final": "AJ3",
+                    "inicial": "AJ3"
+                },
+                {
+                    "final": "AK3",
+                    "inicial": "AK3"
+                },
+                {
+                    "final": "AL3",
+                    "inicial": "AL3"
+                }
+            ]
+        },
+        {
+            "asociado": "Sterling Park Amateur Radio Club",
+            "cerrado": false,
+            "direccion": "Call Box 599, Sterling, VA 20167",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W4",
+                    "inicial": "W4"
+                },
+                {
+                    "final": "K4",
+                    "inicial": "K4"
+                },
+                {
+                    "final": "N4",
+                    "inicial": "N4"
+                },
+                {
+                    "final": "AA4",
+                    "inicial": "AA4"
+                },
+                {
+                    "final": "AB4",
+                    "inicial": "AB4"
+                },
+                {
+                    "final": "AC4",
+                    "inicial": "AC4"
+                },
+                {
+                    "final": "AD4",
+                    "inicial": "AD4"
+                },
+                {
+                    "final": "AE4",
+                    "inicial": "AE4"
+                },
+                {
+                    "final": "AF4",
+                    "inicial": "AF4"
+                },
+                {
+                    "final": "AG4",
+                    "inicial": "AG4"
+                },
+                {
+                    "final": "AH4",
+                    "inicial": "AH4"
+                },
+                {
+                    "final": "AI4",
+                    "inicial": "AI4"
+                },
+                {
+                    "final": "AJ4",
+                    "inicial": "AJ4"
+                },
+                {
+                    "final": "AK4",
+                    "inicial": "AK4"
+                },
+                {
+                    "final": "AL4",
+                    "inicial": "AL4"
+                },
+                {
+                    "final": "KG4X2",
+                    "inicial": "KG4X2"
+                }
+            ]
+        },
+        {
+            "asociado": "W5 Incoming Bureau",
+            "cerrado": false,
+            "direccion": "P.O. Box 1496, Henderson, TX 75653",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W5",
+                    "inicial": "W5"
+                },
+                {
+                    "final": "K5",
+                    "inicial": "K5"
+                },
+                {
+                    "final": "N5",
+                    "inicial": "N5"
+                },
+                {
+                    "final": "AA5",
+                    "inicial": "AA5"
+                },
+                {
+                    "final": "AB5",
+                    "inicial": "AB5"
+                },
+                {
+                    "final": "AC5",
+                    "inicial": "AC5"
+                },
+                {
+                    "final": "AD5",
+                    "inicial": "AD5"
+                },
+                {
+                    "final": "AE5",
+                    "inicial": "AE5"
+                },
+                {
+                    "final": "AF5",
+                    "inicial": "AF5"
+                },
+                {
+                    "final": "AG5",
+                    "inicial": "AG5"
+                },
+                {
+                    "final": "AH5",
+                    "inicial": "AH5"
+                },
+                {
+                    "final": "AI5",
+                    "inicial": "AI5"
+                },
+                {
+                    "final": "AJ5",
+                    "inicial": "AJ5"
+                },
+                {
+                    "final": "AK5",
+                    "inicial": "AK5"
+                },
+                {
+                    "final": "AL5",
+                    "inicial": "AL5"
+                }
+            ]
+        },
+        {
+            "asociado": "6th District Incoming QSL Bureau",
+            "cerrado": false,
+            "direccion": "P.O. Box 7488, Stockton, CA 95267–0488",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W6",
+                    "inicial": "W6"
+                },
+                {
+                    "final": "K6",
+                    "inicial": "K6"
+                },
+                {
+                    "final": "N6",
+                    "inicial": "N6"
+                },
+                {
+                    "final": "AA6",
+                    "inicial": "AA6"
+                },
+                {
+                    "final": "AB6",
+                    "inicial": "AB6"
+                },
+                {
+                    "final": "AC6",
+                    "inicial": "AC6"
+                },
+                {
+                    "final": "AD6",
+                    "inicial": "AD6"
+                },
+                {
+                    "final": "AE6",
+                    "inicial": "AE6"
+                },
+                {
+                    "final": "AF6",
+                    "inicial": "AF6"
+                },
+                {
+                    "final": "AG6",
+                    "inicial": "AG6"
+                },
+                {
+                    "final": "AH6",
+                    "inicial": "AH6"
+                },
+                {
+                    "final": "AI6",
+                    "inicial": "AI6"
+                },
+                {
+                    "final": "AJ6",
+                    "inicial": "AJ6"
+                },
+                {
+                    "final": "AK6",
+                    "inicial": "AK6"
+                },
+                {
+                    "final": "AL6",
+                    "inicial": "AL6"
+                }
+            ]
+        },
+        {
+            "asociado": "Willamette Valley DX Club",
+            "cerrado": false,
+            "direccion": "PO Box 1288, Battle Ground, WA 98604–4687",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W7",
+                    "inicial": "W7"
+                },
+                {
+                    "final": "K7",
+                    "inicial": "K7"
+                },
+                {
+                    "final": "N7",
+                    "inicial": "N7"
+                },
+                {
+                    "final": "AA7",
+                    "inicial": "AA7"
+                },
+                {
+                    "final": "AB7",
+                    "inicial": "AB7"
+                },
+                {
+                    "final": "AC7",
+                    "inicial": "AC7"
+                },
+                {
+                    "final": "AD7",
+                    "inicial": "AD7"
+                },
+                {
+                    "final": "AE7",
+                    "inicial": "AE7"
+                },
+                {
+                    "final": "AF7",
+                    "inicial": "AF7"
+                },
+                {
+                    "final": "AG7",
+                    "inicial": "AG7"
+                },
+                {
+                    "final": "AH7",
+                    "inicial": "AH7"
+                },
+                {
+                    "final": "AI7",
+                    "inicial": "AI7"
+                },
+                {
+                    "final": "AJ7",
+                    "inicial": "AJ7"
+                },
+                {
+                    "final": "AK7",
+                    "inicial": "AK7"
+                },
+                {
+                    "final": "AL7",
+                    "inicial": "AL7"
+                }
+            ]
+        },
+        {
+            "asociado": "W8 QSL Bureau",
+            "cerrado": false,
+            "direccion": "PO Box 307, West Chester, OH 45071–0307",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W8",
+                    "inicial": "W8"
+                },
+                {
+                    "final": "K8",
+                    "inicial": "K8"
+                },
+                {
+                    "final": "N8",
+                    "inicial": "N8"
+                },
+                {
+                    "final": "AA8",
+                    "inicial": "AA8"
+                },
+                {
+                    "final": "AB8",
+                    "inicial": "AB8"
+                },
+                {
+                    "final": "AC8",
+                    "inicial": "AC8"
+                },
+                {
+                    "final": "AD8",
+                    "inicial": "AD8"
+                },
+                {
+                    "final": "AE8",
+                    "inicial": "AE8"
+                },
+                {
+                    "final": "AF8",
+                    "inicial": "AF8"
+                },
+                {
+                    "final": "AG8",
+                    "inicial": "AG8"
+                },
+                {
+                    "final": "AH8",
+                    "inicial": "AH8"
+                },
+                {
+                    "final": "AI8",
+                    "inicial": "AI8"
+                },
+                {
+                    "final": "AJ8",
+                    "inicial": "AJ8"
+                },
+                {
+                    "final": "AK8",
+                    "inicial": "AK8"
+                },
+                {
+                    "final": "AL8",
+                    "inicial": "AL8"
+                }
+            ]
+        },
+        {
+            "asociado": "NIDXA",
+            "cerrado": false,
+            "direccion": "PO Box 125, Naperville, IL 60566",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W9",
+                    "inicial": "W9"
+                },
+                {
+                    "final": "K9",
+                    "inicial": "K9"
+                },
+                {
+                    "final": "N9",
+                    "inicial": "N9"
+                },
+                {
+                    "final": "AA9",
+                    "inicial": "AA9"
+                },
+                {
+                    "final": "AB9",
+                    "inicial": "AB9"
+                },
+                {
+                    "final": "AC9",
+                    "inicial": "AC9"
+                },
+                {
+                    "final": "AD9",
+                    "inicial": "AD9"
+                },
+                {
+                    "final": "AE9",
+                    "inicial": "AE9"
+                },
+                {
+                    "final": "AF9",
+                    "inicial": "AF9"
+                },
+                {
+                    "final": "AG9",
+                    "inicial": "AG9"
+                },
+                {
+                    "final": "AH9",
+                    "inicial": "AH9"
+                },
+                {
+                    "final": "AI9",
+                    "inicial": "AI9"
+                },
+                {
+                    "final": "AJ9",
+                    "inicial": "AJ9"
+                },
+                {
+                    "final": "AK9",
+                    "inicial": "AK9"
+                },
+                {
+                    "final": "AL9",
+                    "inicial": "AL9"
+                }
+            ]
+        },
+        {
+            "asociado": "W0 QSL Bureau",
+            "cerrado": false,
+            "direccion": "PO Box 907, Florissant, MO 63032",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "W0",
+                    "inicial": "W0"
+                },
+                {
+                    "final": "K0",
+                    "inicial": "K0"
+                },
+                {
+                    "final": "N0",
+                    "inicial": "N0"
+                },
+                {
+                    "final": "AA0",
+                    "inicial": "AA0"
+                },
+                {
+                    "final": "AB0",
+                    "inicial": "AB0"
+                },
+                {
+                    "final": "AC0",
+                    "inicial": "AC0"
+                },
+                {
+                    "final": "AD0",
+                    "inicial": "AD0"
+                },
+                {
+                    "final": "AE0",
+                    "inicial": "AE0"
+                },
+                {
+                    "final": "AF0",
+                    "inicial": "AF0"
+                },
+                {
+                    "final": "AG0",
+                    "inicial": "AG0"
+                },
+                {
+                    "final": "AH0",
+                    "inicial": "AH0"
+                },
+                {
+                    "final": "AI0",
+                    "inicial": "AI0"
+                },
+                {
+                    "final": "AJ0",
+                    "inicial": "AJ0"
+                },
+                {
+                    "final": "AK0",
+                    "inicial": "AK0"
+                },
+                {
+                    "final": "AL0",
+                    "inicial": "AL0"
+                }
+            ]
+        },
+        {
+            "asociado": "Guam-Marianas Amateur Radio Club",
+            "cerrado": false,
+            "direccion": "PO Box 9727, Tamuning, Guam, 96931",
+            "nota": "Contact: Timothy Anderson, KH2XX",
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "KH2",
+                    "inicial": "KH2"
+                }
+            ]
+        },
+        {
+            "asociado": "HAWAI",
+            "cerrado": false,
+            "direccion": "Box 73, APO, AP 96558",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "KH3",
+                    "inicial": "KH3"
+                }
+            ]
+        },
+        {
+            "asociado": "KH6 Hawaii QSL Bureau",
+            "cerrado": false,
+            "direccion": "c/o Ned Conklin KH7JJ, 2969 Kalalaua Ave. #1004, Honolulu HI 96815 USA",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "KH7",
+                    "inicial": "KH6"
+                }
+            ]
+        },
+        {
+            "asociado": "Alaska",
+            "cerrado": false,
+            "direccion": "Box 520343, Big Lake, AK 99652 USA",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "KL",
+                    "inicial": "KL"
+                }
+            ]
+        },
+        {
+            "asociado": "Puerto Rico QSL Bureau",
+            "cerrado": false,
+            "direccion": "Box 9021061, San Juan, PR 00902–1061",
+            "nota": null,
+            "pais": "UNITED STATES",
+            "prefijos": [
+                {
+                    "final": "KP4",
+                    "inicial": "KP3"
                 }
             ]
         },
@@ -1527,15 +2805,364 @@
             ]
         },
         {
-            "asociado": "Zveza Radioamaterjev Slovenije (ZRS) QSL Bureau",
+            "asociado": "Association des Radioamateurs du Burkina Faso",
             "cerrado": false,
-            "direccion": "Bezjakova ulica 151, Pekre SI-2341 Limbus",
+            "direccion": "c/o Y. Kaba, XT2KY, ONATEL, Box 01, Ouagadougou 10000",
             "nota": null,
-            "pais": "SLOVENIA",
+            "pais": "BURKINA FASO",
             "prefijos": [
                 {
-                    "final": "S5",
-                    "inicial": "S5"
+                    "final": "XT",
+                    "inicial": "XT"
+                }
+            ]
+        },
+        {
+            "asociado": "Associacao dos Radioamadores de Macau",
+            "cerrado": false,
+            "direccion": "P.O Box 6018",
+            "nota": null,
+            "pais": "MACAU",
+            "prefijos": [
+                {
+                    "final": "XX9",
+                    "inicial": "XX9"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "MYANMAR",
+            "prefijos": [
+                {
+                    "final": "XZ",
+                    "inicial": "XY"
+                }
+            ]
+        },
+        {
+            "asociado": "ORARI National QSL Bureau",
+            "cerrado": false,
+            "direccion": "Box 1234, Jakarta 10012",
+            "nota": null,
+            "pais": "INDONESIA",
+            "prefijos": [
+                {
+                    "final": "YE",
+                    "inicial": "YB"
+                },
+                {
+                    "final": "8I",
+                    "inicial": "8A"
+                }
+            ]
+        },
+        {
+            "asociado": "Iraqi Association for Radio Amateurs",
+            "cerrado": false,
+            "direccion": "Box 55072, Baghdad 12001",
+            "nota": null,
+            "pais": "IRAQ",
+            "prefijos": [
+                {
+                    "final": "YI",
+                    "inicial": "YI"
+                },
+                {
+                    "final": "HN",
+                    "inicial": "HN"
+                }
+            ]
+        },
+        {
+            "asociado": "Vanuatu Amateur Radio Society",
+            "cerrado": false,
+            "direccion": "Box 665, Port Vila",
+            "nota": null,
+            "pais": "VANUATU",
+            "prefijos": [
+                {
+                    "final": "YJ",
+                    "inicial": "YJ"
+                }
+            ]
+        },
+        {
+            "asociado": "Technical Institute of Radio",
+            "cerrado": false,
+            "direccion": "Box 245, Damascus",
+            "nota": null,
+            "pais": "SYRIA",
+            "prefijos": [
+                {
+                    "final": "YK",
+                    "inicial": "YK"
+                },
+                {
+                    "final": "6C",
+                    "inicial": "6C"
+                }
+            ]
+        },
+        {
+            "asociado": "Latvijas Radio Amatieru Liga",
+            "cerrado": false,
+            "direccion": "Dzirnavu iela 7–3, Riga, LV-1010",
+            "nota": null,
+            "pais": "LATVIA",
+            "prefijos": [
+                {
+                    "final": "YL",
+                    "inicial": "YL"
+                }
+            ]
+        },
+        {
+            "asociado": "Club de Radio-Experimentadores de Nicaragua",
+            "cerrado": false,
+            "direccion": "Box 925, Managua",
+            "nota": null,
+            "pais": "NICARAGUA",
+            "prefijos": [
+                {
+                    "final": "YN",
+                    "inicial": "YN"
+                },
+                {
+                    "final": "HT",
+                    "inicial": "HT"
+                }
+            ]
+        },
+        {
+            "asociado": "Federatia Romana de Radioamatorism",
+            "cerrado": false,
+            "direccion": "Box 22–50, RO-014780 Bucharest",
+            "nota": null,
+            "pais": "ROMANIA",
+            "prefijos": [
+                {
+                    "final": "YR",
+                    "inicial": "YO"
+                }
+            ]
+        },
+        {
+            "asociado": "Club de Radio Aficionados de El Salvador",
+            "cerrado": false,
+            "direccion": "Box 517, San Salvador",
+            "nota": null,
+            "pais": "EL SALVADOR",
+            "prefijos": [
+                {
+                    "final": "YS",
+                    "inicial": "YS"
+                }
+            ]
+        },
+        {
+            "asociado": "SRS",
+            "cerrado": false,
+            "direccion": "P.O. Box 534, 11102 Belgrade, Serbia",
+            "nota": null,
+            "pais": "SERBIA",
+            "prefijos": [
+                {
+                    "final": "YU",
+                    "inicial": "YT"
+                }
+            ]
+        },
+        {
+            "asociado": "Radio Club Venezolano",
+            "cerrado": false,
+            "direccion": "Box 20285, Caracas 1020‑A",
+            "nota": null,
+            "pais": "VENEZUELA",
+            "prefijos": [
+                {
+                    "final": "YY",
+                    "inicial": "YV"
+                },
+                {
+                    "final": "4M",
+                    "inicial": "4M"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "ZIMBABWE",
+            "prefijos": [
+                {
+                    "final": "Z2",
+                    "inicial": "Z2"
+                }
+            ]
+        },
+        {
+            "asociado": "Radioamaterski Sojuz na Makedonija [RSM]",
+            "cerrado": false,
+            "direccion": "P.O. Box 477, 1000 Skopje",
+            "nota": null,
+            "pais": "NORTH MACEDONIA",
+            "prefijos": [
+                {
+                    "final": "Z3",
+                    "inicial": "Z3"
+                }
+            ]
+        },
+        {
+            "asociado": null,
+            "cerrado": true,
+            "direccion": null,
+            "nota": null,
+            "pais": "ALBANIA",
+            "prefijos": [
+                {
+                    "final": "ZA",
+                    "inicial": "ZA"
+                }
+            ]
+        },
+        {
+            "asociado": "Gibraltar Amateur Radio Society",
+            "cerrado": false,
+            "direccion": "Box 292",
+            "nota": null,
+            "pais": "GIBRALTAR",
+            "prefijos": [
+                {
+                    "final": "ZB",
+                    "inicial": "ZB"
+                }
+            ]
+        },
+        {
+            "asociado": "Cayman Amateur Radio Society",
+            "cerrado": false,
+            "direccion": "Box 1029 GT, KY1-1102, Grand Cayman",
+            "nota": null,
+            "pais": "CAYMAN ISLANDS",
+            "prefijos": [
+                {
+                    "final": "ZF",
+                    "inicial": "ZF"
+                }
+            ]
+        },
+        {
+            "asociado": "NZART QSL Bureau",
+            "cerrado": false,
+            "direccion": "P.O. Box 857, Wanganui Mail Centre, Wanganui 4540",
+            "nota": null,
+            "pais": "NEW ZEALAND",
+            "prefijos": [
+                {
+                    "final": "ZM",
+                    "inicial": "ZL"
+                }
+            ]
+        },
+        {
+            "asociado": "Radio Club Paraguayo",
+            "cerrado": false,
+            "direccion": "Box 512, Asunción 1209",
+            "nota": null,
+            "pais": "PARAGUAY",
+            "prefijos": [
+                {
+                    "final": "ZP",
+                    "inicial": "ZP"
+                }
+            ]
+        },
+        {
+            "asociado": "South African Radio League",
+            "cerrado": false,
+            "direccion": "Box 1721, Strubensvallei 1735",
+            "nota": null,
+            "pais": "SOUTH AFRICA",
+            "prefijos": [
+                {
+                    "final": "ZU",
+                    "inicial": "ZR"
+                }
+            ]
+        },
+        {
+            "asociado": "International Amateur Radio Club",
+            "cerrado": false,
+            "direccion": "Box 6, CH-1211 Geneva 20",
+            "nota": null,
+            "pais": "SWITZERLAND",
+            "prefijos": [
+                {
+                    "final": "4U1ITU",
+                    "inicial": "4U1ITU"
+                }
+            ]
+        },
+        {
+            "asociado": "Directorate General of Telecommunications",
+            "cerrado": false,
+            "direccion": "Box 11365–931, Tehran 16314",
+            "nota": null,
+            "pais": "IRAN",
+            "prefijos": [
+                {
+                    "final": "EQ",
+                    "inicial": "EP"
+                },
+                {
+                    "final": "9D",
+                    "inicial": "9B"
+                }
+            ]
+        },
+        {
+            "asociado": "Amateur Radio Union of Kyrgyzstan",
+            "cerrado": false,
+            "direccion": "Box 745, 720017 Bishkek",
+            "nota": null,
+            "pais": "KYRGYZSTAN",
+            "prefijos": [
+                {
+                    "final": "EX",
+                    "inicial": "EX"
+                }
+            ]
+        },
+        {
+            "asociado": "American Amateur Radio Club of Korea",
+            "cerrado": false,
+            "direccion": "Dependent Mail Section, Box 153, APO, AP 96206",
+            "nota": "US personnel in the Republic of Korea",
+            "pais": "REPUBLIC OF KOREA (South Korea)",
+            "prefijos": [
+                {
+                    "final": "HL9",
+                    "inicial": "HL9"
+                }
+            ]
+        },
+        {
+            "asociado": "Falkland Amateur Radio Association",
+            "cerrado": false,
+            "direccion": "Box 400, Stanley",
+            "nota": null,
+            "pais": "FALKLAND ISLANDS",
+            "prefijos": [
+                {
+                    "final": "VP8",
+                    "inicial": "VP8"
                 }
             ]
         }
