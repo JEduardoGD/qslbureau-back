@@ -10,7 +10,6 @@ import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Slot;
 import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
-import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 
 public interface SlotLogicService {
@@ -27,7 +26,7 @@ public interface SlotLogicService {
 
 	List<Status> getCreatedAndOpenStatuses();
 
-	Slot getSlotByCountry(String callsignTo, Local local) throws MaximumSlotNumberReachedException, QrzException;
+	Slot getSlotByCountry(String callsignTo, Local local) throws MaximumSlotNumberReachedException;
 
 	List<Slot> getOpenedOrCreatedSlots();
 

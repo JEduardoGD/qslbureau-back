@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 import egd.fmre.qslbureau.capture.dto.QslDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.dto.SummaryQslDto;
+import egd.fmre.qslbureau.capture.dto.jsonburo.BuroDto;
 import egd.fmre.qslbureau.capture.entity.Capturer;
 import egd.fmre.qslbureau.capture.entity.Local;
 import egd.fmre.qslbureau.capture.entity.Qrzreg;
@@ -37,6 +37,7 @@ import egd.fmre.qslbureau.capture.service.CapturerService;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.QslCaptureService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.service.WorldBuroesService;
 import egd.fmre.qslbureau.capture.util.CallsignHelper;
 import egd.fmre.qslbureau.capture.util.CompareNacionalityUtil;
 import egd.fmre.qslbureau.capture.util.JsonParserUtil;
@@ -54,9 +55,10 @@ public class QslCaptureServiceImpl implements QslCaptureService {
     @Autowired CapturerService     capturerService;
     @Autowired LocalRepository     localRepository;
     @Autowired QrzService          qrzService;
+    @Autowired WorldBuroesService  worldBuroesService;
     
-    @Value("${MX_PREFIXES}")
-    private String mxPrefixes;
+    //@Value("${MX_PREFIXES}")
+    //private String mxPrefixes;
     
     private Status statusQslVigente;
     private Status statusQslEliminada;
@@ -103,18 +105,25 @@ public class QslCaptureServiceImpl implements QslCaptureService {
         try {
             String effectiveCallsign = qslDto.getVia() != null
                     && !StaticValuesHelper.EMPTY_STRING.equals(qslDto.getVia()) ? qslDto.getVia() : qslDto.getTo();
+            
+            List<BuroDto> buroDtoList;
+	    try {
+		buroDtoList = worldBuroesService.findByCallsign(effectiveCallsign);
+	    } catch (WorldBuroesServiceImplException e) {
+		throw new QslcaptureException(e);
+	    }
+            
+	    if (buroDtoList == null || buroDtoList.isEmpty()) {
+		log.error("No se encontraron datos de buro para el callsign: " + effectiveCallsign);
+		throw new QslcaptureException("No se encontraron datos de buro para el callsign: " + effectiveCallsign);
+	    }
                     
-            boolean isMexican = CompareNacionalityUtil.isMexican(effectiveCallsign, mxPrefixes);
+            boolean isMexican = CompareNacionalityUtil.isMexican(effectiveCallsign, buroDtoList);
 
-			try {
-				if (isMexican) {
-					slot = slotLogicService.getSlotForQsl(effectiveCallsign, local);
-				} else {
-					slot = slotLogicService.getSlotByCountry(effectiveCallsign, local);
-				}
-			} catch (QrzException e) {
-				log.error(e.getMessage());
-				return null;
+			if (isMexican) {
+				slot = slotLogicService.getSlotForQsl(effectiveCallsign, local);
+			} else {
+				slot = slotLogicService.getSlotByCountry(effectiveCallsign, local);
 			}
 			
 			if(slot == null) {
