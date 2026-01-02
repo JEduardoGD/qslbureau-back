@@ -8,13 +8,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import egd.fmre.qslbureau.capture.controller.MigrationSlotDto;
 import egd.fmre.qslbureau.capture.dto.MergeableDataDto;
 import egd.fmre.qslbureau.capture.dto.SlotCountqslDTO;
 import egd.fmre.qslbureau.capture.dto.SlotDto;
+import egd.fmre.qslbureau.capture.dto.jsonburo.BuroDto;
 import egd.fmre.qslbureau.capture.entity.CallsignRule;
 import egd.fmre.qslbureau.capture.entity.ContactBitacore;
 import egd.fmre.qslbureau.capture.entity.Local;
@@ -24,7 +24,6 @@ import egd.fmre.qslbureau.capture.entity.Status;
 import egd.fmre.qslbureau.capture.enums.QslstatusEnum;
 import egd.fmre.qslbureau.capture.enums.SlotstatusEnum;
 import egd.fmre.qslbureau.capture.exception.MaximumSlotNumberReachedException;
-import egd.fmre.qslbureau.capture.exception.QrzException;
 import egd.fmre.qslbureau.capture.exception.QslcaptureException;
 import egd.fmre.qslbureau.capture.helper.StaticValuesHelper;
 import egd.fmre.qslbureau.capture.repo.CallsignruleRepository;
@@ -34,12 +33,12 @@ import egd.fmre.qslbureau.capture.repo.SlotRepository;
 import egd.fmre.qslbureau.capture.service.ContactBitacoreService;
 import egd.fmre.qslbureau.capture.service.QrzService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.service.WorldBuroesService;
 import egd.fmre.qslbureau.capture.util.CompareNacionalityUtil;
 import egd.fmre.qslbureau.capture.util.DateTimeUtil;
 import egd.fmre.qslbureau.capture.util.QsldtoTransformer;
 import egd.fmre.qslbureau.capture.util.RandomUtils;
 import egd.fmre.qslbureau.capture.util.SlotsUtil;
-import egd.fmre.qslbureau.capture.util.TextUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -54,9 +53,10 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 	@Autowired QrzService qrzService;
 	@Autowired QslRepository qslRepository;
 	@Autowired ContactBitacoreService contactBitacoreService;
+	@Autowired WorldBuroesService worldBuroesService;
 
-	@Value("${MX_PREFIXES}")
-	private String mxPrefixes;
+	//@Value("${MX_PREFIXES}")
+	//private String mxPrefixes;
 
 	private static String MAX_NUMBER_SLOTS_REACHED = "Se ha alcanzado el número máximo de slots para este local";
 
@@ -182,13 +182,18 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 
 	@Override
 	public Slot getSlotByCountry(String callsign, Local local) throws MaximumSlotNumberReachedException {
-		String country = null;
+		List<BuroDto> buroesOfCallsign;
 		try {
-			country = qrzService.getCountryOfCallsign(callsign);
-		} catch (QrzException e) {
-			log.warn(e.getMessage());
+		    buroesOfCallsign = worldBuroesService.findByCallsign(callsign);
+		} catch (WorldBuroesServiceImplException e) {
+		    log.error(e.getMessage());
+		    return null;
 		}
-		country = TextUtil.sanitize(country);
+
+		String country = null;
+		if (!buroesOfCallsign.isEmpty()) {
+		    country = buroesOfCallsign.get(0).getPais();
+		}
 
 		if (country == null) {
 			return null;
@@ -218,11 +223,11 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 				i++;
 				continue;
 			} else {
-				Slot newSlot = generateSlot(null, DateTimeUtil.getDateTime(), local, i);
+				Slot newSlot = generateSlotCountry(country, DateTimeUtil.getDateTime(), local, i);
 				return slotRepository.save(newSlot);
 			}
 		}
-		Slot newSlot = generateSlot(null, DateTimeUtil.getDateTime(), local, i);
+		Slot newSlot = generateSlotCountry(country, DateTimeUtil.getDateTime(), local, i);
 		return slotRepository.save(newSlot);
 	}
 
@@ -369,7 +374,20 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 			String effectiveCallsign = qsl.getVia() != null && !StaticValuesHelper.EMPTY_STRING.equals(qsl.getVia())
 					? qsl.getVia()
 					: qsl.getTo();
-			boolean isMexican = CompareNacionalityUtil.isMexican(effectiveCallsign, mxPrefixes);
+			
+			List<BuroDto> buroDtoList;
+			    try {
+				buroDtoList = worldBuroesService.findByCallsign(effectiveCallsign);
+			    } catch (WorldBuroesServiceImplException e) {
+				throw new QslcaptureException(e);
+			    }
+		            
+			    if (buroDtoList == null || buroDtoList.isEmpty()) {
+				log.error("No se encontraron datos de buro para el callsign: " + effectiveCallsign);
+				throw new QslcaptureException("No se encontraron datos de buro para el callsign: " + effectiveCallsign);
+			    }
+			    
+			boolean isMexican = CompareNacionalityUtil.isMexican(effectiveCallsign, buroDtoList);
 
 			try {
 				if (isMexican) {
