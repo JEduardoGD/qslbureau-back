@@ -37,6 +37,17 @@ public abstract class EmailHelper {
 		}
 	}
 
+	protected String loadEmailFileRepresentative() throws SendMailException {
+		String emailFile = "/email_representative.html";
+		Class<EmailServiceImpl> clazz = EmailServiceImpl.class;
+		InputStream inputStream = clazz.getResourceAsStream(emailFile);
+		try {
+			return readFromInputStream(inputStream);
+		} catch (IOException e) {
+			throw new SendMailException(e);
+		}
+	}
+
 	protected String readFromInputStream(InputStream inputStream) throws IOException {
 		StringBuilder resultStringBuilder = new StringBuilder();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {

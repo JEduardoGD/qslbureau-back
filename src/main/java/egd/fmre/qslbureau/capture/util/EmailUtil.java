@@ -2,12 +2,17 @@ package egd.fmre.qslbureau.capture.util;
 
 import java.io.UnsupportedEncodingException;
 
+import javax.activation.DataHandler;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
+import egd.fmre.qslbureau.capture.dto.AttachmentObject;
 import egd.fmre.qslbureau.capture.dto.EmailDetailsObject;
 import egd.fmre.qslbureau.capture.exception.SendMailException;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +53,26 @@ public abstract class EmailUtil {
 			msg.setSubject(emailDetailsObject.getSubject(), ENCODING);
 
 			// msg.setText(body, ENCODING);
-			msg.setContent(emailDetailsObject.getBody(), CONTENT_ENCODING);
+			//msg.setContent(emailDetailsObject.getBody(), CONTENT_ENCODING);
+			
+			MimeMultipart multiPart = new MimeMultipart();
+			
+			MimeBodyPart htmlPart = new MimeBodyPart();
+			htmlPart.setContent(emailDetailsObject.getBody(), CONTENT_ENCODING);
+			multiPart.addBodyPart(htmlPart);
+			
+			if (emailDetailsObject.getAttachments() !=null && !emailDetailsObject.getAttachments().isEmpty()) {
+			    for (AttachmentObject attachment : emailDetailsObject.getAttachments()) {
+				MimeBodyPart att = new MimeBodyPart();
+				ByteArrayDataSource bds = new ByteArrayDataSource(attachment.getData(),
+					"application/octet-stream");
+				att.setDataHandler(new DataHandler(bds));
+				att.setFileName(attachment.getFilename());
+				multiPart.addBodyPart(att);
+			    }
+			}
+			
+			msg.setContent(multiPart);
 
 			msg.setSentDate(DateTimeUtil.getDateTime());
 
