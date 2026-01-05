@@ -35,6 +35,9 @@ public class Representative implements Serializable {
     @Column(name = "USERNAME")
     private String username;
 
+    @Column(name = "EMAIL")
+    private String email;
+
     @Column(name = "START")
     private Date start;
     
