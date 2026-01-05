@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import egd.fmre.qslbureau.capture.dto.ContactDataDto;
 import egd.fmre.qslbureau.capture.dto.EmailDataDto;
+import egd.fmre.qslbureau.capture.dto.EmailRepresentativeDTO;
 import egd.fmre.qslbureau.capture.dto.QslSumatoryDto;
 import egd.fmre.qslbureau.capture.dto.StandardResponse;
 import egd.fmre.qslbureau.capture.entity.Contact;
@@ -22,6 +23,7 @@ import egd.fmre.qslbureau.capture.entity.ContactBitacore;
 import egd.fmre.qslbureau.capture.entity.Qsl;
 import egd.fmre.qslbureau.capture.entity.Representative;
 import egd.fmre.qslbureau.capture.entity.Slot;
+import egd.fmre.qslbureau.capture.entity.Zone;
 import egd.fmre.qslbureau.capture.enums.ContactEmailEnum;
 import egd.fmre.qslbureau.capture.exception.ContactServiceException;
 import egd.fmre.qslbureau.capture.exception.SendMailException;
@@ -31,19 +33,21 @@ import egd.fmre.qslbureau.capture.service.EmailService;
 import egd.fmre.qslbureau.capture.service.QslService;
 import egd.fmre.qslbureau.capture.service.RepresentativeService;
 import egd.fmre.qslbureau.capture.service.SlotLogicService;
+import egd.fmre.qslbureau.capture.service.ZoneService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("contact")
 @Slf4j
 public class ContactController {
-
-	@Autowired ContactService         contactService;
+    
+    @Autowired ContactService         contactService;
     @Autowired RepresentativeService  representativeService;
     @Autowired SlotLogicService       slotLogicService;
     @Autowired EmailService           emailService;
     @Autowired QslService             qslService;
     @Autowired ContactBitacoreService contactBitacoreService;
+    @Autowired ZoneService zoneService;
 
 	@GetMapping("/findactiveforcallsign/{callsign}")
 	public ResponseEntity<StandardResponse> findActiveForCallsign(@PathVariable String callsign) {
@@ -135,6 +139,39 @@ public class ContactController {
 			standardResponse = new StandardResponse(true, e.getMessage());
 			return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
 		}
+	}
+
+	@GetMapping("/sendmail/representativeid/{representativeId}")
+	public ResponseEntity<StandardResponse> sendMailRepresentative(@PathVariable Integer representativeId) {
+	    StandardResponse standardResponse = null;
+
+	    Representative representative;
+	    representative = representativeService.findById(representativeId);
+	    if (representative == null) {
+		standardResponse = new StandardResponse(true,
+			String.format("Error con el representative id %d", representativeId));
+		return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
+	    }
+
+	    List<Zone> zonesOfRepresentative = zoneService.getActiveZonesByRepresentative(representative);
+
+	    for (Zone zone : zonesOfRepresentative) {
+		EmailRepresentativeDTO emailRepresentative = new EmailRepresentativeDTO();
+		emailRepresentative.setZoneName(zone.getName());
+		emailRepresentative.setEmailAddress(representative.getEmail());
+		emailRepresentative.setRepresentativeId(representative.getId());
+		emailRepresentative.setRepresentativeName(representative.getName());
+		emailRepresentative.setRepresentativeLastName(representative.getLastName());
+		try {
+		    boolean res = emailService.sendMailRepresentative(emailRepresentative);
+		    standardResponse = new StandardResponse(res);
+		    return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
+		} catch (SendMailException e) {
+		    log.error(e.getMessage());
+		    standardResponse = new StandardResponse(true, "Error sending representative error mail");
+		}
+	    }
+	    return new ResponseEntity<StandardResponse>(standardResponse, new HttpHeaders(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/callforupdateemail/callsign/{callsign}")

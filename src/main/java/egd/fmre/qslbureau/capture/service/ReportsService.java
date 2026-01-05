@@ -12,8 +12,6 @@ public interface ReportsService {
 
 	List<QslsReport> gettingCallsignsMap();
 
-	byte[] writeReport(List<QslsReport> list);
-
 	byte[] writeReportOfCapturedCallsigns(List<CapturedCallsign> captiredCallsigns);
 
 	List<CapturedCallsign> getReportOfCapturedCallsigns();
