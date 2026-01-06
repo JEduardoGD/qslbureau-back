@@ -108,7 +108,7 @@ public class QslCaptureServiceImpl implements QslCaptureService {
             
             List<BuroDto> buroDtoList;
 	    try {
-		buroDtoList = worldBuroesService.findByCallsign(effectiveCallsign);
+		buroDtoList = worldBuroesService.findByCallsign(effectiveCallsign, qslDto.getLocalId());
 	    } catch (WorldBuroesServiceImplException e) {
 		throw new QslcaptureException(e);
 	    }

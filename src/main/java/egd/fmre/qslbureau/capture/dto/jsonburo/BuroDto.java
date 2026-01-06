@@ -17,4 +17,5 @@ public class BuroDto implements Serializable {
 	private String pais;
 	private Boolean cerrado;
 	private List<PrefijoDto> prefijos;
+	private int slotNumber;
 }

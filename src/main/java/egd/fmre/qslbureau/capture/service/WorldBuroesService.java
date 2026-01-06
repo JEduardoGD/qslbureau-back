@@ -7,6 +7,6 @@ import egd.fmre.qslbureau.capture.service.impl.WorldBuroesServiceImplException;
 
 public interface WorldBuroesService {
 
-    List<BuroDto> findByCallsign(String callsing) throws WorldBuroesServiceImplException;
+    List<BuroDto> findByCallsign(String callsing, int localId) throws WorldBuroesServiceImplException;
 
 }
