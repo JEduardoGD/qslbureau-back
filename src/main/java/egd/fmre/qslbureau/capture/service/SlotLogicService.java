@@ -59,4 +59,6 @@ public interface SlotLogicService {
 	List<MergeableDataDto> getApplicableTraslates(int localid);
 
 	boolean mergeChanges(MergeableDataDto mergeableDataDto);
+
+	Slot findSlotByCountryAndLocalId(String country, int localId);
 }
