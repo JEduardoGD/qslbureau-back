@@ -179,12 +179,23 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 
 		return slotRepository.save(slot);
 	}
+	
+	@Override
+	public Slot findSlotByCountryAndLocalId(String country, int localId) {
+	        Local local = localRepository.findById(localId);
+		List<Status> slotStatuses = Arrays.asList(slotstatusCreated, slotstatusOpen);
+		List<Slot> slots = slotRepository.findByLocalAndCountryAndStatuses(country, slotStatuses, local);
+		if(slots != null && !slots.isEmpty()) {
+		    return slots.get(0);
+		}
+		return null;
+	}
 
 	@Override
 	public Slot getSlotByCountry(String callsign, Local local) throws MaximumSlotNumberReachedException {
 		List<BuroDto> buroesOfCallsign;
 		try {
-		    buroesOfCallsign = worldBuroesService.findByCallsign(callsign);
+		    buroesOfCallsign = worldBuroesService.findByCallsign(callsign, local.getId());
 		} catch (WorldBuroesServiceImplException e) {
 		    log.error(e.getMessage());
 		    return null;
@@ -377,7 +388,7 @@ public class SlotLogicServiceImpl extends SlotsUtil implements SlotLogicService 
 			
 			List<BuroDto> buroDtoList;
 			    try {
-				buroDtoList = worldBuroesService.findByCallsign(effectiveCallsign);
+				buroDtoList = worldBuroesService.findByCallsign(effectiveCallsign, local.getId());
 			    } catch (WorldBuroesServiceImplException e) {
 				throw new QslcaptureException(e);
 			    }

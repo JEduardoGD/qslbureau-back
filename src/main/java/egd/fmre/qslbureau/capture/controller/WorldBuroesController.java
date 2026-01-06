@@ -25,11 +25,11 @@ public class WorldBuroesController {
     @Autowired
     WorldBuroesService worldBuroesService;
 
-    @GetMapping("/findByCallsing/{localsign}")
-    public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable String localsign) {
+    @GetMapping("/findByCallsing/{localsign}/localid/{localid}")
+    public ResponseEntity<StandardResponse> getApplicableRules(@PathVariable String localsign, @PathVariable Integer localid) {
     List<BuroDto> buroes;
     try {
-        buroes = worldBuroesService.findByCallsign(localsign);
+        buroes = worldBuroesService.findByCallsign(localsign, localid);
     } catch (WorldBuroesServiceImplException e) {
         return new ResponseEntity<StandardResponse>(new StandardResponse(true, e.getMessage()), new HttpHeaders(),
             HttpStatus.OK);
